@@ -1,0 +1,32 @@
+.UI_fuel_guage {
+	height: 100%;
+	width: 100%;
+	background: linear-gradient(to bottom, #f6e6b4 0%,#ed9017 50%,#ff1919 99%);
+	margin-top: auto;
+}
+.UI_fuel_container {
+	height: 48px;
+	border: 2px outset #fff;
+	padding: 1px;
+	width: 6px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+}
+
+.UI_cool_down {
+	color: #fff;
+}
+
+.UI_player {
+	color: #fff;
+	background-color: #445;
+	width: 120px;
+}
+.UI_player th {
+	text-align: left;
+}
+.UI_player td {
+	text-align: right;
+}
