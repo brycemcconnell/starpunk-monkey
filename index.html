@@ -20,18 +20,26 @@
 			src: url('PixelMplus10-Regular.ttf');
 		}
 		#wrapper {
-			width: 256px;
-			height: 256px;
 			position: relative;
 			display: none;
 		}
+		canvas {
+			width: auto;
+			height: 100vh;
+			image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
+			image-rendering: -webkit-optimize-contrast; /* Safari                        */
+			image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
+			image-rendering: pixelated;        
+		}
 	</style>
 	<link rel="stylesheet" href="UI.css">
-	<script src="./pixi.min.js"></script>
+	<script src="./lib/pixi.min.js"></script>
+	<script src="./lib/pixi-sound.js"></script>
 
 </head>
 <body>
 	<div id="wrapper"></div>
+	
 	<script type="text/javascript">
 		let type = "WebGL"
 		if(!PIXI.utils.isWebGLSupported()){
@@ -39,6 +47,6 @@
 		}
 		PIXI.utils.sayHello(type)
 	</script>
-	<script src="./main.js" ></script>
+	<script src="./main.js" type="module"></script>
 </body>
 </html>
