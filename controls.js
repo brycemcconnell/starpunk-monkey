@@ -1,46 +1,45 @@
-import {ship} from './ship.js';
+import {allies} from './Model.js';
 export function initKeyboard() {
   window.addEventListener('keydown', (e) => {
-  // console.log(e.key)
   if (e.key == "w" || e.key == "W") {
-    ship.moveDirection.up = true;
+    allies[0].moveDirection.up = true;
   }
   if (e.key == "s" || e.key == "S") {
-    ship.moveDirection.down = true;
+    allies[0].moveDirection.down = true;
   }
   if (e.key == "a" || e.key == "A") {
-    ship.moveDirection.left = true;
+    allies[0].moveDirection.left = true;
   }
   if (e.key == "d" || e.key == "D") {
-    ship.moveDirection.right = true;
+    allies[0].moveDirection.right = true;
   }
   if (e.key == "Shift") {
-    ship.booster = true;
+    allies[0].booster = true;
   }
   if (e.key == " ") {
-    // ship.booster = true;
-    ship.shooting = true;
+    // allies[0].booster = true;
+    allies[0].shooting = true;
   }
 });
 window.addEventListener('keyup', (e) => {
   if (e.key == "w" || e.key == "W") {
-    ship.moveDirection.up = false;
+    allies[0].moveDirection.up = false;
   }
   if (e.key == "s" || e.key == "S") {
-    ship.moveDirection.down = false;
+    allies[0].moveDirection.down = false;
   }
   if (e.key == "a" || e.key == "A") {
-    ship.moveDirection.left = false;
+    allies[0].moveDirection.left = false;
   }
   if (e.key == "d" || e.key == "D") {
-    ship.moveDirection.right = false;
+    allies[0].moveDirection.right = false;
   }
   if (e.key == "Shift") {
-    ship.booster = false;
+    allies[0].booster = false;
   }
   if (e.key == " ") {
-    // ship.booster = true;
-    ship.shooting = false;
+    // allies[0].booster = true;
+    allies[0].shooting = false;
   }
 });
 }

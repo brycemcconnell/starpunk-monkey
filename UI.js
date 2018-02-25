@@ -1,3 +1,7 @@
+import {allies, enemies} from './Model.js';
+import {stats} from './player.js';
+import * as fr from './fr.js';
+import * as Gs from './Globals.js';
 class UIElement {
 	constructor(config) {
 		this.container;
@@ -59,6 +63,14 @@ PlayerHitsRow.appendChild(PlayerHitsTitle);
 export const PlayerHits = document.createElement('td');
 PlayerHitsRow.appendChild(PlayerHits);
 
+export const killsRow = document.createElement('tr');
+Player.appendChild(killsRow);
+export const killsTitle = document.createElement('th');
+killsTitle.innerHTML = "Kills: ";
+killsRow.appendChild(killsTitle);
+export const kills = document.createElement('td');
+killsRow.appendChild(kills);
+
 export const PlayerAccuracyRow = document.createElement('tr');
 Player.appendChild(PlayerAccuracyRow);
 export const PlayerAccuracyTitle = document.createElement('th');
@@ -94,8 +106,61 @@ PlayerComboRow.appendChild(PlayerComboTitle);
 export const PlayerCombo = document.createElement('td');
 PlayerComboRow.appendChild(PlayerCombo);
 
+export const FPSRow = document.createElement('tr');
+Player.appendChild(FPSRow);
+export const FPSTitle = document.createElement('th');
+FPSTitle.innerHTML = "FPS: ";
+FPSRow.appendChild(FPSTitle);
+export const FPS = document.createElement('td');
+FPSRow.appendChild(FPS);
+
+export const EnemyCountRow = document.createElement('tr');
+Player.appendChild(EnemyCountRow);
+export const EnemyCountTitle = document.createElement('th');
+EnemyCountTitle.innerHTML = "EnemyCount: ";
+EnemyCountRow.appendChild(EnemyCountTitle);
+export const EnemyCount = document.createElement('td');
+EnemyCountRow.appendChild(EnemyCount);
+
+
+export const AddEnemy = document.createElement('button');
+AddEnemy.innerHTML = "add Enemy";
+AddEnemy.onmouseup = () => {
+	enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256));  
+	stats.enemyCounter.update();
+}
+
+export const ToggleRespawn = document.createElement('button');
+ToggleRespawn.innerHTML = "Toggle Respawn";
+ToggleRespawn.onmouseup = () => {
+	Gs.RESPAWN.toggle();
+}
+
+const sidebar = document.createElement('div');
+
+const fireRateSliderContainer = document.createElement('div');
+fireRateSliderContainer.innerHTML = 'FireRate';
+fireRateSliderContainer.style.borderRadius = '2px';
+fireRateSliderContainer.style.backgroundColor = '#fff';
+fireRateSliderContainer.style.padding = '12px';
+const fireRateSlider = document.createElement('input');
+fireRateSlider.type = "range";
+fireRateSlider.min = '1';
+fireRateSlider.max = '30';
+fireRateSlider.value = '20';
+fireRateSlider.style.margin = '0';
+fireRateSlider.style.borderColor = '#0f0';
+
+fireRateSlider.onchange = () => {
+  allies[0].fireRate = fireRateSlider.value;
+}
+fireRateSliderContainer.appendChild(fireRateSlider);
 
 export function init() {
 	wrapper.appendChild(UIGuageOverlay);
-	wrapper.appendChild(Player);
+	wrapper.appendChild(sidebar)
+	sidebar.appendChild(Player);
+	sidebar.appendChild(AddEnemy);
+	sidebar.appendChild(ToggleRespawn);
+	sidebar.appendChild(fireRateSliderContainer);
 }

@@ -1,6 +1,6 @@
 .UI_box {
-	border: 2px outset #fff;
-	padding: 1px;
+	border: 6px outset #fff;
+	padding: 4px;
 }
 .UI_fuel_guage {
 	height: 100%;
@@ -15,10 +15,11 @@
 	display: flex;
 }
 .UI_guage_container {
-	height: 48px;
-	width: 6px;
+	height: 96px;
+	width: 12px;
 	display: flex;
 	background-color: #000a;
+	margin-left: 4px;
 }
 
 .UI_cool_down_guage {
@@ -31,11 +32,35 @@
 .UI_player {
 	color: #fff;
 	width: 200px;
-	margin-left: 12px;
 }
 .UI_player th {
 	text-align: left;
 }
 .UI_player td {
 	text-align: right;
+}
+
+.UI_loader_container {
+	color: #fff;
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+}
+.UI_loader_container div{
+	margin-right: 16px;
+}
+.UI_loader_container__loaderContainer {
+	width: 200px;
+	height: 20px;
+}
+.UI_loader_container div {
+	margin-right: 16px;
+}
+.UI_loader_container__loader {
+	height: 100%;
+	width: 0;
+	background: linear-gradient(to bottom, #d2ff52 0%,#91e842 50%,#91e842 94%);
+	transition: .1s;
 }

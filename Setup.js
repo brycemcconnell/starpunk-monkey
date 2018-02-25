@@ -1,69 +1,101 @@
-import { grid, app, enemies, bulletPool } from './Model.js';
+import { grid, app, enemies, bulletPool, background, allies } from './Model.js';
 import {gameLoop} from './gameLoop.js';
-import {instantiateShip} from './ship.js';
+// import {instantiateShip} from './ship.js';
 import * as Gs from './Globals.js';
 import Enemy from './Enemy.js';
+import AlliedShip from './AlliedShip.js';
+import {loaderInfo} from './Loader.js';
 
-export let wallpaper;
-export let stars;
-export let clouds;
+function createBackgroundLayer(x) {
+  const layer = new PIXI.extras.TilingSprite(PIXI.loader.resources[x.sprite].texture, x.w, x.h);
+  layer.name = x.name || undefined;
+  layer.position.set(x.x || 0, x.y || 0);
+  layer.tint = x.tint || 0xFFFFFF;
+  layer.vy = x.vy || 0;
+  layer.parentGroup = backgroundGroup;
+  app.stage.addChild(layer);
+  background.push(layer);
+}
+
+const backgroundGroup = new PIXI.display.Group(-1, true);
+export const shadowGroup = new PIXI.display.Group(0, true);
+export const shipGroup = new PIXI.display.Group(1, true);
+
 export default function setup() {
-  wallpaper = new PIXI.extras.TilingSprite(PIXI.loader.resources["sprites/wallpaper.png"].texture, 256, 640);
-  wallpaper.position.set(0, -320);
-  wallpaper.tint = 0x777777;
-  app.stage.addChild(wallpaper);
-  
-  clouds = new PIXI.extras.TilingSprite(PIXI.loader.resources["sprites/clouds.png"].texture, 256, 640);
-  clouds.position.set(0, -320);
-  app.stage.addChild(clouds);
+  app.stage = new PIXI.display.Stage();
+  app.stage.group.enableSort = true;
+  app.stage.addChild(new PIXI.display.Layer(backgroundGroup));
+  app.stage.addChild(new PIXI.display.Layer(shadowGroup));
+  app.stage.addChild(new PIXI.display.Layer(shipGroup));
+  loaderInfo.innerHTML = "complete!";
+  createBackgroundLayer({
+    name: "Nebulae",
+    sprite: "sprites/wallpaper.png",
+    w: 256,
+    h: 640,
+    y: -320,
+    vy: .1,
+    tint: 0xaaaaaa
+  });
+  createBackgroundLayer({
+    name: "deepStars",
+    sprite: "sprites/stars.png",
+    w: 320,
+    h: 640,
+    x: -64,
+    y: -320,
+    vy: 0.01,
+    tint: 0xaa0077
+  });
+  createBackgroundLayer({
+    name: "bgStars",
+    sprite: "sprites/stars.png",
+    w: 288,
+    h: 640,
+    x: -32,
+    y: -320,
+    vy: .3
+  });
+  createBackgroundLayer({
+    name: "clouds",
+    sprite: "sprites/clouds.png",
+    w: 256,
+    h: 640,
+    y: -320,
+    tint: 0xcccccc,
+    vy: .4
+  });
+  createBackgroundLayer({
+    name: "fgStars",
+    sprite: "sprites/stars.png",
+    w: 256,
+    h: 640,
+    y: -320,
+    vy: .6
+  });
 
-  stars = new PIXI.extras.TilingSprite(PIXI.loader.resources["sprites/stars.png"].texture, 256, 640);
-  stars.position.set(0, -320);
-  app.stage.addChild(stars);
-  // A tiling wallpaper
-  // for (let i = grid.length - 1; i >= 0; i--) {
-  //   for (let j = grid[i].length - 1; j >= 0; j--) {
-  //     if (grid[i][j] == 1) {
-  //       let bg = new PIXI.extras.TilingSprite(PIXI.loader.resources["sprites/bg.png"].texture, 32, 32);
-  //       bg.scale.set(1, 1);
-  //       let x = i * 32;
-  //       let y = j * 32;
-  //       bg.position.set(x, y);
-  //       grid[i][j] = bg;
-  //       app.stage.addChild(bg);
-  //     }
-  //   }
-  // }
   for (let i = 0; i < 5; i++ ) {
-    let enemy = new Enemy({x: 30 * i, y: 30});
+    let enemy = new Enemy({x: 12, y: (24 * i) + 20, sprite: "Enemy2"});
     enemies.activePool.push(enemy);
   }
-  // ship = new PIXI.Sprite(PIXI.loader.resources["sprites/ship.png"].texture);
-  // ship.scale.set(1, 1);
-  // ship.position.set(64, 64);
-  // ship.vx = 0;
-  // ship.vy = 0;
-  // ship.moveDirection = {
-  //   up: false,
-  //   down: false,
-  //   left: false,
-  //   right: false,
+  // for (let i = 0; i < 5; i++ ) {
+  //   let enemy = new Enemy({x: 10, y: (30 * i)+ 30, sprite: "Enemy", tint: 0xff7777}, null, {type: "verticalSnake", config: {loop: true}});
+  //   enemies.activePool.push(enemy);
   // }
-  // ship.shooting = false;
-  // ship.fireRate = 20;
-  // ship.coolDown = 0;
-  // ship.maxFuel = 100;
-  // ship.fuel = 100;
-  // ship.booster = false;
-  // app.stage.addChild(ship);
-  instantiateShip();
-  app.ticker.add(delta => gameLoop(delta));
 
-  
+  const ship = new AlliedShip({
+    x: Gs.CANVAS_SIZEX / 2,
+    y: Gs.CANVAS_SIZEY - 64,
+    sprite: "Player2"
+  });
+  allies.push(ship);
+  // instantiateShip();
+  app.ticker.add(delta => gameLoop(delta));
 
   // Create initial bullets
   for (let i = 0; i < 10; i++) {
     let bullet = new PIXI.Sprite(PIXI.loader.resources["sprites/laser.png"].texture);
+    bullet.anchor.set(0.5);
     bulletPool.push(bullet);
   }
 
