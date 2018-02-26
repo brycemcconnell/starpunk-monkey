@@ -122,6 +122,14 @@ EnemyCountRow.appendChild(EnemyCountTitle);
 export const EnemyCount = document.createElement('td');
 EnemyCountRow.appendChild(EnemyCount);
 
+export const TestBoxRow = document.createElement('tr');
+Player.appendChild(TestBoxRow);
+export const TestBoxTitle = document.createElement('th');
+TestBoxTitle.innerHTML = "TestBox: ";
+TestBoxRow.appendChild(TestBoxTitle);
+export const TestBox = document.createElement('td');
+TestBoxRow.appendChild(TestBox);
+
 
 export const AddEnemy = document.createElement('button');
 AddEnemy.innerHTML = "add Enemy";

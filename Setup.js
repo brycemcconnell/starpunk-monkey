@@ -2,6 +2,7 @@ import { grid, app, enemies, bulletPool, background, allies } from './Model.js';
 import {gameLoop} from './gameLoop.js';
 // import {instantiateShip} from './ship.js';
 import * as Gs from './Globals.js';
+import * as UI from './UI.js';
 import Enemy from './Enemy.js';
 import AlliedShip from './AlliedShip.js';
 import {loaderInfo} from './Loader.js';
@@ -74,10 +75,7 @@ export default function setup() {
     vy: .6
   });
 
-  for (let i = 0; i < 5; i++ ) {
-    let enemy = new Enemy({x: 12, y: (24 * i) + 20, sprite: "Enemy2"});
-    enemies.activePool.push(enemy);
-  }
+  
   // for (let i = 0; i < 5; i++ ) {
   //   let enemy = new Enemy({x: 10, y: (30 * i)+ 30, sprite: "Enemy", tint: 0xff7777}, null, {type: "verticalSnake", config: {loop: true}});
   //   enemies.activePool.push(enemy);
@@ -103,4 +101,23 @@ export default function setup() {
   wrapper.style.width = document.querySelector("canvas").clientWidth + "px";
   wrapper.style.height = document.querySelector("canvas").clientHeight + "px";
   // sound.laser = PIXI.loader.resources["laser.wav"];
+
+
+  for (let i = 0; i < 1; i++ ) {
+    let enemy = new Enemy({x: 128, y: 128, sprite: "Enemy2"});
+    enemies.activePool.push(enemy);
+  }
+  Gs.setCANVAS_SCALE();
+  document.querySelector("canvas").addEventListener("mousemove", (e) => {
+    enemies.activePool[0].destination = {
+      x: (e.clientX / Gs.CANVAS_SCALEX),
+      y: (e.clientY / Gs.CANVAS_SCALEY),
+    }
+    UI.TestBox.innerHTML = (enemies.activePool[0].angle).toFixed(2) + "," +
+    (enemies.activePool[0].angle/Math.PI * 180).toFixed(2) + "/" +
+    (enemies.activePool[0].sprite.rotation % Math.PI).toFixed(2) + "," +
+    (enemies.activePool[0].sprite.rotation/Math.PI * 180 % 360).toFixed(2);
+  // console.log(enemies.activePool[0])
+  });
 }
+

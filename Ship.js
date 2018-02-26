@@ -17,5 +17,11 @@ export default class Ship {
 	    this.shadow.parentGroup = shadowGroup;
 	    app.stage.addChild(this.sprite);
 	    app.stage.addChild(this.shadow);
+
+	    this.vx = 0;
+	    this.vy = 0;
+	    this.vr = 0;
+	   	this.speed = 1;
+	   	this.rotateSpeed = .05;
 	}
 }

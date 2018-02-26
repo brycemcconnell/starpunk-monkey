@@ -17,3 +17,14 @@ Enemikes previously implemented health does not have this, they take consecutive
 
 Bugs:
 With the new AI shadows desync over time
+
+AI Extended:
+Change enemies to move by their 'vx'/'vy' values on handleMove()
+```
+on handleMove() {
+    check target destination
+    rotate towards if not already facing (difference of angle)
+    calculate and set vx/vy with trigonometry
+    move
+}
+```

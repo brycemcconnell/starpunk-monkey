@@ -31,8 +31,6 @@ import Ship from './Ship.js';
 export default class AlliedShip extends Ship {
   constructor(pos) {
     super(pos);
-    this.vx = 0;
-    this.vy = 0;
     this.moveDirection = {
       up: false,
       down: false,
