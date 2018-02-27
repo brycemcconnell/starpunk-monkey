@@ -2,6 +2,17 @@ import { bulletPool, bullets, app, allies, enemies } from './Model.js';
 import * as Gs from './Globals.js';
 import * as UI from './UI.js';
 export const bulletSpeed = 3;
+
+// Turning system
+const turnFactor = 30; // Max turn in degrees
+const turningEnabled = true;
+const turnSpeed = 3;
+let currentTurn = 0;
+
+function turn() {
+	allies[0].sprite.rotation = Math.PI/180 * (270 + currentTurn);
+	allies[0].shadow.rotation = Math.PI/180 * (270 + currentTurn);
+}
 export const player = {
 	handleMovement: function(delta) {
 		allies.sort((a, b) => a.speed - b.speed);
@@ -9,6 +20,8 @@ export const player = {
 		  // break;
 		  // Set inital speed
 		  let currentSpeed = allies[0].speed;
+		  let turning = false;
+		  
 
 		  // Calculate boosting
 		  if (allies[0].booster && allies[0].fuel > 0) {
@@ -38,10 +51,24 @@ export const player = {
 		  if (allies[0].moveDirection.left && allies[0].sprite.x > 16) {
 		    allies[0].sprite.x -= currentSpeed;
 		    allies[0].shadow.x -= currentSpeed;
+
+		    currentTurn = currentTurn > -turnFactor ? currentTurn - turnSpeed : currentTurn;
+		    turningEnabled && turn();
+		    turning = true;
 		  }
 		  if (allies[0].moveDirection.right && allies[0].sprite.x < Gs.CANVAS_SIZEX - 16) {
 		    allies[0].sprite.x += currentSpeed;
 		    allies[0].shadow.x += currentSpeed;
+
+				currentTurn = currentTurn < turnFactor ? currentTurn + turnSpeed : currentTurn;
+		    turningEnabled && turn();
+		    turning = true;
+		  }
+		  if (!turning) {
+		  	// Reset Turning
+			  currentTurn = currentTurn < 0 ? currentTurn + turnSpeed :
+			                currentTurn > 0 ? currentTurn - turnSpeed : currentTurn;
+			  turningEnabled && turn();
 		  }
 		  // allies[0].coolDown += allies[0].coolDown > 0 ? -1 : allies[0].coolDown == 0 ? allies[0].fireRate : -1;
 		  if (allies[0].coolDown > 0) {
