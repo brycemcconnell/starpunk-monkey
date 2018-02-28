@@ -1,6 +1,6 @@
 import * as AI from './ai/index.js';
 import Ship from './Ship.js';
-import {stats} from './player.js';
+import {statsOld} from './player.js';
 import * as Gs from './Globals.js';
 import * as fr from './fr.js';
 
@@ -17,13 +17,13 @@ export default class Enemy extends Ship {
 		super(pos);
 		this.AI = AI[ai.type];
 		this.AIconfig = ai.config;
-		this.sprite.rotation = Math.PI/180 * 90;
-		this.shadow.rotation = Math.PI/180 * 90;
+		// this.sprite.rotation = Math.PI/180 * 90;
+		// this.shadow.rotation = Math.PI/180 * 90;
 		// this.handleMove();
 	    // Type construction
 	    this.speed = 1.0;
 	    this.rotateSpeed = .05;
-	    this.destination = {x: 150,  y: 100};
+	    // this.destination = {x: 150,  y: 100};
 	    this.angle = 0;
 	    // AI Construction
 	    
@@ -31,13 +31,13 @@ export default class Enemy extends Ship {
 	handleDeath(index,container) {
 		this.sprite.visible = false;
         this.shadow.visible = false;
-        stats.kills.update();
+        statsOld.kills.update();
 	}
 	handleMove(delta) {
 		// console.log(this.sprite.rotation * 180/Math.PI);
 
 		
-		if (this.sprite.position.x - 12< this.destination.x &&
+		/*if (this.sprite.position.x - 12< this.destination.x &&
 			this.sprite.position.y - 12< this.destination.y &&
 			this.sprite.position.x + 12 > this.destination.x &&
 			this.sprite.position.y + 12 > this.destination.y ) {
@@ -51,7 +51,7 @@ export default class Enemy extends Ship {
 				this.vr = this.rotateSpeed;
 			}
 			// moveForward(this, delta);
-		}
+		}*/
 
 		// move everything
 		this.sprite.rotation += this.vr;

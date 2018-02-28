@@ -1,9 +1,10 @@
-import { grid, app, enemies, bulletPool, background, allies } from './Model.js';
+import { grid, app, enemies, enemyBullets, background, allies } from './Model.js';
 import {gameLoop} from './gameLoop.js';
 // import {instantiateShip} from './ship.js';
 import * as Gs from './Globals.js';
 import * as UI from './UI.js';
 import Enemy from './Enemy.js';
+
 import AlliedShip from './AlliedShip.js';
 import {loaderInfo} from './Loader.js';
 
@@ -55,7 +56,8 @@ export default function setup() {
     h: 640,
     x: -32,
     y: -320,
-    vy: .3
+    vy: .3,
+    tint: 0xeeaabb
   });
   createBackgroundLayer({
     name: "clouds",
@@ -90,13 +92,6 @@ export default function setup() {
   // instantiateShip();
   app.ticker.add(delta => gameLoop(delta));
 
-  // Create initial bullets
-  for (let i = 0; i < 10; i++) {
-    let bullet = new PIXI.Sprite(PIXI.loader.resources["sprites/laser.png"].texture);
-    bullet.anchor.set(0.5);
-    bulletPool.push(bullet);
-  }
-
   wrapper.style.display = "flex";
   wrapper.style.width = document.querySelector("canvas").clientWidth + "px";
   wrapper.style.height = document.querySelector("canvas").clientHeight + "px";
@@ -109,14 +104,16 @@ export default function setup() {
   }
   Gs.setCANVAS_SCALE();
   document.querySelector("canvas").addEventListener("mousemove", (e) => {
-    enemies.activePool[0].destination = {
-      x: (e.clientX / Gs.CANVAS_SCALEX),
-      y: (e.clientY / Gs.CANVAS_SCALEY),
-    }
-    UI.TestBox.innerHTML = (enemies.activePool[0].angle).toFixed(2) + "," +
+    // enemies.activePool[0].destination = {
+    //   x: (e.clientX / Gs.CANVAS_SCALEX),
+    //   y: (e.clientY / Gs.CANVAS_SCALEY),
+    // }
+    UI.MouseLocation.innerHTML = "x:" + Math.round(e.clientX / Gs.CANVAS_SCALEX) + " / " +
+      "y: " + Math.round(e.clientY / Gs.CANVAS_SCALEY);
+    UI.EnemyRotation.innerHTML = "Inactive"/*(enemies.activePool[0].angle).toFixed(2) + "," +
     (enemies.activePool[0].angle/Math.PI * 180).toFixed(2) + "/" +
     (enemies.activePool[0].sprite.rotation % Math.PI).toFixed(2) + "," +
-    (enemies.activePool[0].sprite.rotation/Math.PI * 180 % 360).toFixed(2);
+    (enemies.activePool[0].sprite.rotation/Math.PI * 180 % 360).toFixed(2)*/;
   // console.log(enemies.activePool[0])
   });
 }

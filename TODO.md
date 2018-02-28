@@ -28,3 +28,6 @@ on handleMove() {
     move
 }
 ```
+
+Ship guns are modular, they can be placed on your ship in sockets, which dictates what position they shoot from. Thesse can be programmed to have different shoot patterns/use different amounts of energy. You can also choose what gun type to put in (and what type of ammo?)
+Eg. you could put two basic lasers on your ship, then begin the level. Insteaed of one projectile you shoot two at a time.

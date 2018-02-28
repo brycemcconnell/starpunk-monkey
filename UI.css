@@ -31,9 +31,9 @@
 
 .UI_player {
 	color: #fff;
-	width: 200px;
+	width: 100%;
 }
-.UI_player th {
+.UI_sidebar th {
 	text-align: left;
 }
 .UI_player td {
@@ -63,4 +63,46 @@
 	width: 0;
 	background: linear-gradient(to bottom, #d2ff52 0%,#91e842 50%,#91e842 94%);
 	transition: .1s;
+}
+.UI_inactive {
+	color: #777;
+}
+.UI_sidebar > * {
+    margin-bottom: 4px;
+}
+.UI_sidebar > button {
+    display: block;
+}
+.UI_sidebar {
+	margin-left: 8px;
+	margin-top: 8px;
+	color: #fff;
+}
+.UI_sidebar-title {
+	border-bottom: 2px solid #fff;
+	font-size: 14px;
+	padding-bottom: 4px;
+	margin-bottom: 4px;
+}
+.UI_sidebar_fireRate-view {
+	display: flex;
+	flex: space-between;
+	justify-content: space-around;
+}
+.UI_sidebar_fireRate-view input[type=range]::-moz-range-track {
+		background: linear-gradient(to right, #ff0f0f 0%,#ffed4c 100%);
+}
+.UI_player-ship-view {
+	flex: 120px;
+	position: relative;
+}
+.UI_player-ship-debug_rotation {
+	height: 0;
+	width: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 10px solid #fff;
+	position: absolute;
+	top: 10px;
+	right: -10px;
 }

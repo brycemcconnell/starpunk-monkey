@@ -1,32 +1,30 @@
 import * as Gs from './Globals.js';
+import {allies} from './Model.js';
 export default class SmartArray {
-	constructor(defaultClass, initialCount = 0, filler) {
+	constructor(defaultClass, listener) {
 		this.activePool = new Array();
-		this.inactivePool = new Array(initialCount).fill(filler);
+		this.inactivePool = new Array().fill();
 		this.defaultClass = defaultClass;
+		this.listener = listener;
 	}
 	getNew(rotation, x, y) {
-	  let item = this.inactivePool.length > 0 ?
-	    this.inactivePool.pop() :
-	    new this.defaultClass({
-	    	x: x, y: y, sprite: "Enemy2"
-	    });
-	    // new PIXI.Sprite(PIXI.loader.resources[this.defaultTexture].texture);
-	  item.sprite.position.x = x;
-	  item.shadow.position.x = x;
-	  item.sprite.position.y = y;
-	  item.shadow.position.y = y + Gs.SHADOW_OFFSET;
-	  item.sprite.rotation = Math.PI/180 * rotation;
-	  item.shadow.rotation = Math.PI/180 * rotation;
-	  item.sprite.visible = true;
-	  item.shadow.visible = true;
-	  this.activePool.push(item);
-	  return item;
+		let item = this.inactivePool.length > 0 ?
+			this.inactivePool.pop() :
+			new this.defaultClass({
+				x: x, y: y, sprite: "Basic"
+		});
+		item.sprite.position.x = x;
+		item.sprite.position.y = y;
+		item.sprite.rotation = rotation;
+		item.sprite.visible = true;
+		this.activePool.push(item);
+		this.listener.update(this.activePool.length, this.inactivePool.length);
+		return item;
 	}
 	recycle(item) {
-	  item.handleDeath();
-	  this.activePool.splice(this.activePool.indexOf(item), 1);
-	  this.inactivePool.push(item);
-	  // console.log(this.activePool.length, this.inactivePool.length);
+		item.handleDeath();
+		this.activePool.splice(this.activePool.indexOf(item), 1);
+		this.inactivePool.push(item);
+		this.listener.update(this.activePool.length, this.inactivePool.length);
 	}
 }

@@ -14,6 +14,7 @@ Loader.load();
 // PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 initKeyboard();
 
+// Resizing in chromium v.64 is bugged 2018-02-28
 window.addEventListener('resize', () => {
   wrapper.style.width = document.querySelector("canvas").clientWidth + "px";
   wrapper.style.height = document.querySelector("canvas").clientHeight + "px";

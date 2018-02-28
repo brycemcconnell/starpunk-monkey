@@ -12,11 +12,21 @@ export const SHADOW_OFFSET = 50;
 export const SHADOW_STRENGTH = .3;
 export const SCALE_FACTOR = 1;
 export const UI_SCALE = 2;
+export const DEFAULT_ROTATION = 270;
+export const FIRERATE_MIN = 1;
+export const FIRERATE_MAX = 60;
+export const SHOW_HITBOXES = {
+	value: true,
+	toggle: function() {
+		this.value = this.value ? false : true;
+		console.log('Hitboxes set to', this.value);
+	}
+};
 
-export let RESPAWN = {
+export const RESPAWN = {
 	value: false,
 	toggle: function() {
 		this.value = this.value ? false : true;
-		console.log(this.value);
+		console.log('Respawning set to', this.value);
 	}
 };

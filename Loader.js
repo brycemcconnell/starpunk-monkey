@@ -23,7 +23,7 @@ export function load() {
     "sprites/enemy.png"
   ]).add([
     "sprites/enemy2.png"
-  ]).add(["sprites/genericShadow.png"])
+  ])
   .add('laser','sounds/laser.wav')
   .add('explode','sounds/explode.mp3')
   .on("progress", loadProgressHandler)

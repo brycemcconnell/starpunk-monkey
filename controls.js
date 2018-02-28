@@ -1,7 +1,7 @@
 import {allies} from './Model.js';
 export function initKeyboard() {
   window.addEventListener('keydown', (e) => {
-  if (e.key == "w" || e.key == "W") {
+  if (e.key == "w" || e.key == "W" ) {
     allies[0].moveDirection.up = true;
   }
   if (e.key == "s" || e.key == "S") {

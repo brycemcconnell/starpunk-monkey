@@ -1,6 +1,10 @@
 import * as Gs from './Globals.js';
+import * as UI from './UI.js';
+import * as Stat from './stats.js';
+import ShipArray from './ShipArray.js';
 import SmartArray from './SmartArray.js';
 import Enemy from './Enemy.js';
+import Bullet from './Bullet.js';
 import AlliedShip from './AlliedShip.js';
 function createGrid() {
   let newGrid = [];
@@ -31,33 +35,14 @@ app.renderer = PIXI.autoDetectRenderer(Gs.CANVAS_SIZEX, Gs.CANVAS_SIZEY, {
   });
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.BICUBIC;
 
-export const enemies = new SmartArray(Enemy);
-export const bulletPool = [];
+export const enemies = new ShipArray(Enemy, Stat.enemyCount);
+export const enemyBullets = new SmartArray(Bullet, Stat.enemyBulletCount);
+export const allyBullets = new SmartArray(Bullet, Stat.allyBulletCount);
 export const speed = 2;
-export const bullets = [];
 
 export const background = [];
 
 
-export const spriteList = {
-  "Enemy": {
-    sprite: "sprites/enemy.png"
-  },
-  "Player": {
-    sprite: "sprites/ship.png"
-  },
-  "Player2": {
-    sprite: "sprites/ship2.png"
-  },
-  "PlayerAlt": {
-    sprite: "sprites/shipAlt.png"
-  },
-  "BattleCruiser": {
-    sprite: "sprites/battleCruiser.png"
-  },
-  "Enemy2": {
-    sprite: "sprites/enemy2.png"
-  },
-};
+
 
 export const allies = [];

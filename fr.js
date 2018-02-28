@@ -19,3 +19,28 @@ export const randAngle4 = ()=> {
 	}
 	return result;
 };
+export const getCentrePoint = (v) => {
+  let cx = (v[0].x + v[1].x + v[2].x + v[3].x) / 4;
+  let cy = (v[0].y + v[1].y + v[2].y + v[3].y) / 4;
+  return { x: cx, y: cy};
+};
+export const transformRotate = (x, y, c, angle) => {
+  x -= c.x;
+  y -= c.y
+
+  let newx = x * Math.cos(angle) - y * Math.sin(angle);
+  let newy = x * Math.sin(angle) + y * Math.cos(angle);
+
+  x = newx + c.x;
+  y = newy + c.y;
+
+  return {x: x, y: y};
+};
+
+export const convertXYPairs = (array) => {
+  let newArray = [];
+  for (let i = 0; i < array.length; i+=2) {
+    newArray.push({x: array[i], y: array[i+1]});
+  }
+  return newArray;
+};

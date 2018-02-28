@@ -1,7 +1,7 @@
-import { grid, speed, bullets, enemies, background, allies } from './Model.js';
+import { grid, speed, allyBullets, enemies, background, allies } from './Model.js';
 import * as fr from './fr.js';
 // import { ship } from './ship.js';
-import { shoot, getNewBullet, bulletSpeed, stats, recycleBullet, player } from './player.js';
+import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
 import * as Gs from './Globals.js';
 let timer = 0;
@@ -14,43 +14,186 @@ export function gameLoop(delta){
   enemies.activePool.forEach(enemy => {
     enemy.handleMove(delta);
   });
+
+
   // If you have multiple allies, make the fleet move at the same speed?
   // Sort by lowest speed first, eg allies[0] is slowest. Change the speed of your fleet based on this
   // allies[1] = {speed: 2};
   
   // ship.x += ship.vx;
   // ship.y += ship.vy;
-  bulletLoop:
-  for(let b = bullets.length - 1; b >= 0; b--){
-    bullets[b].position.x += (Math.cos(bullets[b].rotation)*bulletSpeed)*delta;
-    bullets[b].position.y += (Math.sin(bullets[b].rotation)*bulletSpeed)*delta;
+  AllyBulletLoop:
+  for(let b = allyBullets.activePool.length - 1; b >= 0; b--){
+    allyBullets.activePool[b].sprite.position.x += (Math.cos(allyBullets.activePool[b].sprite.rotation)*bulletSpeed)*delta;
+    allyBullets.activePool[b].sprite.position.y += (Math.sin(allyBullets.activePool[b].sprite.rotation)*bulletSpeed)*delta;
     for (let x = enemies.activePool.length - 1; x >= 0; x--) {
-      if (bullets[b].position.y < enemies.activePool[x].sprite.position.y + 12 &&
-          bullets[b].position.y > enemies.activePool[x].sprite.position.y - 12 &&
-          bullets[b].position.x > enemies.activePool[x].sprite.position.x - 12 &&
-          bullets[b].position.x < enemies.activePool[x].sprite.position.x + 12 &&
+      if (allyBullets.activePool[b].sprite.position.y < enemies.activePool[x].sprite.position.y + 12 &&
+          allyBullets.activePool[b].sprite.position.y > enemies.activePool[x].sprite.position.y - 12 &&
+          allyBullets.activePool[b].sprite.position.x > enemies.activePool[x].sprite.position.x - 12 &&
+          allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + 12 &&
           enemies.activePool[x].sprite.visible) {
         // console.log('hit', enemies);
         enemies.recycle(enemies.activePool[x]);
-        stats.hits.update();
+        statsOld.hits.update();
         
         PIXI.sound.play('explode');
-        recycleBullet(bullets[b]);
+        allyBullets.recycle(allyBullets.activePool[b]);
         if (Gs.RESPAWN.value) { enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }
-        stats.enemyCounter.update();
-        break bulletLoop;
+        statsOld.enemyCounter.update();
+        break AllyBulletLoop;
       }
     }
 
-    if (bullets[b].position.y < 0) {
-      recycleBullet(bullets[b]);
+    if (allyBullets.activePool[b].sprite.position.y < 0) {
+      allyBullets.recycle(allyBullets.activePool[b]);
     }
   }
+
+  function collisionDetector(a, b, hitbox = false) {
+    let result = false;
+    
+    // Perhaps move all of this into the Graphics objects themselves, only update on rotation (or even better, on the likely hood of detection?)
+    // Define verticies
+
+
+
+
+
+    // console.log(aV, oA);
+    // let ax1 = a.getBounds().x;
+    // let ay1 = a.getBounds().y;
+    // let ax2 = a.getBounds().x + a.getBounds().width;
+    // let ay2 = a.getBounds().y + a.getBounds().height;
+    // let ac = {x: a.getBounds().x + (a.getBounds().width / 2),
+    //           y: a.getBounds().y + (a.getBounds().height / 2)};
+    // let ax1 = a.getBounds().x;
+    // let ay1 = a.getBounds().y;
+    // let ax2 = a.getBounds().x + a.getBounds().width;
+    // let ay2 = a.getBounds().y + a.getBounds().height;
+    // let ac = getCentrePoint(aV);
+    // console.log(a.getLocalBounds())
+
+    // let bx1 = b.getBounds().x;
+    // let by1 = b.getBounds().y;
+    // let bx2 = b.getBounds().x + b.getBounds().width;
+    // let by2 = b.getBounds().y + b.getBounds().height;
+    // let bx1 = b.getBounds().x;
+    // let by1 = b.getBounds().y;
+    // let bx2 = b.getBounds().x + b.getBounds().width;
+    // let by2 = b.getBounds().y + b.getBounds().height;
+    // let bc = {x: b.getBounds().x + (b.getBounds().width / 2),
+    //           y: b.getBounds().y + (b.getBounds().height / 2)};
+
+
+    // if (ax1 < bx2 &&
+    //     ax2 > bx1 &&
+    //     ay1 < by2 &&
+    //     ay2 > by1
+    //     ) {
+
+    //   result = true;
+    // }
+    return result;
+  }
+  // reset detection color
+  enemies.activePool.forEach(enemy => {
+    enemy.hitBox.children.forEach(child => {
+      child.tint = 0xffffff;
+    });
+  });
+
+  allies.forEach(ally => {
+    ally.hitBox.children.forEach(child => {
+      child.tint = 0xffffff;
+    });
+    checkPerAlly:
+    for (let i = enemies.activePool.length - 1; i >= 0; i--) {
+      // INNER-COLLISION START *** If there is a chance of collision ***
+      let allyHitbox = ally.hitBox;
+      let enemyHitbox = enemies.activePool[i].hitBox;
+      if (collisionDetector(ally, enemies.activePool[i])) {
+        for (let ai = allyHitbox.children.length - 1; ai >= 0; ai--) {
+          for (let ei = enemyHitbox.children.length - 1; ei >= 0; ei--) {
+            // if (collisionDetector(enemyHitbox.children[ei], allyHitbox.children[ai], true)) {
+              allyHitbox.children[ai].tint = 0xff0000;
+              enemyHitbox.children[ei].tint = 0xff0000;
+            // }
+          }
+        }
+      }
+      // INNER-COLLISION END 
+    }
+  });
 
   timer += 1;
   if (timer % 60 == 0) {
     UI.FPS.innerHTML = parseFloat(60 / delta).toFixed(1);
   }
  
+  if (!Gs.SHOW_HITBOXES.value) {
+    enemies.activePool.concat(allies).forEach(ship => {
+      ship.hitBox.visible = false;
+    });
+  } else {
+    enemies.activePool.concat(allies).forEach(ship => {
+      ship.hitBox.visible = true;
+    });
+  }
+  window.testme = allies[0];
+  getHitBoxVerticies();
+}
 
+function getHitBoxVerticies() {
+  let a = allies[0];
+  let aV = fr.convertXYPairs(a.sprite.vertexData);
+
+  UI.playerShipDebug.style.transform = `translate(-50%, -50%) rotate(${allies[0].sprite.rotation * 180/Math.PI}deg)`;
+  // Get centrepoints
+  let aC = fr.getCentrePoint(aV);
+  UI.playerShipDebugOverview.forEach((item, index) => {
+    switch (index) {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+        item.innerHTML = "x: " + (aV[index].x).toFixed(2) + 
+                         " / y: " + (aV[index].y).toFixed(2);
+        break;
+      case 4:
+        item.innerHTML = "x: " + aC.x.toFixed(2) + 
+                         " / y: " + aC.y.toFixed(2);
+        break;
+      case 5:
+        item.innerHTML = "r: " + (a.sprite.rotation).toFixed(2) + "c / " + 
+                         "d: " + (a.sprite.rotation * 180/Math.PI).toFixed(2) + "°";
+    }
+  });
+  // note this is also equal to the anchor point of the sprite, maybe optimize later?
+  // Convert to original coordinates (before sprite rotation)
+  let aO = [];
+  aV.forEach(pair => {
+    aO.push(fr.transformRotate(pair.x, pair.y, aC, -45 * Math.PI/180));
+  });
+
+  // Calculate the hitbox original locations
+  let aTest = a.hitBox.children[0].userData;
+
+  let hitBoxCoords = [
+    {x: aTest.x1, y: aTest.y1},
+    {x: aTest.x1, y: aTest.y2},
+    {x: aTest.x2, y: aTest.y2},
+    {x: aTest.x2, y: aTest.y1}
+  ];
+  // Define the offset from 0,0 of the original parent box
+  let offset = aO[0];
+  let testBoxLocal = [];
+  // Rotate each of the hitbox points @ origin by center point @ origin
+  hitBoxCoords.forEach(pair => {
+    testBoxLocal.push(fr.transformRotate(pair.x, pair.y, {x: aC.x - offset.x, y:aC.y - offset.y}, 45 * Math.PI/180));
+  });
+  // Remove the offset
+  testBoxLocal.forEach(pair => {
+    pair.x = pair.x + offset.x;
+    pair.y = pair.y + offset.y
+  });
 }
