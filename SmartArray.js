@@ -7,7 +7,7 @@ export default class SmartArray {
 		this.defaultClass = defaultClass;
 		this.listener = listener;
 	}
-	getNew(rotation, x, y) {
+	getNew(rotation, x, y, type) {
 		let item = this.inactivePool.length > 0 ?
 			this.inactivePool.pop() :
 			new this.defaultClass({

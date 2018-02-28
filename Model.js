@@ -2,7 +2,7 @@ import * as Gs from './Globals.js';
 import * as UI from './UI.js';
 import * as Stat from './stats.js';
 import ShipArray from './ShipArray.js';
-import SmartArray from './SmartArray.js';
+import BulletArray from './BulletArray.js';
 import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import AlliedShip from './AlliedShip.js';
@@ -36,8 +36,8 @@ app.renderer = PIXI.autoDetectRenderer(Gs.CANVAS_SIZEX, Gs.CANVAS_SIZEY, {
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.BICUBIC;
 
 export const enemies = new ShipArray(Enemy, Stat.enemyCount);
-export const enemyBullets = new SmartArray(Bullet, Stat.enemyBulletCount);
-export const allyBullets = new SmartArray(Bullet, Stat.allyBulletCount);
+export const enemyBullets = new BulletArray(Bullet, Stat.enemyBulletCount);
+export const allyBullets = new BulletArray(Bullet, Stat.allyBulletCount);
 export const speed = 2;
 
 export const background = [];
@@ -45,4 +45,4 @@ export const background = [];
 
 
 
-export const allies = [];
+export const allies = new ShipArray(AlliedShip, Stat.allyCount);

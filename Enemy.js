@@ -3,6 +3,7 @@ import Ship from './Ship.js';
 import {statsOld} from './player.js';
 import * as Gs from './Globals.js';
 import * as fr from './lib/fr.js';
+import {enemyBullets} from './Model.js';
 
 function collisionDetection() {
 
@@ -26,13 +27,11 @@ export default class Enemy extends Ship {
 	    // this.destination = {x: 150,  y: 100};
 	    this.angle = 0;
 	    // AI Construction
+	    this.shooting = true;
+	    this.fireRate = 90;
+	    this.coolDown = 0;
 	    
-	}
-	handleDeath(index,container) {
-		this.sprite.visible = false;
-        this.shadow.visible = false;
-        statsOld.kills.update();
-	}
+	} 
 	handleMove(delta) {
 		// console.log(this.sprite.rotation * 180/Math.PI);
 
@@ -72,5 +71,16 @@ export default class Enemy extends Ship {
 		const y2 = this.destination.y;
 		let result = Math.atan2(y2 - y1, x2 - x1)
 		return result > 0 ? result : Math.PI - result*-1 + Math.PI;
+	}
+	handleAttack(delta) {
+	  if (this.coolDown > 0) {
+	    this.coolDown -= 1 * delta;
+	  }
+	  if (this.shooting && this.coolDown <= 0) {
+	    let pos = {x: this.sprite.x + Gs.TILE_SIZE / 2 - 4, y: this.sprite.y + Gs.TILE_SIZE / 2 - 4};
+	    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, "Basic");
+		PIXI.sound.play('laser');
+	    this.coolDown = this.fireRate;
+	  }
 	}
 }

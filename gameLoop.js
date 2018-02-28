@@ -1,4 +1,4 @@
-import { grid, speed, allyBullets, enemies, background, allies } from './Model.js';
+import { grid, speed, allyBullets, enemies, enemyBullets, background, allies } from './Model.js';
 import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
@@ -12,6 +12,7 @@ export function gameLoop(delta){
   player.handleMovement(delta);
   enemies.activePool.forEach(enemy => {
     enemy.handleMove(delta);
+    enemy.handleAttack(delta);
   });
 
 
@@ -23,8 +24,8 @@ export function gameLoop(delta){
   // ship.y += ship.vy;
   AllyBulletLoop:
   for(let b = allyBullets.activePool.length - 1; b >= 0; b--){
-    allyBullets.activePool[b].sprite.position.x += (Math.cos(allyBullets.activePool[b].sprite.rotation)*bulletSpeed)*delta;
-    allyBullets.activePool[b].sprite.position.y += (Math.sin(allyBullets.activePool[b].sprite.rotation)*bulletSpeed)*delta;
+    allyBullets.activePool[b].sprite.position.x += (Math.cos(allyBullets.activePool[b].sprite.rotation)*allyBullets.activePool[b].speed)*delta;
+    allyBullets.activePool[b].sprite.position.y += (Math.sin(allyBullets.activePool[b].sprite.rotation)*allyBullets.activePool[b].speed)*delta;
     for (let x = enemies.activePool.length - 1; x >= 0; x--) {
       if (allyBullets.activePool[b].sprite.position.y < enemies.activePool[x].sprite.position.y + 12 &&
           allyBullets.activePool[b].sprite.position.y > enemies.activePool[x].sprite.position.y - 12 &&
@@ -32,9 +33,8 @@ export function gameLoop(delta){
           allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + 12 &&
           enemies.activePool[x].sprite.visible) {
         // console.log('hit', enemies);
-        enemies.recycle(enemies.activePool[x]);
+        enemies.activePool[x].handleHit();
         statsOld.hits.update();
-        
         PIXI.sound.play('explode');
         allyBullets.recycle(allyBullets.activePool[b]);
         if (Gs.RESPAWN.value) { enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }
@@ -45,6 +45,35 @@ export function gameLoop(delta){
 
     if (allyBullets.activePool[b].sprite.position.y < 0) {
       allyBullets.recycle(allyBullets.activePool[b]);
+    }
+  }
+  EnemyBulletLoop:
+  for(let b = enemyBullets.activePool.length - 1; b >= 0; b--){
+    enemyBullets.activePool[b].sprite.position.x += (Math.cos(enemyBullets.activePool[b].sprite.rotation)*enemyBullets.activePool[b].speed)*delta;
+    enemyBullets.activePool[b].sprite.position.y += (Math.sin(enemyBullets.activePool[b].sprite.rotation)*enemyBullets.activePool[b].speed)*delta;
+    for (let x = allies.activePool.length - 1; x >= 0; x--) {
+      if (enemyBullets.activePool[b].sprite.position.y < allies.activePool[x].sprite.position.y + 12 &&
+          enemyBullets.activePool[b].sprite.position.y > allies.activePool[x].sprite.position.y - 12 &&
+          enemyBullets.activePool[b].sprite.position.x > allies.activePool[x].sprite.position.x - 12 &&
+          enemyBullets.activePool[b].sprite.position.x < allies.activePool[x].sprite.position.x + 12 &&
+          allies.activePool[x].sprite.visible) {
+        // console.log('hit', allies);
+        allies.activePool[x].handleHit();
+        if (allies.activePool.length < 1) {
+          console.log('gameover');
+        }
+        // statsOld.hits.update();
+        
+        PIXI.sound.play('explode');
+        enemyBullets.recycle(enemyBullets.activePool[b]);
+        if (Gs.RESPAWN.value) { allies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }
+        // statsOld.enemyCounter.update();
+        break EnemyBulletLoop;
+      }
+    }
+
+    if (enemyBullets.activePool[b].sprite.position.y > Gs.CANVAS_SIZEY) {
+      enemyBullets.recycle(enemyBullets.activePool[b]);
     }
   }
 
@@ -101,7 +130,7 @@ export function gameLoop(delta){
     });
   });
 
-  allies.forEach(ally => {
+  allies.activePool.forEach(ally => {
     ally.hitBox.children.forEach(child => {
       child.tint = 0xffffff;
     });
@@ -130,23 +159,23 @@ export function gameLoop(delta){
   }
  
   if (!Gs.SHOW_HITBOXES.value) {
-    enemies.activePool.concat(allies).forEach(ship => {
+    enemies.activePool.concat(allies.activePool).forEach(ship => {
       ship.hitBox.visible = false;
     });
   } else {
-    enemies.activePool.concat(allies).forEach(ship => {
+    enemies.activePool.concat(allies.activePool).forEach(ship => {
       ship.hitBox.visible = true;
     });
   }
-  window.testme = allies[0];
+  window.testme = allies.activePool[0];
   getHitBoxVerticies();
 }
 
 function getHitBoxVerticies() {
-  let a = allies[0];
+  let a = allies.activePool[0];
   let aV = fr.convertXYPairs(a.sprite.vertexData);
 
-  UI.playerShipDebug.style.transform = `translate(-50%, -50%) rotate(${allies[0].sprite.rotation * 180/Math.PI}deg)`;
+  UI.playerShipDebug.style.transform = `translate(-50%, -50%) rotate(${allies.activePool[0].sprite.rotation * 180/Math.PI}deg)`;
   // Get centrepoints
   let aC = fr.getCentrePoint(aV);
   UI.playerShipDebugOverview.forEach((item, index) => {

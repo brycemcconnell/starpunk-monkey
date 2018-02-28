@@ -7,6 +7,7 @@ import Enemy from './Enemy.js';
 
 import AlliedShip from './AlliedShip.js';
 import {loaderInfo} from './Loader.js';
+import {initKeyboard} from './controls.js';
 
 function createBackgroundLayer(x) {
   const layer = new PIXI.extras.TilingSprite(PIXI.loader.resources[x.sprite].texture, x.w, x.h);
@@ -83,12 +84,25 @@ export default function setup() {
   //   enemies.activePool.push(enemy);
   // }
 
-  const ship = new AlliedShip({
-    x: Gs.CANVAS_SIZEX / 2,
-    y: Gs.CANVAS_SIZEY - 64,
-    sprite: "Player2"
-  });
-  allies.push(ship);
+  // const ship = new AlliedShip({
+  //   x: Gs.CANVAS_SIZEX / 2,
+  //   y: Gs.CANVAS_SIZEY - 64,
+  //   
+  // });
+  allies.getNew(
+    270,
+    Gs.CANVAS_SIZEX / 2,
+    Gs.CANVAS_SIZEY - 64,
+    "Player2",
+    "ally"
+  );
+  allies.getNew(
+    270,
+    Gs.CANVAS_SIZEX / 2 + 64,
+    Gs.CANVAS_SIZEY - 64,
+    "BattleCruiser",
+    "ally"
+  );
   // instantiateShip();
   app.ticker.add(delta => gameLoop(delta));
 
@@ -99,8 +113,13 @@ export default function setup() {
 
 
   for (let i = 0; i < 1; i++ ) {
-    let enemy = new Enemy({x: 128, y: 128, sprite: "Enemy2"});
-    enemies.activePool.push(enemy);
+    enemies.getNew(
+      90,
+      Gs.CANVAS_SIZEX / 2,
+      64,
+      "Enemy2",
+      "enemy"
+    );
   }
   Gs.setCANVAS_SCALE();
   document.querySelector("canvas").addEventListener("mousemove", (e) => {
@@ -116,5 +135,6 @@ export default function setup() {
     (enemies.activePool[0].sprite.rotation/Math.PI * 180 % 360).toFixed(2)*/;
   // console.log(enemies.activePool[0])
   });
+  initKeyboard();
 }
 

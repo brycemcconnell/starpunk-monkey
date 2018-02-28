@@ -1,27 +1,22 @@
 import * as Gs from './Globals.js';
 import SmartArray from './SmartArray.js';
-export default class ShipArray extends SmartArray {
-	getNew(rotation, x, y, sprite, team) {
+export default class BulletArray extends SmartArray {
+	getNew(rotation, x, y, type) {
 		let item = this.inactivePool.length > 0 ?
-		this.inactivePool.pop() :
-		new this.defaultClass({
-			x: x, y: y, sprite: sprite, team: team
+			this.inactivePool.pop() :
+			new this.defaultClass({
+				x: x, y: y, sprite: type
 		});
-			// new PIXI.Sprite(PIXI.loader.resources[this.defaultTexture].texture);
 		item.sprite.position.x = x;
-		item.shadow.position.x = x;
 		item.sprite.position.y = y;
-		item.shadow.position.y = y + Gs.SHADOW_OFFSET;
-		item.sprite.rotation = Math.PI/180 * rotation;
-		item.shadow.rotation = Math.PI/180 * rotation;
+		item.sprite.rotation = rotation;
 		item.sprite.visible = true;
-		item.shadow.visible = true;
 		this.activePool.push(item);
-		console.log(this.listener);
 		this.listener.update(this.activePool.length, this.inactivePool.length);
 		return item;
 	}
 	recycle(item) {
+		item.sprite.visible = false;
 		this.activePool.splice(this.activePool.indexOf(item), 1);
 		this.inactivePool.push(item);
 		this.listener.update(this.activePool.length, this.inactivePool.length);

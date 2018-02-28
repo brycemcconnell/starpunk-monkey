@@ -16,7 +16,7 @@ export const DEFAULT_ROTATION = 270;
 export const FIRERATE_MIN = 1;
 export const FIRERATE_MAX = 60;
 export const SHOW_HITBOXES = {
-	value: true,
+	value: false,
 	toggle: function() {
 		this.value = this.value ? false : true;
 		console.log('Hitboxes set to', this.value);

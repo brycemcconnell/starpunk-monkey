@@ -135,7 +135,7 @@ MouseLocationRow.appendChild(MouseLocation);
 export const AddEnemy = document.createElement('button');
 AddEnemy.innerHTML = "add Enemy";
 AddEnemy.onmouseup = () => {
-	enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256));  
+	enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256), "Enemy2");  
 	// update stat
 }
 
@@ -179,7 +179,9 @@ fireRateSliderView.appendChild(fireRateSlider);
 fireRateSliderView.appendChild(fireRateMax);
 
 fireRateSlider.onchange = () => {
-  allies[0].fireRate = fireRateSlider.value;
+  allies.activePool.forEach(ship => {
+  	ship.fireRate = fireRateSlider.value;
+  });
 }
 fireRateSliderContainer.appendChild(fireRateSliderTitle);
 fireRateSliderContainer.appendChild(fireRateSliderView);
