@@ -24,7 +24,7 @@ export default class Enemy extends Ship {
 	    // Type construction
 	    this.speed = 1.0;
 	    this.rotateSpeed = .05;
-	    // this.destination = {x: 150,  y: 100};
+	    this.destination = {x:fr.random(Gs.CANVAS_SIZEX - 12),y:fr.random(Gs.CANVAS_SIZEY - 12)};
 	    this.angle = 0;
 	    // AI Construction
 	    this.shooting = true;
@@ -36,11 +36,11 @@ export default class Enemy extends Ship {
 		// console.log(this.sprite.rotation * 180/Math.PI);
 
 		
-		/*if (this.sprite.position.x - 12< this.destination.x &&
+		if (this.sprite.position.x - 12< this.destination.x &&
 			this.sprite.position.y - 12< this.destination.y &&
 			this.sprite.position.x + 12 > this.destination.x &&
 			this.sprite.position.y + 12 > this.destination.y ) {
-			// this.destination = {x:fr.random(Gs.CANVAS_SIZEX - 12),y:fr.random(Gs.CANVAS_SIZEY - 12)};
+			this.destination = {x:fr.random(Gs.CANVAS_SIZEX - 12),y:fr.random(Gs.CANVAS_SIZEY - 12)};
 		// console.log(this.destination);
 		} else {
 			this.angle = this.angleToDestination();
@@ -49,8 +49,8 @@ export default class Enemy extends Ship {
 			} else {
 				this.vr = this.rotateSpeed;
 			}
-			// moveForward(this, delta);
-		}*/
+			moveForward(this, delta);
+		}
 
 		// move everything
 		this.sprite.rotation += this.vr;
@@ -85,7 +85,7 @@ export default class Enemy extends Ship {
 	}
 	handleDeath() {
 		super.handleDeath();
-		playerScore.update(this.score);
+		playerScore.update(playerScore.active + this.score);
 		playerKills.update(playerKills.active + 1);
 	}
 }
