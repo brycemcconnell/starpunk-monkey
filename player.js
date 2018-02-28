@@ -1,6 +1,7 @@
 import * as UI from './UI.js';
 import { allyBullets, app, allies, enemies } from './Model.js';
 import * as Gs from './Globals.js';
+import {playerSpeed} from './stats.js';
 export const bulletSpeed = 3;
 // Turning system
 const turnFactor = 30; // Max turn in degrees
@@ -13,76 +14,84 @@ function turn(ship) {
 	ship.shadow.rotation = Math.PI/180 * (Gs.DEFAULT_ROTATION + currentTurn);
 }
 export const player = {
-	handleMovement: function(delta) {
-		
-	  // console.log(allies)
-	  // break;
-	  // Set inital speed
-	  
-	  
+	handleMovement: function(delta) {		
+		let moveRightOk = 0;
+		let moveLeftOk = 0;
+		let moveDownOk = 0;
+		let moveUpOk = 0;
 	  allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {
-		  let currentSpeed = allies.activePool.sort((a, b) => a.speed - b.speed)[0].speed;
+		  UI.FuelGuage.style.height =  (ship.fuel * 100) / ship.maxFuel + "%";
+
+		  if (ship.moveDirection.up && ship.sprite.y > ship.sprite.width / 2) {
+		    moveUpOk += 1;
+		  }
+		  if (ship.moveDirection.down && ship.sprite.y < Gs.CANVAS_SIZEY - ship.sprite.width / 2) {
+		    moveDownOk += 1;
+		  }
+		  if (ship.moveDirection.left && ship.sprite.x > ship.sprite.width / 2) {
+		  	moveLeftOk += 1;
+		  }
+		  if (ship.moveDirection.right && ship.sprite.x < Gs.CANVAS_SIZEX - ship.sprite.width / 2) {
+		  	moveRightOk += 1;
+		  }
+		  // Handle guns
+		  if (ship.coolDown > 0) {
+		    ship.coolDown -= 1 * delta;
+		  }
+		  if (ship.shooting && ship.coolDown <= 0) {
+		    let pos = {x: ship.sprite.x + Gs.TILE_SIZE / 2 - 4, y: ship.sprite.y + Gs.TILE_SIZE / 2 - 4};
+		    shoot(ship.sprite.rotation, pos);
+		    ship.coolDown = ship.fireRate;
+		  }
+		  UI.CoolDownGuage.style.opacity = (100 - (ship.coolDown * 100) / ship.fireRate) / 100;
+		});
+		allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {
+			let currentSpeed = allies.activePool.sort((a, b) => a.speed - b.speed)[0].speed;
 	  	let currentTurnSpeed = turnSpeed;
 	  	let turning = false;
-// Calculate boosting
-	  if (ship.booster && ship.fuel > 0) {
-	    currentSpeed += 1;
-	    ship.fuel -= .5;
-	  } else {
-	    ship.fuel += ship.fuel < ship.maxFuel ? 0.1 : 0;
-	  }
+      // Calculate boosting
+	    if (ship.booster && ship.fuel > 0) {
+	   		currentSpeed += 1;
+	    	ship.fuel -= .5;
+	  	} else {
+	    	ship.fuel += ship.fuel < ship.maxFuel ? 0.1 : 0;
+	  	}
+			if ((ship.moveDirection.up || ship.moveDirection.down) &&
+		      (ship.moveDirection.left || ship.moveDirection.right)) {
+		    currentSpeed /= 1.33;
+		  }
+		  currentSpeed *= delta;
+		  if (moveUpOk == allies.activePool.length) {
+		  	ship.sprite.y -= currentSpeed;
+		    ship.shadow.y -= currentSpeed;
+		  }
+		  if (moveDownOk == allies.activePool.length) {
+		  	ship.sprite.y += currentSpeed;
+		    ship.shadow.y += currentSpeed;
+		  }
 
-	  // Modify for diagonal speed
-	  if ((ship.moveDirection.up || ship.moveDirection.down) &&
-	      (ship.moveDirection.left || ship.moveDirection.right)) {
-	    currentSpeed /= 1.33;
-	  }
-
-	  currentSpeed *= delta;
-	  
-	  UI.FuelGuage.style.height =  (ship.fuel * 100) / ship.maxFuel + "%";
-	  if (ship.moveDirection.up && ship.sprite.y > ship.sprite.width / 2) {
-	    ship.sprite.y -= currentSpeed;
-	    ship.shadow.y -= currentSpeed;
-	  }
-	  if (ship.moveDirection.down && ship.sprite.y < Gs.CANVAS_SIZEY - ship.sprite.width / 2) {
-	    ship.sprite.y += currentSpeed;
-	    ship.shadow.y += currentSpeed;
-	  }
-	  if (ship.moveDirection.left && ship.sprite.x > ship.sprite.width / 2) {
-	    ship.sprite.x -= currentSpeed;
-	    ship.shadow.x -= currentSpeed;
-
-	    currentTurn = currentTurn > -turnFactor ? currentTurn - currentTurnSpeed : currentTurn;
-	    turningEnabled && turn(ship);
-	    turning = true;
-	  }
-	  if (ship.moveDirection.right && ship.sprite.x < Gs.CANVAS_SIZEX - ship.sprite.width / 2) {
-	    ship.sprite.x += currentSpeed;
-	    ship.shadow.x += currentSpeed;
-
-			currentTurn = currentTurn < turnFactor ? currentTurn + currentTurnSpeed : currentTurn;
-	    turningEnabled && turn(ship);
-	    turning = true;
-	  }
-	  if (!turning) {
-	  	// Reset Turning
-		  currentTurn = currentTurn < 0 ? currentTurn + currentTurnSpeed :
-		                currentTurn > 0 ? currentTurn - currentTurnSpeed : currentTurn;
-		  turningEnabled && turn(ship);
-	  }
-	  // ship.coolDown += ship.coolDown > 0 ? -1 : ship.coolDown == 0 ? ship.fireRate : -1;
-	  if (ship.coolDown > 0) {
-	    ship.coolDown -= 1 * delta;
-	  }
-	  if (ship.shooting && ship.coolDown <= 0) {
-	    let pos = {x: ship.sprite.x + Gs.TILE_SIZE / 2 - 4, y: ship.sprite.y + Gs.TILE_SIZE / 2 - 4};
-	    shoot(ship.sprite.rotation, pos);
-	    ship.coolDown = ship.fireRate;
-	  }
-	  UI.CoolDownGuage.style.opacity = (100 - (ship.coolDown * 100) / ship.fireRate) / 100;
-	  });
-	  
+			if (moveLeftOk == allies.activePool.length) {
+				ship.sprite.x -= currentSpeed;
+		    ship.shadow.x -= currentSpeed;
+		    currentTurn = currentTurn > -turnFactor ? currentTurn - currentTurnSpeed : currentTurn;
+		    turningEnabled && turn(ship);
+		    turning = true;
+			}
+			if (moveRightOk == allies.activePool.length) {
+				ship.sprite.x += currentSpeed;
+		    ship.shadow.x += currentSpeed;
+				currentTurn = currentTurn < turnFactor ? currentTurn + currentTurnSpeed : currentTurn;
+		    turningEnabled && turn(ship);
+		    turning = true;
+			}
+			if (!turning) {
+		  	// Reset Turning
+			  currentTurn = currentTurn < 0 ? currentTurn + currentTurnSpeed :
+			                currentTurn > 0 ? currentTurn - currentTurnSpeed : currentTurn;
+			  turningEnabled && turn(ship);
+		  }
+		  playerSpeed.update(currentSpeed.toFixed(2));
+		});
 	}
 };
 export const statsOld = {

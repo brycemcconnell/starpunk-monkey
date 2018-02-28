@@ -15,11 +15,19 @@ export const UI_SCALE = 2;
 export const DEFAULT_ROTATION = 270;
 export const FIRERATE_MIN = 1;
 export const FIRERATE_MAX = 60;
+PIXI.sound.volumeAll = 1;
 export const SHOW_HITBOXES = {
 	value: false,
 	toggle: function() {
 		this.value = this.value ? false : true;
 		console.log('Hitboxes set to', this.value);
+	}
+};
+export const SHOW_SIZEBOXES = {
+	value: true,
+	toggle: function() {
+		this.value = this.value ? false : true;
+		console.log('Sizeboxes set to', this.value);
 	}
 };
 

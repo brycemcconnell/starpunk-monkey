@@ -24,6 +24,7 @@ export const ShipSprites = {
   "Player2": {
     sprite: "sprites/ship2.png",
     maxHealth: 3,
+    speed: 1.6,
     hitBoxes: [
       {
         x: 0,
@@ -53,6 +54,7 @@ export const ShipSprites = {
   "BattleCruiser": {
     sprite: "sprites/battleCruiser.png",
     maxHealth: 6,
+    speed: .9,
     hitBoxes: [
       {
         x: 0,
@@ -65,6 +67,7 @@ export const ShipSprites = {
   "Enemy2": {
     sprite: "sprites/enemy2.png",
     maxHealth: 2,
+    score: 100,
     hitBoxes: [
       {
         x: 0,

@@ -5,6 +5,12 @@ import * as UI from './UI.js'
 import * as Gs from './Globals.js';
 let timer = 0;
 export function gameLoop(delta){
+
+  timer += 1;
+  if (timer % 60 == 0) {
+    UI.FPS.innerHTML = parseFloat(60 / delta).toFixed(1);
+  }
+
   background.forEach(layer => {
     layer.y = layer.y < 0 ? layer.y + (layer.vy * delta) : -Gs.CANVAS_SIZEY;
   });
@@ -27,10 +33,10 @@ export function gameLoop(delta){
     allyBullets.activePool[b].sprite.position.x += (Math.cos(allyBullets.activePool[b].sprite.rotation)*allyBullets.activePool[b].speed)*delta;
     allyBullets.activePool[b].sprite.position.y += (Math.sin(allyBullets.activePool[b].sprite.rotation)*allyBullets.activePool[b].speed)*delta;
     for (let x = enemies.activePool.length - 1; x >= 0; x--) {
-      if (allyBullets.activePool[b].sprite.position.y < enemies.activePool[x].sprite.position.y + 12 &&
-          allyBullets.activePool[b].sprite.position.y > enemies.activePool[x].sprite.position.y - 12 &&
-          allyBullets.activePool[b].sprite.position.x > enemies.activePool[x].sprite.position.x - 12 &&
-          allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + 12 &&
+      if (allyBullets.activePool[b].sprite.position.y < enemies.activePool[x].sprite.position.y + (enemies.activePool[x].sprite.width / 2) &&
+          allyBullets.activePool[b].sprite.position.y > enemies.activePool[x].sprite.position.y - (enemies.activePool[x].sprite.width / 2) &&
+          allyBullets.activePool[b].sprite.position.x > enemies.activePool[x].sprite.position.x - (enemies.activePool[x].sprite.width / 2) &&
+          allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + (enemies.activePool[x].sprite.width / 2) &&
           enemies.activePool[x].sprite.visible) {
         // console.log('hit', enemies);
         enemies.activePool[x].handleHit();
@@ -52,10 +58,10 @@ export function gameLoop(delta){
     enemyBullets.activePool[b].sprite.position.x += (Math.cos(enemyBullets.activePool[b].sprite.rotation)*enemyBullets.activePool[b].speed)*delta;
     enemyBullets.activePool[b].sprite.position.y += (Math.sin(enemyBullets.activePool[b].sprite.rotation)*enemyBullets.activePool[b].speed)*delta;
     for (let x = allies.activePool.length - 1; x >= 0; x--) {
-      if (enemyBullets.activePool[b].sprite.position.y < allies.activePool[x].sprite.position.y + 12 &&
-          enemyBullets.activePool[b].sprite.position.y > allies.activePool[x].sprite.position.y - 12 &&
-          enemyBullets.activePool[b].sprite.position.x > allies.activePool[x].sprite.position.x - 12 &&
-          enemyBullets.activePool[b].sprite.position.x < allies.activePool[x].sprite.position.x + 12 &&
+      if (enemyBullets.activePool[b].sprite.position.y < allies.activePool[x].sprite.position.y + (allies.activePool[x].sprite.width / 2) &&
+          enemyBullets.activePool[b].sprite.position.y > allies.activePool[x].sprite.position.y - (allies.activePool[x].sprite.width / 2) &&
+          enemyBullets.activePool[b].sprite.position.x > allies.activePool[x].sprite.position.x - (allies.activePool[x].sprite.width / 2) &&
+          enemyBullets.activePool[b].sprite.position.x < allies.activePool[x].sprite.position.x + (allies.activePool[x].sprite.width / 2) &&
           allies.activePool[x].sprite.visible) {
         // console.log('hit', allies);
         allies.activePool[x].handleHit();
@@ -94,17 +100,17 @@ export function gameLoop(delta){
     // let ay2 = a.getBounds().y + a.getBounds().height;
     // let ac = {x: a.getBounds().x + (a.getBounds().width / 2),
     //           y: a.getBounds().y + (a.getBounds().height / 2)};
-    // let ax1 = a.getBounds().x;
-    // let ay1 = a.getBounds().y;
-    // let ax2 = a.getBounds().x + a.getBounds().width;
-    // let ay2 = a.getBounds().y + a.getBounds().height;
+    let ax1 = a.getBounds().x;
+    let ay1 = a.getBounds().y;
+    let ax2 = a.getBounds().x + a.getBounds().width;
+    let ay2 = a.getBounds().y + a.getBounds().height;
     // let ac = getCentrePoint(aV);
     // console.log(a.getLocalBounds())
 
-    // let bx1 = b.getBounds().x;
-    // let by1 = b.getBounds().y;
-    // let bx2 = b.getBounds().x + b.getBounds().width;
-    // let by2 = b.getBounds().y + b.getBounds().height;
+    let bx1 = b.getBounds().x;
+    let by1 = b.getBounds().y;
+    let bx2 = b.getBounds().x + b.getBounds().width;
+    let by2 = b.getBounds().y + b.getBounds().height;
     // let bx1 = b.getBounds().x;
     // let by1 = b.getBounds().y;
     // let bx2 = b.getBounds().x + b.getBounds().width;
@@ -113,50 +119,54 @@ export function gameLoop(delta){
     //           y: b.getBounds().y + (b.getBounds().height / 2)};
 
 
-    // if (ax1 < bx2 &&
-    //     ax2 > bx1 &&
-    //     ay1 < by2 &&
-    //     ay2 > by1
-    //     ) {
+    if (ax1 < bx2 &&
+        ax2 > bx1 &&
+        ay1 < by2 &&
+        ay2 > by1
+        ) {
 
-    //   result = true;
-    // }
+      result = true;
+    }
     return result;
   }
   // reset detection color
   enemies.activePool.forEach(enemy => {
+    enemy.sizeBox.tint = 0xffffff;
     enemy.hitBox.children.forEach(child => {
       child.tint = 0xffffff;
     });
   });
 
   allies.activePool.forEach(ally => {
+    ally.sizeBox.tint = 0xffffff;
     ally.hitBox.children.forEach(child => {
       child.tint = 0xffffff;
     });
+  });
+
+  allies.activePool.forEach(ally => {
     checkPerAlly:
-    for (let i = enemies.activePool.length - 1; i >= 0; i--) {
-      // INNER-COLLISION START *** If there is a chance of collision ***
-      let allyHitbox = ally.hitBox;
-      let enemyHitbox = enemies.activePool[i].hitBox;
-      if (collisionDetector(ally, enemies.activePool[i])) {
+    for (let i = enemies.activePool.length - 1; i >= 0; i--) {      
+      if (collisionDetector(ally.sizeBox, enemies.activePool[i].sizeBox)) {
+        ally.sizeBox.tint = 0xff0000;
+        enemies.activePool[i].sizeBox.tint = 0xff0000;
+
+        let allyHitbox = ally.hitBox;
+        let enemyHitbox = enemies.activePool[i].hitBox;
         for (let ai = allyHitbox.children.length - 1; ai >= 0; ai--) {
           for (let ei = enemyHitbox.children.length - 1; ei >= 0; ei--) {
+            
             // if (collisionDetector(enemyHitbox.children[ei], allyHitbox.children[ai], true)) {
-              allyHitbox.children[ai].tint = 0xff0000;
-              enemyHitbox.children[ei].tint = 0xff0000;
+              // allyHitbox.children[ai].tint = 0xff0000;
+              // enemyHitbox.children[ei].tint = 0xff0000;
             // }
           }
         }
       }
-      // INNER-COLLISION END 
     }
   });
 
-  timer += 1;
-  if (timer % 60 == 0) {
-    UI.FPS.innerHTML = parseFloat(60 / delta).toFixed(1);
-  }
+  
  
   if (!Gs.SHOW_HITBOXES.value) {
     enemies.activePool.concat(allies.activePool).forEach(ship => {
@@ -165,6 +175,15 @@ export function gameLoop(delta){
   } else {
     enemies.activePool.concat(allies.activePool).forEach(ship => {
       ship.hitBox.visible = true;
+    });
+  }
+  if (!Gs.SHOW_SIZEBOXES.value) {
+    enemies.activePool.concat(allies.activePool).forEach(ship => {
+      ship.sizeBox.visible = false;
+    });
+  } else {
+    enemies.activePool.concat(allies.activePool).forEach(ship => {
+      ship.sizeBox.visible = true;
     });
   }
   window.testme = allies.activePool[0];

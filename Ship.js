@@ -2,11 +2,12 @@ import * as Gs from './Globals.js';
 import {app, enemies, allies} from './Model.js';
 import {ShipSprites} from './data/SpriteList.js';
 import {shadowGroup, shipGroup} from './Setup.js';
+
 export default class Ship {
 	constructor(config) {
 		this.team = config.team == "enemy" ? enemies :
 		            config.team == "ally" ? allies :
-		            nullw;
+		            null;
 		this.sprite = new PIXI.Sprite(PIXI.loader.resources[ShipSprites[config.sprite].sprite].texture);
 		this.sprite.position.set(config.x, config.y);
 		this.sprite.tint = config.tint || 0xFFFFFF;
@@ -19,6 +20,14 @@ export default class Ship {
 		this.shadow.position.set(config.x, config.y + Gs.SHADOW_OFFSET);
 		this.shadow.anchor.set(0.5);
 		this.shadow.parentGroup = shadowGroup;
+
+		this.sizeBox = new PIXI.Graphics();
+		this.sizeBox.setTransform(-this.sprite.width / 2, -this.sprite.width / 2);
+		this.sizeBox.lineStyle(1, 0xffffff);
+		this.sizeBox.alpha = .3;
+		this.sizeBox.drawRect(0, 0, this.sprite.width, this.sprite.height);
+		this.sprite.addChild(this.sizeBox);
+
 		this.hitBox = new PIXI.Container();
 		// Compensate for anchor point when drawing hit boxes
 		this.hitBox.setTransform(-this.sprite.width / 2, -this.sprite.width / 2);
@@ -43,11 +52,12 @@ export default class Ship {
 		this.vx = 0;
 		this.vy = 0;
 		this.vr = 0;
-		this.speed = 1;
+		this.speed = ShipSprites[config.sprite].speed;
 		this.rotateSpeed = .05;
 
 		this.maxHealth = ShipSprites[config.sprite].maxHealth;
   	this.currentHealth = this.maxHealth;
+  	this.score = ShipSprites[config.sprite].score;
 	}
 	handleHit() {
 		this.currentHealth -= 1;

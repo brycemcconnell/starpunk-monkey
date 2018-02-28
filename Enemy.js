@@ -4,7 +4,7 @@ import {statsOld} from './player.js';
 import * as Gs from './Globals.js';
 import * as fr from './lib/fr.js';
 import {enemyBullets} from './Model.js';
-
+import {playerScore, playerKills} from "./stats.js";
 function collisionDetection() {
 
 }
@@ -82,5 +82,10 @@ export default class Enemy extends Ship {
 		PIXI.sound.play('laser');
 	    this.coolDown = this.fireRate;
 	  }
+	}
+	handleDeath() {
+		super.handleDeath();
+		playerScore.update(this.score);
+		playerKills.update(playerKills.active + 1);
 	}
 }

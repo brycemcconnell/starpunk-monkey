@@ -56,13 +56,13 @@ PlayerHitsRow.appendChild(PlayerHitsTitle);
 export const PlayerHits = document.createElement('td');
 PlayerHitsRow.appendChild(PlayerHits);
 
-export const killsRow = document.createElement('tr');
-Player.appendChild(killsRow);
-export const killsTitle = document.createElement('th');
-killsTitle.innerHTML = "Kills: ";
-killsRow.appendChild(killsTitle);
-export const kills = document.createElement('td');
-killsRow.appendChild(kills);
+export const PlayerKillsRow = document.createElement('tr');
+Player.appendChild(PlayerKillsRow);
+export const PlayerKillsTitle = document.createElement('th');
+PlayerKillsTitle.innerHTML = "Kills: ";
+PlayerKillsRow.appendChild(PlayerKillsTitle);
+export const PlayerKills = document.createElement('td');
+PlayerKillsRow.appendChild(PlayerKills);
 
 export const PlayerAccuracyRow = document.createElement('tr');
 Player.appendChild(PlayerAccuracyRow);
@@ -72,7 +72,10 @@ PlayerAccuracyRow.appendChild(PlayerAccuracyTitle);
 export const PlayerAccuracy = document.createElement('td');
 PlayerAccuracyRow.appendChild(PlayerAccuracy);
 
-// scorre
+
+/*
+Score
+*/
 export const PlayerScoreRow = document.createElement('tr');
 Player.appendChild(PlayerScoreRow);
 export const PlayerScoreTitle = document.createElement('th');
@@ -80,8 +83,20 @@ PlayerScoreTitle.innerHTML = "Score: ";
 PlayerScoreRow.appendChild(PlayerScoreTitle);
 export const PlayerScore = document.createElement('td');
 PlayerScoreRow.appendChild(PlayerScore);
+PlayerScore.innerHTML = 0;
 
-// multiplier
+/*
+Multiplier
+Add to multiplier through:
+	Special drops
+	Maintaining a high combo?
+	// High accuracy?
+
+Subtract from multiplier through:
+	Taking damage (small)
+	Losing a ship (big minus)
+	// Low accuracy?
+*/
 export const PlayerMultiplierRow = document.createElement('tr');
 Player.appendChild(PlayerMultiplierRow);
 export const PlayerMultiplierTitle = document.createElement('th');
@@ -90,7 +105,14 @@ PlayerMultiplierRow.appendChild(PlayerMultiplierTitle);
 export const PlayerMultiplier = document.createElement('td');
 PlayerMultiplierRow.appendChild(PlayerMultiplier);
 
-// combo
+/*
+Combo system
+An additive bonus based on enemy kills since last taking damage
+A player ship being hit resets this.
+
+eg. kill enemy ship
+enemy ship score value (eg. 100) + combo (eg. 20) = 120 points
+*/
 export const PlayerComboRow = document.createElement('tr');
 Player.appendChild(PlayerComboRow);
 export const PlayerComboTitle = document.createElement('th');
@@ -131,11 +153,19 @@ MouseLocationRow.appendChild(MouseLocationTitle);
 export const MouseLocation = document.createElement('td');
 MouseLocationRow.appendChild(MouseLocation);
 
+export const PlayerSpeedRow = document.createElement('tr');
+Player.appendChild(PlayerSpeedRow);
+export const PlayerSpeedTitle = document.createElement('th');
+PlayerSpeedTitle.innerHTML = "Current Speed: ";
+PlayerSpeedRow.appendChild(PlayerSpeedTitle);
+export const PlayerSpeed = document.createElement('td');
+PlayerSpeedRow.appendChild(PlayerSpeed);
+
 
 export const AddEnemy = document.createElement('button');
 AddEnemy.innerHTML = "add Enemy";
 AddEnemy.onmouseup = () => {
-	enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256), "Enemy2");  
+	enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256), "Enemy2", "enemy");  
 	// update stat
 }
 
@@ -148,6 +178,16 @@ export const ToggleHitboxes = document.createElement('button');
 ToggleHitboxes.innerHTML = "Toggle Hitboxes";
 ToggleHitboxes.onmouseup = () => {
 	Gs.SHOW_HITBOXES.toggle();
+}
+export const ToggleSizeboxes = document.createElement('button');
+ToggleSizeboxes.innerHTML = "Toggle Sizeboxes";
+ToggleSizeboxes.onmouseup = () => {
+	Gs.SHOW_SIZEBOXES.toggle();
+}
+export const ToggleSound = document.createElement('button');
+ToggleSound.innerHTML = "Toggle Sound";
+ToggleSound.onmouseup = () => {
+	PIXI.sound.volumeAll = PIXI.sound.volumeAll ? 0 : 1;
 }
 
 const sidebar = document.createElement('div');
@@ -341,13 +381,14 @@ export function init() {
 	sidebar.appendChild(AddEnemy);
 	sidebar.appendChild(ToggleRespawn);
 	sidebar.appendChild(ToggleHitboxes);
+	sidebar.appendChild(ToggleSizeboxes);
+	sidebar.appendChild(ToggleSound);
 	sidebar.appendChild(fireRateSliderContainer);
 	sidebar.appendChild(playerShipView);
 	sidebar.appendChild(objectCountsContainer);
 }
 
 const inactiveItems = [
-	PlayerScoreRow,
 	PlayerMultiplierRow,
 	PlayerComboRow,
 	EnemyRotationRow,
