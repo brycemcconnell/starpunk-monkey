@@ -1,6 +1,6 @@
 import {allies, enemies} from './Model.js';
 // import {statsOld} from './player.js';
-import * as fr from './fr.js';
+import * as fr from './lib/fr.js';
 import * as Gs from './Globals.js';
 class UIElement {
 	constructor(config) {

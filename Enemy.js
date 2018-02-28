@@ -2,7 +2,7 @@ import * as AI from './ai/index.js';
 import Ship from './Ship.js';
 import {statsOld} from './player.js';
 import * as Gs from './Globals.js';
-import * as fr from './fr.js';
+import * as fr from './lib/fr.js';
 
 function collisionDetection() {
 

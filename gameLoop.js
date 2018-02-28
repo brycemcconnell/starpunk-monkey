@@ -1,6 +1,5 @@
 import { grid, speed, allyBullets, enemies, background, allies } from './Model.js';
-import * as fr from './fr.js';
-// import { ship } from './ship.js';
+import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
 import * as Gs from './Globals.js';
