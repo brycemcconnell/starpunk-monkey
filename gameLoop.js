@@ -3,7 +3,7 @@ import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
 import * as Gs from './Globals.js';
-import {gameTime, trueTime, entitiesTotalCount} from './stats.js';
+import {gameTime, trueTime, entitiesTotalCount, gameRelevantStats} from './stats.js';
 import Wave from './Wave.js';
 
 let timer = 0;
@@ -262,6 +262,7 @@ export function gameLoop(delta){
 }
 
 function resetGame() {
+  console.log("Resetting game...");
   allies.getNew(
     270,
     Gs.CANVAS_SIZEX / 2,
@@ -269,18 +270,22 @@ function resetGame() {
     "Player2",
     "ally"
   );
-  console.log("recreating player");
   if (enemies.activePool.length > 0) {
-    console.log(enemies.activePool.length);
     for (let i = enemies.activePool.length - 1; i >=0; i--) {
-      console.log('removing enemy: ', i);
       enemies.activePool[i].handleDeath(false);
+      console.log("Enemies removed");
     }
     for (let i = enemyBullets.activePool.length - 1; i >=0; i--) {
       enemyBullets.recycle(enemyBullets.activePool[i]);
+      console.log("EnemyBullets removed");
     }
     for (let i = allyBullets.activePool.length - 1; i >=0; i--) {
       allyBullets.recycle(allyBullets.activePool[i]);
+      console.log("AllyBullets removed");
     }
+    gameRelevantStats.forEach(stat => {
+      stat.update(0);
+      console.log("resetting game stats");
+    });
   }
 }

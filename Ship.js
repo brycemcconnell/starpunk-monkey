@@ -54,6 +54,7 @@ export default class Ship {
 		this.vr = 0;
 		this.speed = ShipSprites[config.sprite].speed;
 		this.rotateSpeed = .05;
+		this.immune = false;
 
 		this.maxHealth = ShipSprites[config.sprite].maxHealth;
   		this.currentHealth = this.maxHealth;
@@ -76,14 +77,17 @@ export default class Ship {
 
 	}
 	handleHit() {
-		this.currentHealth -= 1;
-		this.sprite.tint = 0xff7777;
-		setTimeout(() => {
-			this.sprite.tint = 0xffffff;
-		}, 100);
-		if (this.currentHealth < 1) {
-			this.handleDeath();
+		if (!this.immune) {
+			this.currentHealth -= 1;
+			this.sprite.tint = 0xff7777;
+			setTimeout(() => {
+				this.sprite.tint = 0xffffff;
+			}, 100);
+			if (this.currentHealth < 1) {
+				this.handleDeath();
+			}
 		}
+		
 	}
 	handleDeath() {
 		this.sprite.visible = false;

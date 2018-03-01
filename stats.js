@@ -2,14 +2,25 @@ import Stat from './Stat.js';
 import ChildStat from './ChildStat.js';
 import * as UI from './UI.js';
 
+// Global stats
 export const entitiesTotalCount = new Stat(UI.entitiesTotalCount);
 export const enemyCount = new ChildStat(UI.enemiesCount, entitiesTotalCount);
 export const enemyBulletCount = new ChildStat(UI.enemyBulletsCount, entitiesTotalCount);
 export const allyCount = new ChildStat(UI.alliesCount, entitiesTotalCount);
 export const allyBulletCount = new ChildStat(UI.allyBulletsCount, entitiesTotalCount);
 
+// Dynamic stats
+export const playerSpeed = new Stat(UI.PlayerSpeed);
+
+
 export const playerScore = new Stat(UI.PlayerScore);
 export const playerKills = new Stat(UI.PlayerKills);
-export const playerSpeed = new Stat(UI.PlayerSpeed);
 export const gameTime = new Stat(UI.GameTime);
 export const trueTime = new Stat(UI.TrueTime);
+
+export const gameRelevantStats = [
+	playerScore,
+	playerKills,
+	gameTime,
+	trueTime
+];

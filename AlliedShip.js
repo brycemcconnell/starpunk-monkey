@@ -23,5 +23,13 @@ export default class AlliedShip extends Ship {
     this.shadow.rotation = Math.PI/180 * Gs.DEFAULT_ROTATION;
 
   }
-  
+  handleHit() {
+    super.handleHit();
+    if (!this.immune) {
+      this.immune = true;
+      setTimeout(() => {
+        this.immune = false;
+      }, 200);
+    }
+  }
 }
