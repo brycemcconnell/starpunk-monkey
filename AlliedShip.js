@@ -1,6 +1,7 @@
 import Ship from './Ship.js';
 import * as Gs from './Globals.js';
 import {allies} from './Model.js';
+import {resetGame} from './resetGame.js';
 export default class AlliedShip extends Ship {
   constructor(pos) {
     super(pos);
@@ -11,7 +12,7 @@ export default class AlliedShip extends Ship {
       right: false,
     }
     this.shooting = false;
-    this.fireRate = 20;
+    this.fireRate = 14;
     this.coolDown = 0;
     this.maxFuel = 100;
     this.fuel = 100;

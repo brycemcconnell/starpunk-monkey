@@ -36,12 +36,14 @@ export default class Enemy extends Ship {
 	    
 	}
 	setPath() {
-		let paths = ["MoveCurrentCenter", "StrafeLeft"];
+		let paths = ["MoveCurrentCenter", "StrafeSquare", "MoveCenterCenter", "StrafeExitLeft"];
 		let result = [];
 		paths.forEach(path => {
 			ShipPaths[path].path.forEach(item => {
 				let newPath = Object.assign({}, item);
 				newPath.type = ShipPaths[path].type;
+				newPath.rotate = ShipPaths[path].rotate || null;
+				newPath.rotateSpeedModifier = ShipPaths[path].rotateSpeedModifier || 0;
 				result.push(newPath);
 			});
 		});
@@ -53,46 +55,54 @@ export default class Enemy extends Ship {
 		this.destination = this.path[this.pathCurrent];
 		// If a path Vector does not have x or y, replace it with current
 		this.destination.x = this.destination.x ? this.destination.x :
-								                  this.destination.offsetX ? 
-								                    this.sprite.position.x + this.destination.offsetX :
 		                                            this.sprite.position.x;
 		this.destination.y = this.destination.y ? this.destination.y :
-		                                          this.destination.offsetY? 
-								                    this.sprite.position.y + this.destination.offsetY :
 		                                            this.sprite.position.y;
+
+
 		this.vy = 0;
 		this.vx = 0;
 		this.vr = 0;
-		
-		if (this.sprite.position.x - 12< this.destination.x &&
-			this.sprite.position.y - 12< this.destination.y &&
-			this.sprite.position.x + 12 > this.destination.x &&
-			this.sprite.position.y + 12 > this.destination.y ) {
-			this.pathCurrent = this.pathCurrent < this.path.length -1 ? this.pathCurrent + 1 : 0;
-		// console.log(this.destination);
-		} else {
-			if (this.destination.type == "move") {
-				this.targetAngle = this.angleToDestination();
-				this.targetAngle = fr.roundFraction(this.targetAngle, 2)
-				if (fr.deltaAngle(this.targetAngle, this.sprite.rotation) < 0) {
-					this.vr = -this.rotateSpeed;
-				} else {
-					this.vr = this.rotateSpeed;
+
+		if (this.destination.type !== "timer") {
+			if (this.sprite.position.x - 12< this.destination.x &&
+				this.sprite.position.y - 12< this.destination.y &&
+				this.sprite.position.x + 12 > this.destination.x &&
+				this.sprite.position.y + 12 > this.destination.y ) {
+				this.pathCurrent = this.pathCurrent < this.path.length -1 ? this.pathCurrent + 1 : 0;
+			// console.log(this.destination);
+			} else {
+				if (this.destination.type == "move") {
+					this.targetAngle = this.angleToDestination();
+					this.targetAngle = fr.roundFraction(this.targetAngle, 2)
+					if (fr.deltaAngle(this.targetAngle, this.sprite.rotation) < 0) {
+						this.vr = -this.rotateSpeed;
+					} else {
+						this.vr = this.rotateSpeed;
+					}
+					const distance = Math.floor(this.distanceToDestination());
+					this.vr = fr.round(this.vr * (distance/100), 2);
+					moveForward(this, delta);
+				} else if (this.destination.type == "strafe") {
+					if (this.destination.y
+						) {
+						this.vy = Math.sign(this.destination.y - this.sprite.position.y) * this.speed;
+					}
+					if (this.destination.x
+						) {
+						this.vx = Math.sign(this.destination.x - this.sprite.position.x) * this.speed;
+					}
+					if (fr.deltaAngle(Math.PI / 2, this.sprite.rotation) < 0) {
+						this.vr = -this.rotateSpeed;
+					} else {
+						this.vr = this.rotateSpeed;
+					}
 				}
-				const distance = Math.floor(this.distanceToDestination());
-				this.vr = fr.round(this.vr * (distance/100), 2);
-				moveForward(this, delta);
-			} else if (this.destination.type == "strafe") {
-				this.vx = Math.sign(this.destination.offsetX) * this.speed;
-				// this.vy = Math.sign(this.destination.y) * this.speed;
 			}
-			// console.log(this.destination.type)
-			
-			
-			// this.vx = fr.round(this.vx * (distance/100), 2);
-			// this.vy = fr.round(this.vy * (distance/100), 2);
-			// console.log(this.vx + this.vy);
+		} else {
+			this.vr = (this.rotateSpeed + this.destination.rotateSpeedModifier) * this.destination.rotate;
 		}
+		
 
 		// move everything
 		this.sprite.rotation += this.vr;
@@ -102,7 +112,7 @@ export default class Enemy extends Ship {
 		this.shadow.position.x += this.vx;
 		this.shadow.position.y += this.vy;
 		
-		if (this.pathCurrent == this.path.length - 1) {
+		if (this.pathCurrent == this.path.length - 1 && this.path.length > 1) {
 			if (this.sprite.position.y > Gs.CANVAS_SIZEY + (this.sprite.height) ||
 	            this.sprite.position.x > Gs.CANVAS_SIZEX + (this.sprite.width) ||
 	            this.sprite.position.y < -(this.sprite.height) ||
@@ -134,7 +144,7 @@ export default class Enemy extends Ship {
 	  }
 	  if (this.shooting && this.coolDown <= 0) {
 	    let pos = {x: this.sprite.x + Gs.TILE_SIZE / 2 - 4, y: this.sprite.y + Gs.TILE_SIZE / 2 - 4};
-	    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, "Basic");
+	    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, "Basic2");
 		PIXI.sound.play('laser');
 	    this.coolDown = this.fireRate;
 	  }

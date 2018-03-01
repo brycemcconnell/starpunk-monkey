@@ -5,6 +5,8 @@ import * as UI from './UI.js'
 import * as Gs from './Globals.js';
 import {gameTime, trueTime, entitiesTotalCount, gameRelevantStats} from './stats.js';
 import Wave from './Wave.js';
+import {resetGame} from './resetGame.js';
+
 
 let timer = 0;
 let lastTime = Date.now();
@@ -64,6 +66,7 @@ export function gameLoop(delta){
         allyBullets.recycle(allyBullets.activePool[b]);
       }
     }
+    // Check if enemy bullets are hitting player ships
     EnemyBulletLoop:
     for(let b = enemyBullets.activePool.length - 1; b >= 0; b--){
       enemyBullets.activePool[b].sprite.position.x += (Math.cos(enemyBullets.activePool[b].sprite.rotation)*enemyBullets.activePool[b].speed)*delta;
@@ -74,18 +77,14 @@ export function gameLoop(delta){
             enemyBullets.activePool[b].sprite.position.x > allies.activePool[x].sprite.position.x - (allies.activePool[x].sprite.width / 2) &&
             enemyBullets.activePool[b].sprite.position.x < allies.activePool[x].sprite.position.x + (allies.activePool[x].sprite.width / 2) &&
             allies.activePool[x].sprite.visible) {
-          // console.log('hit', allies);
-          allies.activePool[x].handleHit();
+          if (Gs.PLAYER_HIT_DETECTION.value) { allies.activePool[x].handleHit(); }
           if (allies.activePool.length < 1) {
             resetGame();
             break EnemyBulletLoop;
           }
-          // statsOld.hits.update();
-          
           PIXI.sound.play('explode');
           enemyBullets.recycle(enemyBullets.activePool[b]);
           if (Gs.RESPAWN.value) { allies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }
-          // statsOld.enemyCounter.update();
           break EnemyBulletLoop;
         }
       }
@@ -159,14 +158,21 @@ export function gameLoop(delta){
       });
     });
 
-    allies.activePool.forEach(ally => {
+    checkShipCollisions:
+    for (let h = allies.activePool.length - 1; h >= 0; h--) {      
+    // allies.activePool.forEach(ally => {
       checkPerAlly:
       for (let i = enemies.activePool.length - 1; i >= 0; i--) {      
-        if (collisionDetector(ally.sizeBox, enemies.activePool[i].sizeBox)) {
-          ally.sizeBox.tint = 0xff0000;
+        if (collisionDetector(allies.activePool[h].sizeBox, enemies.activePool[i].sizeBox)) {
+          allies.activePool[h].sizeBox.tint = 0xff0000;
           enemies.activePool[i].sizeBox.tint = 0xff0000;
-
-          let allyHitbox = ally.hitBox;
+          if (Gs.PLAYER_HIT_DETECTION.value) { allies.activePool[h].handleHit(); }
+          if (allies.activePool.length < 1) {
+            resetGame();
+            break checkShipCollisions;
+          }
+          enemies.activePool[i].handleHit();
+          let allyHitbox = allies.activePool[h].hitBox;
           let enemyHitbox = enemies.activePool[i].hitBox;
           for (let ai = allyHitbox.children.length - 1; ai >= 0; ai--) {
             for (let ei = enemyHitbox.children.length - 1; ei >= 0; ei--) {
@@ -179,7 +185,7 @@ export function gameLoop(delta){
           }
         }
       }
-    });
+    }
 
     
    
@@ -261,31 +267,3 @@ export function gameLoop(delta){
   }
 }
 
-function resetGame() {
-  console.log("Resetting game...");
-  allies.getNew(
-    270,
-    Gs.CANVAS_SIZEX / 2,
-    Gs.CANVAS_SIZEY - 64,
-    "Player2",
-    "ally"
-  );
-  if (enemies.activePool.length > 0) {
-    for (let i = enemies.activePool.length - 1; i >=0; i--) {
-      enemies.activePool[i].handleDeath(false);
-      console.log("Enemies removed");
-    }
-    for (let i = enemyBullets.activePool.length - 1; i >=0; i--) {
-      enemyBullets.recycle(enemyBullets.activePool[i]);
-      console.log("EnemyBullets removed");
-    }
-    for (let i = allyBullets.activePool.length - 1; i >=0; i--) {
-      allyBullets.recycle(allyBullets.activePool[i]);
-      console.log("AllyBullets removed");
-    }
-    gameRelevantStats.forEach(stat => {
-      stat.update(0);
-      console.log("resetting game stats");
-    });
-  }
-}

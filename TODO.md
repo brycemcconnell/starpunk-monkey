@@ -4,7 +4,7 @@ Type dictates firepower, sprite, and health
 AI dictates move route/firing behaviour
 
 Enemy projectiles -> Smart Array
-Player projectiles -> Smart Array (old bullets)
+Player projectiles -> Smart Array (old bullets) 
 
 Handle projectiles in a loop by type? Or Projectile types know their own movement? And then call projectile[i].move()
 
@@ -79,3 +79,4 @@ Sniper - Shoots slowly but with a speed bonus to projectiles and perfect accurac
 
 Also add shields, a round perimeter around a ship that regenerates energy if not hit within a certain threshold
 
+Change all setTimeouts and setIntervals to aa in-game based system, because those functions dont listen to game pauses/etc.

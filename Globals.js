@@ -17,6 +17,8 @@ export const FIRERATE_MIN = 1;
 export const FIRERATE_MAX = 60;
 export const FADE_SPEED = .1;
 export const SHADOW_ALPHA = .3;
+export const MAP_EDGE_PADDING = 32;
+
 PIXI.sound.volumeAll = 1;
 export const SHOW_HITBOXES = {
 	value: false,
@@ -46,5 +48,12 @@ export const RENDER_STATE = {
 	toggle: function() {
 		this.value = this.value ? false : true;
 		console.log('Render set to', this.value);
+	}
+};
+export const PLAYER_HIT_DETECTION = {
+	value: true,
+	toggle: function() {
+		this.value = this.value ? false : true;
+		console.log('Player hit detection set to', this.value);
 	}
 };

@@ -36,8 +36,8 @@ app.renderer = PIXI.autoDetectRenderer(Gs.CANVAS_SIZEX, Gs.CANVAS_SIZEY, {
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.BICUBIC;
 
 export const enemies = new ShipArray(Enemy, Stat.enemyCount);
-export const enemyBullets = new BulletArray(Bullet, Stat.enemyBulletCount);
-export const allyBullets = new BulletArray(Bullet, Stat.allyBulletCount);
+export const enemyBullets = new BulletArray(Bullet, Stat.enemyBulletCount, "Enemies");
+export const allyBullets = new BulletArray(Bullet, Stat.allyBulletCount, "Allies");
 export const speed = 2;
 
 export const background = [];

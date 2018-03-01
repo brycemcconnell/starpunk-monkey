@@ -211,6 +211,11 @@ ToggleSound.innerHTML = "Toggle Sound";
 ToggleSound.onmouseup = () => {
 	PIXI.sound.volumeAll = PIXI.sound.volumeAll ? 0 : 1;
 }
+export const TogglePlayerHitDetection = document.createElement('button');
+TogglePlayerHitDetection.innerHTML = "Toggle Player Hit Detection";
+TogglePlayerHitDetection.onmouseup = () => {
+	Gs.PLAYER_HIT_DETECTION.toggle();
+}
 export const AddWave = document.createElement('button');
 AddWave.innerHTML = "Add Wave";
 AddWave.onmouseup = () => {
@@ -416,7 +421,11 @@ objectCountsTitleList.forEach((item, index) => {
 	objectCountsTable.appendChild(row);
 })
 
+const wrapperOverlay = document.createElement("div");
+wrapperOverlay.classList.add("canvas-inset-shadow");
 export function init() {
+	// This removes mousemove detection
+	// wrapper.appendChild(wrapperOverlay);
 	wrapper.appendChild(UIGuageOverlay);
 	pageWrapper.appendChild(sidebar)
 	sidebar.appendChild(Player);
@@ -426,6 +435,7 @@ export function init() {
 	sidebar.appendChild(ToggleSizeboxes);
 	sidebar.appendChild(ToggleSound);
 	sidebar.appendChild(ToggleRender);
+	sidebar.appendChild(TogglePlayerHitDetection);
 	sidebar.appendChild(AddWave);
 	sidebar.appendChild(fireRateSliderContainer);
 	sidebar.appendChild(playerShipView);

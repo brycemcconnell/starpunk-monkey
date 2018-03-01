@@ -40,7 +40,7 @@ export const player = {
 		  }
 		  if (ship.shooting && ship.coolDown <= 0) {
 		    let pos = {x: ship.sprite.x + Gs.TILE_SIZE / 2 - 4, y: ship.sprite.y + Gs.TILE_SIZE / 2 - 4};
-		    shoot(ship.sprite.rotation, pos);
+		    shoot(((Math.PI * 2) / 4) * 3, pos);
 		    ship.coolDown = ship.fireRate;
 		  }
 		  UI.CoolDownGuage.style.opacity = (100 - (ship.coolDown * 100) / ship.fireRate) / 100;
@@ -166,7 +166,7 @@ export const statsOld = {
 
 
 export function shoot(rotation, startPosition){  
-  let bullet = allyBullets.getNew(rotation, startPosition.x, startPosition.y, "Basic");
+  let bullet = allyBullets.getNew(rotation, startPosition.x, startPosition.y, "Basic2");
   statsOld.shots.update();
   statsOld.accuracy.update();
   PIXI.sound.play('laser'); 

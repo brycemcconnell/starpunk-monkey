@@ -34,6 +34,12 @@
 			image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
 			image-rendering: pixelated;        
 		}
+		.canvas-inset-shadow {
+			min-width: 100%;
+			min-height: 100%;
+			position: absolute;
+			box-shadow: inset 0 0 5em 1em #000000b3;
+		}
 	</style>
 	<link rel="stylesheet" href="UI.css">
 	<script src="./lib/pixi.min.js"></script>

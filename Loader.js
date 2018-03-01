@@ -1,29 +1,37 @@
 import setup from './Setup.js';
 export function load() {
   PIXI.loader
+  //backgrounds
   .add([
-    "sprites/bg.png"
+    "sprites/background/bg.png"
   ]).add([
-    "sprites/wallpaper.png"
+    "sprites/background/wallpaper.png"
   ]).add([
-    "sprites/stars.png"
+    "sprites/background/stars.png"
   ]).add([
-    "sprites/clouds.png"
-  ]).add([
-    "sprites/ship.png"
-  ]).add([
-    "sprites/ship2.png"
-  ]).add([
-    "sprites/shipAlt.png"
-  ]).add([
-    "sprites/battleCruiser.png"
-  ]).add([
-    "sprites/laser.png"
-  ]).add([
-    "sprites/enemy.png"
-  ]).add([
-    "sprites/enemy2.png"
+    "sprites/background/clouds.png"
   ])
+  // ships
+  .add([
+    "sprites/ship/ship.png"
+  ]).add([
+    "sprites/ship/ship2.png"
+  ]).add([
+    "sprites/ship/shipAlt.png"
+  ]).add([
+    "sprites/ship/battleCruiser.png"
+  ]).add([
+    "sprites/ship/enemy.png"
+  ]).add([
+    "sprites/ship/enemy2.png"
+  ])
+  // projectiles
+  .add([
+    "sprites/projectile/laser.png"
+  ]).add([
+    "sprites/projectile/laser2.png"
+  ])
+  // sound
   .add('laser','sounds/laser.wav')
   .add('explode','sounds/explode.mp3')
   .on("progress", loadProgressHandler)

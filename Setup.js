@@ -15,8 +15,9 @@ function createBackgroundLayer(x) {
   layer.name = x.name || undefined;
   layer.position.set(x.x || 0, x.y || 0);
   layer.tint = x.tint || 0xFFFFFF;
+  layer.alpha = x.alpha || 1;
   layer.vy = x.vy || 0;
-  layer.parentGroup = backgroundGroup;
+  layer.parentGroup = x.displayGroup || backgroundGroup;
   app.stage.addChild(layer);
   background.push(layer);
 }
@@ -34,7 +35,7 @@ export default function setup() {
   loaderInfo.innerHTML = "complete!";
   createBackgroundLayer({
     name: "Nebulae",
-    sprite: "sprites/wallpaper.png",
+    sprite: "sprites/background/wallpaper.png",
     w: 256,
     h: 640,
     y: -320,
@@ -43,7 +44,7 @@ export default function setup() {
   });
   createBackgroundLayer({
     name: "deepStars",
-    sprite: "sprites/stars.png",
+    sprite: "sprites/background/stars.png",
     w: 320,
     h: 640,
     x: -64,
@@ -53,7 +54,7 @@ export default function setup() {
   });
   createBackgroundLayer({
     name: "bgStars",
-    sprite: "sprites/stars.png",
+    sprite: "sprites/background/stars.png",
     w: 288,
     h: 640,
     x: -32,
@@ -63,16 +64,15 @@ export default function setup() {
   });
   createBackgroundLayer({
     name: "clouds",
-    sprite: "sprites/clouds.png",
+    sprite: "sprites/background/clouds.png",
     w: 256,
     h: 640,
     y: -320,
-    tint: 0xcccccc,
     vy: .4
   });
   createBackgroundLayer({
     name: "fgStars",
-    sprite: "sprites/stars.png",
+    sprite: "sprites/background/stars.png",
     w: 256,
     h: 640,
     y: -320,
@@ -90,6 +90,13 @@ export default function setup() {
   //   y: Gs.CANVAS_SIZEY - 64,
   //   
   // });
+  // allies.getNew(
+  //   270,
+  //   Gs.CANVAS_SIZEX / 2 + 42,
+  //   Gs.CANVAS_SIZEY - 64,
+  //   "Player2",
+  //   "ally"
+  // );
   allies.getNew(
     270,
     Gs.CANVAS_SIZEX / 2,
@@ -97,13 +104,13 @@ export default function setup() {
     "Player2",
     "ally"
   );
-  allies.getNew(
-    270,
-    Gs.CANVAS_SIZEX / 2 + 64,
-    Gs.CANVAS_SIZEY - 64,
-    "BattleCruiser",
-    "ally"
-  );
+  // allies.getNew(
+  //   270,
+  //   Gs.CANVAS_SIZEX / 2 - 42,
+  //   Gs.CANVAS_SIZEY - 64,
+  //   "Player2",
+  //   "ally"
+  // );
   // instantiateShip();
   app.ticker.add(delta => gameLoop(delta));
 
@@ -114,6 +121,7 @@ export default function setup() {
 
   Gs.setCANVAS_SCALE();
   document.querySelector("canvas").addEventListener("mousemove", (e) => {
+    console.log("e")
     // enemies.activePool[0].destination = {
     //   x: (e.clientX / Gs.CANVAS_SCALEX),
     //   y: (e.clientY / Gs.CANVAS_SCALEY),
