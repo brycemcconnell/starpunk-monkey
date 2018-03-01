@@ -78,6 +78,7 @@ export function gameLoop(delta){
           allies.activePool[x].handleHit();
           if (allies.activePool.length < 1) {
             resetGame();
+            break EnemyBulletLoop;
           }
           // statsOld.hits.update();
           
@@ -274,6 +275,12 @@ function resetGame() {
     for (let i = enemies.activePool.length - 1; i >=0; i--) {
       console.log('removing enemy: ', i);
       enemies.activePool[i].handleDeath(false);
+    }
+    for (let i = enemyBullets.activePool.length - 1; i >=0; i--) {
+      enemyBullets.recycle(enemyBullets.activePool[i]);
+    }
+    for (let i = allyBullets.activePool.length - 1; i >=0; i--) {
+      allyBullets.recycle(allyBullets.activePool[i]);
     }
   }
 }
