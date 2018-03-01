@@ -49,6 +49,7 @@ export const player = {
 			let currentSpeed = allies.activePool.sort((a, b) => a.speed - b.speed)[0].speed;
 	  	let currentTurnSpeed = turnSpeed;
 	  	let turning = false;
+	  	let moveDirectionCount = 0;
       // Calculate boosting
 	    if (ship.booster && ship.fuel > 0) {
 	   		currentSpeed += 1;
@@ -62,15 +63,18 @@ export const player = {
 		  }
 		  currentSpeed *= delta;
 		  if (moveUpOk == allies.activePool.length) {
+		  	moveDirectionCount += 1;
 		  	ship.sprite.y -= currentSpeed;
 		    ship.shadow.y -= currentSpeed;
 		  }
 		  if (moveDownOk == allies.activePool.length) {
+		  	moveDirectionCount += 1;
 		  	ship.sprite.y += currentSpeed;
 		    ship.shadow.y += currentSpeed;
 		  }
 
 			if (moveLeftOk == allies.activePool.length) {
+				moveDirectionCount += 1;
 				ship.sprite.x -= currentSpeed;
 		    ship.shadow.x -= currentSpeed;
 		    currentTurn = currentTurn > -turnFactor ? currentTurn - currentTurnSpeed : currentTurn;
@@ -78,6 +82,7 @@ export const player = {
 		    turning = true;
 			}
 			if (moveRightOk == allies.activePool.length) {
+				moveDirectionCount += 1;
 				ship.sprite.x += currentSpeed;
 		    ship.shadow.x += currentSpeed;
 				currentTurn = currentTurn < turnFactor ? currentTurn + currentTurnSpeed : currentTurn;
@@ -90,6 +95,7 @@ export const player = {
 			                currentTurn > 0 ? currentTurn - currentTurnSpeed : currentTurn;
 			  turningEnabled && turn(ship);
 		  }
+		  if (moveDirectionCount == 0) currentSpeed = 0;
 		  playerSpeed.update(currentSpeed.toFixed(2));
 		});
 	}

@@ -47,3 +47,35 @@ Fix diagonal movement speed to be the true speed.
 
 Save smaller props into variables instead of referncing directly?
 Eg. allies.activePool[0].sprite.rotation -> allyRot
+
+Different types of weapons,
+Normal - fire straight
+Seeking - Seek closest enemy target, retarget if enemy is destroyed before they hit them, fly into eternity if no enemies available
+Guided - even after shooting they remain on the same x-value as your ship while you move
+MouseGuided? - Select and then mouse click where to fire
+
+Types of bullet
+Normal - A single shell
+Beam - a beam that is very long
+Missile - A single shell that explodes with AoE on impact
+TinyBeam? - Can't damage shields, has low damage but high speed, good for seeking
+
+Perhaps modifiers?
+Cluster - On hit, shoots out x of itself in random directions
+Timed Missile - explodes even if it doesn't hit anything
+Mine - Stops at x location and stays until an enemy collides with it or (timer runs out and it explodes anyway)
+
+Plasma - Medium damage to shields, small to hull, can only be fired from HighTech cannons
+Phaser - High damage to shields, doesnt damage hull, can only be fired from HighTech cannons
+Ion - Small damage to shields, doesnt damage hull, slows enemy on hit, only fired from HighTech Cannons
+
+Bullet sizes affect which guns can use them.
+
+Types of guns
+Normal - Shoots standard rate
+Gatling - Shoots much faster but with poor accuracy (add -45~45 degree offset to rotation?)
+Cannon - Shoots larger ammunition but at a slower rate
+Sniper - Shoots slowly but with a speed bonus to projectiles and perfect accuracy (maybe even damage bonus?)
+
+Also add shields, a round perimeter around a ship that regenerates energy if not hit within a certain threshold
+

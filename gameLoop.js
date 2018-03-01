@@ -77,7 +77,7 @@ export function gameLoop(delta){
           // console.log('hit', allies);
           allies.activePool[x].handleHit();
           if (allies.activePool.length < 1) {
-            console.log('gameover');
+            resetGame();
           }
           // statsOld.hits.update();
           
@@ -257,5 +257,23 @@ export function gameLoop(delta){
       pair.x = pair.x + offset.x;
       pair.y = pair.y + offset.y
     });
+  }
+}
+
+function resetGame() {
+  allies.getNew(
+    270,
+    Gs.CANVAS_SIZEX / 2,
+    Gs.CANVAS_SIZEY - 64,
+    "Player2",
+    "ally"
+  );
+  console.log("recreating player");
+  if (enemies.activePool.length > 0) {
+    console.log(enemies.activePool.length);
+    for (let i = enemies.activePool.length - 1; i >=0; i--) {
+      console.log('removing enemy: ', i);
+      enemies.activePool[i].handleDeath(false);
+    }
   }
 }

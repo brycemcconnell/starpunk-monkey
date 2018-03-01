@@ -139,9 +139,11 @@ export default class Enemy extends Ship {
 	    this.coolDown = this.fireRate;
 	  }
 	}
-	handleDeath() {
+	handleDeath(scoring = true) {
 		super.handleDeath();
-		playerScore.update(playerScore.active + this.score);
-		playerKills.update(playerKills.active + 1);
+		if (scoring) {
+			playerScore.update(playerScore.active + this.score);
+			playerKills.update(playerKills.active + 1);
+		}	
 	}
 }

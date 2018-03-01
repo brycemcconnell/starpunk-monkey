@@ -1,4 +1,5 @@
 import {allies, enemies} from './Model.js';
+import Wave from './Wave.js';
 // import {statsOld} from './player.js';
 import * as fr from './lib/fr.js';
 import * as Gs from './Globals.js';
@@ -210,6 +211,20 @@ ToggleSound.innerHTML = "Toggle Sound";
 ToggleSound.onmouseup = () => {
 	PIXI.sound.volumeAll = PIXI.sound.volumeAll ? 0 : 1;
 }
+export const AddWave = document.createElement('button');
+AddWave.innerHTML = "Add Wave";
+AddWave.onmouseup = () => {
+	let newTestWave = new Wave({
+    team:  enemies,
+    count: 5,
+    timing: 500,
+    spawn: {
+      r: 90,
+      x: 128,
+      y: -64
+    }
+  });
+}
 
 const sidebar = document.createElement('div');
 sidebar.classList.add("UI_sidebar");
@@ -411,6 +426,7 @@ export function init() {
 	sidebar.appendChild(ToggleSizeboxes);
 	sidebar.appendChild(ToggleSound);
 	sidebar.appendChild(ToggleRender);
+	sidebar.appendChild(AddWave);
 	sidebar.appendChild(fireRateSliderContainer);
 	sidebar.appendChild(playerShipView);
 	sidebar.appendChild(objectCountsContainer);
