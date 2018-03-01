@@ -15,6 +15,8 @@ export const UI_SCALE = 2;
 export const DEFAULT_ROTATION = 270;
 export const FIRERATE_MIN = 1;
 export const FIRERATE_MAX = 60;
+export const FADE_SPEED = .1;
+export const SHADOW_ALPHA = .3;
 PIXI.sound.volumeAll = 1;
 export const SHOW_HITBOXES = {
 	value: false,
@@ -36,5 +38,13 @@ export const RESPAWN = {
 	toggle: function() {
 		this.value = this.value ? false : true;
 		console.log('Respawning set to', this.value);
+	}
+};
+
+export const RENDER_STATE = {
+	value: true,
+	toggle: function() {
+		this.value = this.value ? false : true;
+		console.log('Render set to', this.value);
 	}
 };

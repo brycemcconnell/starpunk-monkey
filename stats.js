@@ -1,9 +1,15 @@
 import Stat from './Stat.js';
+import ChildStat from './ChildStat.js';
 import * as UI from './UI.js';
-export const enemyCount = new Stat(UI.enemiesCount);
-export const enemyBulletCount = new Stat(UI.enemyBulletsCount);
-export const allyCount = new Stat(UI.alliesCount);
-export const allyBulletCount = new Stat(UI.allyBulletsCount);
+
+export const entitiesTotalCount = new Stat(UI.entitiesTotalCount);
+export const enemyCount = new ChildStat(UI.enemiesCount, entitiesTotalCount);
+export const enemyBulletCount = new ChildStat(UI.enemyBulletsCount, entitiesTotalCount);
+export const allyCount = new ChildStat(UI.alliesCount, entitiesTotalCount);
+export const allyBulletCount = new ChildStat(UI.allyBulletsCount, entitiesTotalCount);
+
 export const playerScore = new Stat(UI.PlayerScore);
 export const playerKills = new Stat(UI.PlayerKills);
 export const playerSpeed = new Stat(UI.PlayerSpeed);
+export const gameTime = new Stat(UI.GameTime);
+export const trueTime = new Stat(UI.TrueTime);

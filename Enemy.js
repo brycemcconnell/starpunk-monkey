@@ -5,6 +5,7 @@ import * as Gs from './Globals.js';
 import * as fr from './lib/fr.js';
 import {enemyBullets} from './Model.js';
 import {playerScore, playerKills} from "./stats.js";
+import {ShipPaths} from "./data/ShipPaths.js";
 function collisionDetection() {
 
 }
@@ -24,32 +25,57 @@ export default class Enemy extends Ship {
 	    // Type construction
 	    this.speed = 1.0;
 	    this.rotateSpeed = .05;
-	    this.destination = {x:fr.random(Gs.CANVAS_SIZEX - 12),y:fr.random(Gs.CANVAS_SIZEY - 12)};
-	    this.angle = 0;
+	    this.destination;
+	    this.path;
+	    this.setPath()
+	    this.pathCurrent = 0;
+	    this.targetAngle = 0;
 	    // AI Construction
 	    this.shooting = true;
 	    this.fireRate = 90;
 	    this.coolDown = 0;
 	    
-	} 
+	}
+	setPath() {
+		let path1 = ShipPaths["MoveCurrentCenter"].map(point => {
+			return {x: point.x || null, y: point.y || null}
+		});
+		let path2 = ShipPaths["ExitLeft"].map(point => {
+			return {x: point.x || null, y: point.y || null}
+		});
+		this.path = path1.concat(path2);
+	}
 	handleMove(delta) {
 		// console.log(this.sprite.rotation * 180/Math.PI);
-
+		// reset
+		this.destination = this.path[this.pathCurrent];
+		// If a path Vector does not have x or y, replace it with current
+		this.destination.x = this.destination.x ? this.destination.x : this.sprite.position.x;
+		this.destination.y = this.destination.y ? this.destination.y : this.sprite.position.y;
+		this.vy = 0;
+		this.vx = 0;
+		this.vr = 0;
 		
 		if (this.sprite.position.x - 12< this.destination.x &&
 			this.sprite.position.y - 12< this.destination.y &&
 			this.sprite.position.x + 12 > this.destination.x &&
 			this.sprite.position.y + 12 > this.destination.y ) {
-			this.destination = {x:fr.random(Gs.CANVAS_SIZEX - 12),y:fr.random(Gs.CANVAS_SIZEY - 12)};
+			this.pathCurrent = this.pathCurrent < this.path.length -1 ? this.pathCurrent + 1 : 0;
 		// console.log(this.destination);
 		} else {
-			this.angle = this.angleToDestination();
-			if (this.angle < Math.abs(this.sprite.rotation)) {
+			this.targetAngle = this.angleToDestination();
+			this.targetAngle = fr.roundFraction(this.targetAngle, 2)
+			if (fr.deltaAngle(this.targetAngle, this.sprite.rotation) < 0) {
 				this.vr = -this.rotateSpeed;
 			} else {
 				this.vr = this.rotateSpeed;
 			}
+			const distance = Math.floor(this.distanceToDestination());
+			this.vr = fr.round(this.vr * (distance/100), 2);
 			moveForward(this, delta);
+			// this.vx = fr.round(this.vx * (distance/100), 2);
+			// this.vy = fr.round(this.vy * (distance/100), 2);
+			// console.log(this.vx + this.vy);
 		}
 
 		// move everything
@@ -59,18 +85,32 @@ export default class Enemy extends Ship {
 		this.sprite.position.y += this.vy;
 		this.shadow.position.x += this.vx;
 		this.shadow.position.y += this.vy;
-		// reset
-		this.vy = 0;
-		this.vx = 0;
-		this.vr = 0;
+		
+		if (this.pathCurrent == this.path.length - 1) {
+			if (this.sprite.position.y > Gs.CANVAS_SIZEY + (this.sprite.height) ||
+	            this.sprite.position.x > Gs.CANVAS_SIZEX + (this.sprite.width) ||
+	            this.sprite.position.y < -(this.sprite.height) ||
+	            this.sprite.position.x < -(this.sprite.width)) {
+				super.handleDeath();
+			}
+		}
+		
 	}
 	angleToDestination() {
 		const x1 = this.sprite.position.x;
 		const y1 = this.sprite.position.y;
 		const x2 = this.destination.x;
 		const y2 = this.destination.y;
-		let result = Math.atan2(y2 - y1, x2 - x1)
+		const result = Math.atan2(y2 - y1, x2 - x1)
 		return result > 0 ? result : Math.PI - result*-1 + Math.PI;
+	}
+	distanceToDestination() {
+		const x1 = this.sprite.position.x;
+		const y1 = this.sprite.position.y;
+		const x2 = this.destination.x;
+		const y2 = this.destination.y;
+		const result = Math.hypot(x2 - x1, y2 - y1);
+		return result;
 	}
 	handleAttack(delta) {
 	  if (this.coolDown > 0) {

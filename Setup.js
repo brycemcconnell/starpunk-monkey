@@ -111,28 +111,21 @@ export default function setup() {
   wrapper.style.height = document.querySelector("canvas").clientHeight + "px";
   // sound.laser = PIXI.loader.resources["laser.wav"];
 
-
-  for (let i = 0; i < 1; i++ ) {
-    enemies.getNew(
-      90,
-      Gs.CANVAS_SIZEX / 2,
-      64,
-      "Enemy2",
-      "enemy"
-    );
-  }
   Gs.setCANVAS_SCALE();
   document.querySelector("canvas").addEventListener("mousemove", (e) => {
     // enemies.activePool[0].destination = {
     //   x: (e.clientX / Gs.CANVAS_SCALEX),
     //   y: (e.clientY / Gs.CANVAS_SCALEY),
-    // }
+    // };
     UI.MouseLocation.innerHTML = "x:" + Math.round(e.clientX / Gs.CANVAS_SCALEX) + " / " +
       "y: " + Math.round(e.clientY / Gs.CANVAS_SCALEY);
-    UI.EnemyRotation.innerHTML = "Inactive"/*(enemies.activePool[0].angle).toFixed(2) + "," +
-    (enemies.activePool[0].angle/Math.PI * 180).toFixed(2) + "/" +
-    (enemies.activePool[0].sprite.rotation % Math.PI).toFixed(2) + "," +
-    (enemies.activePool[0].sprite.rotation/Math.PI * 180 % 360).toFixed(2)*/;
+    // UI.EnemyRotation.innerHTML = "target: " +
+    // (enemies.activePool[0].targetAngle).toFixed(2) + "," +
+    // // (enemies.activePool[0].angle/Math.PI * 180).toFixed(2) +
+    // "/ current: " +
+    // (enemies.activePool[0].sprite.rotation).toFixed(2)// + "," +
+    // (enemies.activePool[0].sprite.rotation/Math.PI * 180 % 360).toFixed(2)
+    ;
   // console.log(enemies.activePool[0])
   });
   initKeyboard();

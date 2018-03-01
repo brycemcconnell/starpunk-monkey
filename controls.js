@@ -21,6 +21,7 @@ export function initKeyboard() {
   }
   if (e.key == " ") {
     player.forEach(manualShip => manualShip.shooting = true);
+    e.preventDefault();
   }
 });
 window.addEventListener('keyup', (e) => {

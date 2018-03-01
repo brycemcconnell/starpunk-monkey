@@ -72,6 +72,22 @@ PlayerAccuracyRow.appendChild(PlayerAccuracyTitle);
 export const PlayerAccuracy = document.createElement('td');
 PlayerAccuracyRow.appendChild(PlayerAccuracy);
 
+export const GameTimeRow = document.createElement('tr');
+Player.appendChild(GameTimeRow);
+export const GameTimeTitle = document.createElement('th');
+GameTimeTitle.innerHTML = "Game time: ";
+GameTimeRow.appendChild(GameTimeTitle);
+export const GameTime = document.createElement('td');
+GameTimeRow.appendChild(GameTime);
+
+export const TrueTimeRow = document.createElement('tr');
+Player.appendChild(TrueTimeRow);
+export const TrueTimeTitle = document.createElement('th');
+TrueTimeTitle.innerHTML = "True time: ";
+TrueTimeRow.appendChild(TrueTimeTitle);
+export const TrueTime = document.createElement('td');
+TrueTimeRow.appendChild(TrueTime);
+
 
 /*
 Score
@@ -183,6 +199,11 @@ export const ToggleSizeboxes = document.createElement('button');
 ToggleSizeboxes.innerHTML = "Toggle Sizeboxes";
 ToggleSizeboxes.onmouseup = () => {
 	Gs.SHOW_SIZEBOXES.toggle();
+}
+export const ToggleRender = document.createElement('button');
+ToggleRender.innerHTML = "Toggle Render";
+ToggleRender.onmouseup = () => {
+	Gs.RENDER_STATE.toggle();
 }
 export const ToggleSound = document.createElement('button');
 ToggleSound.innerHTML = "Toggle Sound";
@@ -345,27 +366,33 @@ const enemiesTitle = document.createElement("th");
 const alliesTitle = document.createElement("th");
 const enemyBulletsTitle = document.createElement("th");
 const allyBulletsTitle = document.createElement("th");
+const totalEntitiesTitle = document.createElement("th");
 enemiesTitle.innerHTML = "Enemy count";
 alliesTitle.innerHTML = "Ally Count";
 enemyBulletsTitle.innerHTML = "Enemy Bullet Count";
 allyBulletsTitle.innerHTML = "Ally Bullet Count";
+totalEntitiesTitle.innerHTML = "Total Entities";
 const objectCountsTitleList = [
 	enemiesTitle,
 	alliesTitle,
 	enemyBulletsTitle,
-	allyBulletsTitle
+	allyBulletsTitle,
+	totalEntitiesTitle
 ];
 
 export const enemiesCount = document.createElement("td");
 export const alliesCount = document.createElement("td");
 export const enemyBulletsCount = document.createElement("td");
 export const allyBulletsCount = document.createElement("td");
+export const entitiesTotalCount = document.createElement("td");
 const objectCountsCountList = [
 	enemiesCount,
 	alliesCount,
 	enemyBulletsCount,
-	allyBulletsCount
+	allyBulletsCount,
+	entitiesTotalCount
 ];
+objectCountsCountList.forEach(item => item.innerHTML = 0);
 
 objectCountsTitleList.forEach((item, index) => {
 	let row = document.createElement("tr");
@@ -383,6 +410,7 @@ export function init() {
 	sidebar.appendChild(ToggleHitboxes);
 	sidebar.appendChild(ToggleSizeboxes);
 	sidebar.appendChild(ToggleSound);
+	sidebar.appendChild(ToggleRender);
 	sidebar.appendChild(fireRateSliderContainer);
 	sidebar.appendChild(playerShipView);
 	sidebar.appendChild(objectCountsContainer);

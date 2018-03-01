@@ -24,7 +24,7 @@ export default class Ship {
 		this.sizeBox = new PIXI.Graphics();
 		this.sizeBox.setTransform(-this.sprite.width / 2, -this.sprite.width / 2);
 		this.sizeBox.lineStyle(1, 0xffffff);
-		this.sizeBox.alpha = .3;
+		this.sizeBox.alpha = Gs.SHADOW_ALPHA;
 		this.sizeBox.drawRect(0, 0, this.sprite.width, this.sprite.height);
 		this.sprite.addChild(this.sizeBox);
 
@@ -56,8 +56,21 @@ export default class Ship {
 		this.rotateSpeed = .05;
 
 		this.maxHealth = ShipSprites[config.sprite].maxHealth;
-  	this.currentHealth = this.maxHealth;
-  	this.score = ShipSprites[config.sprite].score;
+  		this.currentHealth = this.maxHealth;
+  		this.score = ShipSprites[config.sprite].score;
+  		this.userData = {
+  			fadeOut: function(sprite) {
+  				if (sprite.alpha > 0) {
+  					sprite.alpha -= Gs.FADE_SPEED;
+  					setTimeout(() => {
+  						this.fadeOut(sprite)
+  					}, 100);
+  				} else {
+  					sprite.alpha = Gs.SHADOW_ALPHA;
+  					sprite.visible = false;
+  				}
+  			}
+  		};
 	}
 	handleHit() {
 		this.currentHealth -= 1;
@@ -71,7 +84,7 @@ export default class Ship {
 	}
 	handleDeath() {
 		this.sprite.visible = false;
-		this.shadow.visible = false;
+		this.userData.fadeOut(this.shadow);
 		this.team.recycle(this);
 	}
 }

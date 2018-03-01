@@ -18,6 +18,7 @@ export default class ShipArray extends SmartArray {
 		item.sprite.visible = true;
 		item.shadow.visible = true;
 		item.currentHealth = item.maxHealth;
+		item.pathCurrent = 0;
 		this.activePool.push(item);
 		this.listener.update(this.activePool.length, this.inactivePool.length);
 		return item;
