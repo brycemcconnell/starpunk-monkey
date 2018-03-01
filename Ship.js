@@ -72,9 +72,12 @@ export default class Ship {
   			}
   		};
 	}
+	setPath() {
+
+	}
 	handleHit() {
 		this.currentHealth -= 1;
-		this.sprite.tint = 0xffaaaa;
+		this.sprite.tint = 0xff7777;
 		setTimeout(() => {
 			this.sprite.tint = 0xffffff;
 		}, 100);

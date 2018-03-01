@@ -26,7 +26,7 @@ export const SHOW_HITBOXES = {
 	}
 };
 export const SHOW_SIZEBOXES = {
-	value: true,
+	value: false,
 	toggle: function() {
 		this.value = this.value ? false : true;
 		console.log('Sizeboxes set to', this.value);

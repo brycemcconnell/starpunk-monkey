@@ -23,7 +23,6 @@ export default class Enemy extends Ship {
 		// this.shadow.rotation = Math.PI/180 * 90;
 		// this.handleMove();
 	    // Type construction
-	    this.speed = 1.0;
 	    this.rotateSpeed = .05;
 	    this.destination;
 	    this.path;
@@ -37,21 +36,30 @@ export default class Enemy extends Ship {
 	    
 	}
 	setPath() {
-		let path1 = ShipPaths["MoveCurrentCenter"].map(point => {
-			return {x: point.x || null, y: point.y || null}
+		let paths = ["MoveCurrentCenter", "StrafeLeft"];
+		let result = [];
+		paths.forEach(path => {
+			ShipPaths[path].path.forEach(item => {
+				let newPath = Object.assign({}, item);
+				newPath.type = ShipPaths[path].type;
+				result.push(newPath);
+			});
 		});
-		let path2 = ShipPaths["ExitLeft"].map(point => {
-			return {x: point.x || null, y: point.y || null}
-		});
-		this.path = path1.concat(path2);
+		this.path = result;
 	}
 	handleMove(delta) {
 		// console.log(this.sprite.rotation * 180/Math.PI);
 		// reset
 		this.destination = this.path[this.pathCurrent];
 		// If a path Vector does not have x or y, replace it with current
-		this.destination.x = this.destination.x ? this.destination.x : this.sprite.position.x;
-		this.destination.y = this.destination.y ? this.destination.y : this.sprite.position.y;
+		this.destination.x = this.destination.x ? this.destination.x :
+								                  this.destination.offsetX ? 
+								                    this.sprite.position.x + this.destination.offsetX :
+		                                            this.sprite.position.x;
+		this.destination.y = this.destination.y ? this.destination.y :
+		                                          this.destination.offsetY? 
+								                    this.sprite.position.y + this.destination.offsetY :
+		                                            this.sprite.position.y;
 		this.vy = 0;
 		this.vx = 0;
 		this.vr = 0;
@@ -63,16 +71,24 @@ export default class Enemy extends Ship {
 			this.pathCurrent = this.pathCurrent < this.path.length -1 ? this.pathCurrent + 1 : 0;
 		// console.log(this.destination);
 		} else {
-			this.targetAngle = this.angleToDestination();
-			this.targetAngle = fr.roundFraction(this.targetAngle, 2)
-			if (fr.deltaAngle(this.targetAngle, this.sprite.rotation) < 0) {
-				this.vr = -this.rotateSpeed;
-			} else {
-				this.vr = this.rotateSpeed;
+			if (this.destination.type == "move") {
+				this.targetAngle = this.angleToDestination();
+				this.targetAngle = fr.roundFraction(this.targetAngle, 2)
+				if (fr.deltaAngle(this.targetAngle, this.sprite.rotation) < 0) {
+					this.vr = -this.rotateSpeed;
+				} else {
+					this.vr = this.rotateSpeed;
+				}
+				const distance = Math.floor(this.distanceToDestination());
+				this.vr = fr.round(this.vr * (distance/100), 2);
+				moveForward(this, delta);
+			} else if (this.destination.type == "strafe") {
+				this.vx = Math.sign(this.destination.offsetX) * this.speed;
+				// this.vy = Math.sign(this.destination.y) * this.speed;
 			}
-			const distance = Math.floor(this.distanceToDestination());
-			this.vr = fr.round(this.vr * (distance/100), 2);
-			moveForward(this, delta);
+			// console.log(this.destination.type)
+			
+			
 			// this.vx = fr.round(this.vx * (distance/100), 2);
 			// this.vy = fr.round(this.vy * (distance/100), 2);
 			// console.log(this.vx + this.vy);

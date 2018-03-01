@@ -8,6 +8,7 @@ import Enemy from './Enemy.js';
 import AlliedShip from './AlliedShip.js';
 import {loaderInfo} from './Loader.js';
 import {initKeyboard} from './controls.js';
+import Wave from './Wave.js';
 
 function createBackgroundLayer(x) {
   const layer = new PIXI.extras.TilingSprite(PIXI.loader.resources[x.sprite].texture, x.w, x.h);
@@ -129,5 +130,16 @@ export default function setup() {
   // console.log(enemies.activePool[0])
   });
   initKeyboard();
+
+  let testWave = new Wave({
+    team:  enemies,
+    count: 5,
+    timing: 500,
+    spawn: {
+      r: 90,
+      x: 128,
+      y: -64
+    }
+  });
 }
 

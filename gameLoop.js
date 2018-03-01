@@ -4,8 +4,11 @@ import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
 import * as Gs from './Globals.js';
 import {gameTime, trueTime, entitiesTotalCount} from './stats.js';
+import Wave from './Wave.js';
+
 let timer = 0;
 let lastTime = Date.now();
+
 export function gameLoop(delta){
   if (Gs.RENDER_STATE.value) {
     trueTime.update(trueTime.active += Date.now() - lastTime,
@@ -17,15 +20,7 @@ export function gameLoop(delta){
       gameTime.update(gameTime.active += 1);
       UI.FPS.innerHTML = parseFloat(60 / delta).toFixed(1);
     }
-    if (timer % 60 == 0) {
-      enemies.getNew(
-        90,
-        fr.random(Gs.CANVAS_SIZEX - 32) + 32,
-        -64,
-        "Enemy2",
-        "enemy"
-      );
-    }
+    // console.log(timer)
 
     background.forEach(layer => {
       layer.y = layer.y < 0 ? layer.y + (layer.vy * delta) : -Gs.CANVAS_SIZEY;
