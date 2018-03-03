@@ -31,6 +31,10 @@ export function load() {
   ]).add([
     "sprites/projectile/laser2.png"
   ])
+  // gun
+  .add([
+    "sprites/gun/gun.png"
+  ])
   // sound
   .add('laser','sounds/laser.wav')
   .add('explode','sounds/explode.mp3')

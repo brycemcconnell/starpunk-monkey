@@ -35,13 +35,20 @@ export const player = {
 		  	moveRightOk += 1;
 		  }
 		  // Handle guns
-		  if (ship.coolDown > 0) {
-		    ship.coolDown -= 1 * delta;
-		  }
-		  if (ship.shooting && ship.coolDown <= 0) {
-		    let pos = {x: ship.sprite.x + Gs.TILE_SIZE / 2 - 4, y: ship.sprite.y + Gs.TILE_SIZE / 2 - 4};
-		    shoot(((Math.PI * 2) / 4) * 3, pos);
-		    ship.coolDown = ship.fireRate;
+		  
+		  if (ship.shooting) {
+		  	ship.guns.forEach(gun => {
+		  		if (gun.coolDown > 0) {
+				    gun.coolDown -= 1 * delta;
+				  }
+		  		if (gun.coolDown <= 0) {
+		  			let pos = {x: gun.worldTransform.tx , y: gun.worldTransform.ty};
+		  			let rot = gun.shootDirection == "straight" ? ((Math.PI * 2) / 4) * 3 : 0;
+		  			console.log(ship.sprite.rotation)
+		  			shoot(rot, pos);
+		  			gun.coolDown = gun.fireRate;
+		  		}
+		  	});
 		  }
 		  UI.CoolDownGuage.style.opacity = (100 - (ship.coolDown * 100) / ship.fireRate) / 100;
 		});

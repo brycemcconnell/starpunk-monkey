@@ -72,6 +72,17 @@ export default class Ship {
   				}
   			}
   		};
+
+  	this.guns = [];
+  	let gun = new PIXI.Sprite(PIXI.loader.resources["sprites/gun/gun.png"].texture);
+  	gun.rotation = this.sprite.rotation;
+  	gun.position.set(8, -3);
+
+  	gun.fireRate = 20;
+  	gun.coolDown = 0;
+  	this.guns.push(gun);
+
+  	this.sprite.addChild(gun);
 	}
 	setPath() {
 
