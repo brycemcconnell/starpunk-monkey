@@ -36,20 +36,18 @@ export const player = {
 		  }
 		  // Handle guns
 		  
-		  if (ship.shooting) {
-		  	ship.guns.forEach(gun => {
-		  		if (gun.coolDown > 0) {
-				    gun.coolDown -= 1 * delta;
-				  }
-		  		if (gun.coolDown <= 0) {
-		  			let pos = {x: gun.worldTransform.tx , y: gun.worldTransform.ty};
-		  			let rot = gun.shootDirection == "straight" ? ((Math.PI * 2) / 4) * 3 : 0;
-		  			console.log(ship.sprite.rotation)
-		  			shoot(rot, pos);
-		  			gun.coolDown = gun.fireRate;
-		  		}
-		  	});
-		  }
+	  	ship.guns.forEach(gun => {
+	  		gun.handleMovement();
+	  		if (gun.coolDown > 0) {
+			    gun.coolDown -= 1 * delta;
+			  }
+	  		if (gun.coolDown <= 0 && ship.shooting) {
+	  			let pos = {x: gun.worldTransform.tx , y: gun.worldTransform.ty};
+	  			let rot = ship.sprite.rotation + gun.rotation;
+	  			shoot(rot, pos);
+	  			gun.coolDown = gun.fireRate;
+	  		}
+	  	});
 		  UI.CoolDownGuage.style.opacity = (100 - (ship.coolDown * 100) / ship.fireRate) / 100;
 		});
 		allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {

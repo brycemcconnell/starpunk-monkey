@@ -121,7 +121,6 @@ export default function setup() {
 
   Gs.setCANVAS_SCALE();
   document.querySelector("canvas").addEventListener("mousemove", (e) => {
-    console.log("e")
     // enemies.activePool[0].destination = {
     //   x: (e.clientX / Gs.CANVAS_SCALEX),
     //   y: (e.clientY / Gs.CANVAS_SCALEY),

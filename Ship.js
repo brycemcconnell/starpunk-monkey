@@ -75,9 +75,18 @@ export default class Ship {
 
   	this.guns = [];
   	let gun = new PIXI.Sprite(PIXI.loader.resources["sprites/gun/gun.png"].texture);
-  	gun.rotation = this.sprite.rotation;
+  	// gun.rotation = this.sprite.rotation;
   	gun.position.set(8, -3);
-
+  	gun.moveType = "StayStraight";
+  	gun.handleMovement = () => {
+  		if (gun.moveType == "StayStraight") {
+  			let rotation = this.sprite.rotation - (3 * (Math.PI / 2))
+  			gun.rotation = -rotation;
+  		}
+  		if (gun.moveType == "Circle") {
+  			gun.rotation += 0.1;
+  		}
+  	};
   	gun.fireRate = 20;
   	gun.coolDown = 0;
   	this.guns.push(gun);
