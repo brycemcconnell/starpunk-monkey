@@ -1,6 +1,7 @@
 import * as UI from './UI.js';
 import { allyBullets, app, allies, enemies } from './Model.js';
 import * as Gs from './Globals.js';
+import * as fr from './lib/fr.js';
 import {playerSpeed} from './stats.js';
 export const bulletSpeed = 3;
 // Turning system
@@ -42,9 +43,18 @@ export const player = {
 			    gun.coolDown -= 1 * delta;
 			  }
 	  		if (gun.coolDown <= 0 && ship.shooting) {
-	  			let pos = {x: gun.worldTransform.tx , y: gun.worldTransform.ty};
-	  			let rot = ship.sprite.rotation + gun.rotation;
-	  			shoot(rot, pos);
+	  			// gun.accuracy -> max offset, 1 being 90 degrees either way (180 chance)
+	  			// Thus 0.5 would be a 90 degree range
+	  			// 0.01 is 99% chance being straight
+	  			// 0.9 is 10% chance being straight, 90% chance of being within 81 degrees either way from target (range of 162)
+	  			let offsetChance = 180 * gun.accuracy;
+	  			let offset = fr.random(offsetChance) - (offsetChance / 2);
+	  			let offsetRadians = offset * Math.PI/180;
+	  			let rot = ship.sprite.rotation + gun.sprite.rotation + offsetRadians;
+	  			gun.turrets.forEach(turret => {
+	  				let pos = {x: gun.sprite.worldTransform.tx + turret.x, y: gun.sprite.worldTransform.ty + turret.y};
+	  				shoot(rot, pos, gun.type);
+	  			})
 	  			gun.coolDown = gun.fireRate;
 	  		}
 	  	});
@@ -170,8 +180,8 @@ export const statsOld = {
 };
 
 
-export function shoot(rotation, startPosition){  
-  let bullet = allyBullets.getNew(rotation, startPosition.x, startPosition.y, "Basic2");
+export function shoot(rotation, startPosition, type){  
+  let bullet = allyBullets.getNew(rotation, startPosition.x, startPosition.y, type);
   statsOld.shots.update();
   statsOld.accuracy.update();
   PIXI.sound.play('laser'); 

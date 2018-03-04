@@ -2,6 +2,7 @@ import * as Gs from './Globals.js';
 import {app, enemies, allies} from './Model.js';
 import {ShipSprites} from './data/SpriteList.js';
 import {shadowGroup, shipGroup} from './Setup.js';
+import Gun from './Gun.js';
 
 export default class Ship {
 	constructor(config) {
@@ -22,7 +23,7 @@ export default class Ship {
 		this.shadow.parentGroup = shadowGroup;
 
 		this.sizeBox = new PIXI.Graphics();
-		this.sizeBox.setTransform(-this.sprite.width / 2, -this.sprite.width / 2);
+		this.sizeBox.setTransform(-(this.sprite.width / 2), -(this.sprite.height / 2));
 		this.sizeBox.lineStyle(1, 0xffffff);
 		this.sizeBox.alpha = Gs.SHADOW_ALPHA;
 		this.sizeBox.drawRect(0, 0, this.sprite.width, this.sprite.height);
@@ -73,32 +74,64 @@ export default class Ship {
   			}
   		};
 
-  	this.guns = [];
-  	let gun = new PIXI.Sprite(PIXI.loader.resources["sprites/gun/gun.png"].texture);
-  	// gun.rotation = this.sprite.rotation;
-  	gun.position.set(8, -3);
-  	gun.moveType = "StayStraight";
-  	gun.handleMovement = () => {
-  		if (gun.moveType == "StayStraight") {
-  			let rotation = this.sprite.rotation - (3 * (Math.PI / 2))
-  			gun.rotation = -rotation;
-  		}
-  		if (gun.moveType == "Circle") {
-  			gun.rotation += 0.1;
-  		}
-  	};
-  	gun.fireRate = 20;
-  	gun.coolDown = 0;
-  	this.guns.push(gun);
+  	this.gunSlots = ShipSprites[config.sprite].gunSlots;
 
-  	this.sprite.addChild(gun);
+  	this.guns = [];
+
+  	// let gun = new PIXI.Sprite(PIXI.loader.resources["sprites/gun/gun-double.png"].texture);
+  	// gun.moveType = "Circle";
+  	// gun.position.x = 12;
+  	// gun.pivot.set(2.5, gun.height/2);
+  	// gun.handleMovement = () => { 
+  	// 	if (gun.moveType == "StayStraight") {
+  	// 		let rotation = this.sprite.rotation - (3 * (Math.PI / 2))
+  	// 		gun.rotation = -rotation;
+  	// 	}
+  	// 	if (gun.moveType == "Circle") {
+  	// 		gun.rotation -= 0.1;
+  	// 	}
+  	// 	if (gun.moveType == "WithShip") {
+
+  	// 	}
+  	// };
+  	// gun.turrets = [
+  	// 	{x: -4, y: 0},
+  	// 	{x: 4, y: 0},
+  	// ];
+  	// gun.fireRate = 2;
+  	// gun.coolDown = 0;
+  	// this.guns.push(gun);
+
+
+  // 	let gun2 = new PIXI.Sprite(PIXI.loader.resources["sprites/gun/gun.png"].texture);
+  // 	gun2.position.x = 12;
+  // 	gun2.pivot.set(2.5, gun2.height/2);
+  // 	gun2.moveType = "Circle";
+		// gun2.handleMovement = () => {
+		// 	if (gun2.moveType == "StayStraight") {
+  // 			let rotation = this.sprite.rotation - (3 * (Math.PI / 2))
+  // 			gun2.rotation = -rotation;
+  // 		}
+  // 		if (gun2.moveType == "Circle") {
+  // 			gun2.rotation += 0.1;
+  // 		}
+		// }
+		// gun2.turrets = [
+  // 		{x: 0, y: 0},
+  // 	];
+  // 	gun2.fireRate = 4;
+  // 	gun2.coolDown = 0;
+  // 	this.guns.push(gun2)
+  	
 	}
+
 	setPath() {
 
 	}
-	handleHit() {
+
+	handleHit(bullet) {
 		if (!this.immune) {
-			this.currentHealth -= 1;
+			this.currentHealth -= bullet.damage;
 			this.sprite.tint = 0xff7777;
 			setTimeout(() => {
 				this.sprite.tint = 0xffffff;
@@ -107,8 +140,8 @@ export default class Ship {
 				this.handleDeath();
 			}
 		}
-		
 	}
+
 	handleDeath() {
 		this.sprite.visible = false;
 		this.userData.fadeOut(this.shadow);

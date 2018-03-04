@@ -2,18 +2,27 @@ export const BulletSprites = {
 	"Basic": {
   	  sprite: "sprites/projectile/laser.png",
   	  damage: 1,
-  	  speed: 3
+  	  speed: 2,
+  	  type: "basic"
   	},
   	"Basic2": {
   	  sprite: "sprites/projectile/laser2.png",
   	  damage: 1,
-  	  speed: 3
+  	  speed: 2,
+  	  type: "basic"
   	},
   	// Implement damage system
-  	"Heavy": {
-  		sprite: "...",
-  		damage: 2,
-  		speed: 1
-  	}
+  	"Missile": {
+  		sprite: "sprites/projectile/missile.png",
+  		damage: 1,
+  		speed: 2,
+  		type: "aoe",
+  		splashRadius: 10,
+  	},
+  	"Gatling": {
+  		sprite: "sprites/projectile/gatling.png",
+  		damage: .2,
+  		speed: 4
+  	},
 
 };

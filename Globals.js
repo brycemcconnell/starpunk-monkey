@@ -19,7 +19,7 @@ export const FADE_SPEED = .1;
 export const SHADOW_ALPHA = .3;
 export const MAP_EDGE_PADDING = 32;
 
-PIXI.sound.volumeAll = 1;
+PIXI.sound.volumeAll = 0;
 export const SHOW_HITBOXES = {
 	value: false,
 	toggle: function() {
@@ -55,5 +55,13 @@ export const PLAYER_HIT_DETECTION = {
 	toggle: function() {
 		this.value = this.value ? false : true;
 		console.log('Player hit detection set to', this.value);
+	}
+};
+export const MOUSE_LOCATION = {
+	x: 0,
+	y: 0,
+	update: function(e) {
+		this.x = Math.round(e.clientX / CANVAS_SCALEX);
+		this.y = Math.round(e.clientY / CANVAS_SCALEY);
 	}
 };

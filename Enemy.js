@@ -9,9 +9,9 @@ import {ShipPaths} from "./data/ShipPaths.js";
 function collisionDetection() {
 
 }
-function moveForward(obj, delta) {
-	obj.vx = (Math.cos(obj.sprite.rotation)*obj.speed) * delta;
-	obj.vy = (Math.sin(obj.sprite.rotation)*obj.speed) * delta;
+function moveForward(obj) {
+	obj.vx = (Math.cos(obj.sprite.rotation)*obj.speed);
+	obj.vy = (Math.sin(obj.sprite.rotation)*obj.speed);
 }
 export default class Enemy extends Ship {
 	constructor(pos, type, ai = {type: "verticalSnake", config: {loop: true}}) {
@@ -19,9 +19,6 @@ export default class Enemy extends Ship {
 		super(pos);
 		this.AI = AI[ai.type];
 		this.AIconfig = ai.config;
-		// this.sprite.rotation = Math.PI/180 * 90;
-		// this.shadow.rotation = Math.PI/180 * 90;
-		// this.handleMove();
 	    // Type construction
 	    this.rotateSpeed = .05;
 	    this.destination;
@@ -50,7 +47,6 @@ export default class Enemy extends Ship {
 		this.path = result;
 	}
 	handleMove(delta) {
-		// console.log(this.sprite.rotation * 180/Math.PI);
 		// reset
 		this.destination = this.path[this.pathCurrent];
 		// If a path Vector does not have x or y, replace it with current
@@ -82,7 +78,7 @@ export default class Enemy extends Ship {
 					}
 					const distance = Math.floor(this.distanceToDestination());
 					this.vr = fr.round(this.vr * (distance/100), 2);
-					moveForward(this, delta);
+					moveForward(this);
 				} else if (this.destination.type == "strafe") {
 					if (this.destination.y
 						) {
@@ -103,14 +99,13 @@ export default class Enemy extends Ship {
 			this.vr = (this.rotateSpeed + this.destination.rotateSpeedModifier) * this.destination.rotate;
 		}
 		
-
-		// move everything
-		this.sprite.rotation += this.vr;
-		this.shadow.rotation += this.vr;
-		this.sprite.position.x += this.vx;
-		this.sprite.position.y += this.vy;
-		this.shadow.position.x += this.vx;
-		this.shadow.position.y += this.vy;
+		// move evrything
+		this.sprite.rotation += this.vr * delta;
+		this.shadow.rotation += this.vr * delta;
+		this.sprite.position.x += this.vx * delta;
+		this.sprite.position.y += this.vy * delta;
+		this.shadow.position.x += this.vx * delta;
+		this.shadow.position.y += this.vy * delta;
 		
 		if (this.pathCurrent == this.path.length - 1 && this.path.length > 1) {
 			if (this.sprite.position.y > Gs.CANVAS_SIZEY + (this.sprite.height) ||

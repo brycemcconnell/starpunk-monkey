@@ -24,16 +24,36 @@ export function load() {
     "sprites/ship/enemy.png"
   ]).add([
     "sprites/ship/enemy2.png"
+  ])  .add([
+    "sprites/ship/arwing.png"
+  ]).add([
+    "sprites/ship/arwing2.png"
+  ]).add([
+    "sprites/ship/castle.png"
   ])
   // projectiles
   .add([
     "sprites/projectile/laser.png"
   ]).add([
     "sprites/projectile/laser2.png"
+  ]).add([
+    "sprites/projectile/missile.png"
+  ]).add([
+    "sprites/projectile/gatling.png"
   ])
   // gun
   .add([
     "sprites/gun/gun.png"
+  ]).add([
+    "sprites/gun/gun-double.png"
+  ]).add([
+    "sprites/gun/gun-missile.png"
+  ]).add([
+    "sprites/gun/gun-gatling.png"
+  ])
+  //etc
+  .add([
+    "sprites/etc/cursor.png"
   ])
   // sound
   .add('laser','sounds/laser.wav')

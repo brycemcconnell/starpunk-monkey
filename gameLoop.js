@@ -25,7 +25,7 @@ export function gameLoop(delta){
     // console.log(timer)
 
     background.forEach(layer => {
-      layer.y = layer.y < 0 ? layer.y + (layer.vy * delta) : -Gs.CANVAS_SIZEY;
+      layer.y = layer.y * 2 < 0 ? layer.y + (layer.vy * delta) : -Gs.CANVAS_SIZEY;
     });
 
     player.handleMovement(delta);
@@ -52,7 +52,11 @@ export function gameLoop(delta){
             allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + (enemies.activePool[x].sprite.width / 2) &&
             enemies.activePool[x].sprite.visible) {
           // console.log('hit', enemies);
-          enemies.activePool[x].handleHit();
+          if (allyBullets.activePool[b].type == "aoe") {
+            allyBullets.activePool[b].explode();
+          } else {
+            enemies.activePool[x].handleHit(allyBullets.activePool[b]);
+          }
           statsOld.hits.update();
           PIXI.sound.play('explode');
           allyBullets.recycle(allyBullets.activePool[b]);
@@ -62,7 +66,11 @@ export function gameLoop(delta){
         }
       }
 
-      if (allyBullets.activePool[b].sprite.position.y < 0) {
+    
+      if (allyBullets.activePool[b].sprite.position.y > Gs.CANVAS_SIZEY ||
+          allyBullets.activePool[b].sprite.position.x > Gs.CANVAS_SIZEX ||
+          allyBullets.activePool[b].sprite.position.y < 0 ||
+          allyBullets.activePool[b].sprite.position.x < 0) {
         allyBullets.recycle(allyBullets.activePool[b]);
       }
     }
@@ -77,7 +85,7 @@ export function gameLoop(delta){
             enemyBullets.activePool[b].sprite.position.x > allies.activePool[x].sprite.position.x - (allies.activePool[x].sprite.width / 2) &&
             enemyBullets.activePool[b].sprite.position.x < allies.activePool[x].sprite.position.x + (allies.activePool[x].sprite.width / 2) &&
             allies.activePool[x].sprite.visible) {
-          if (Gs.PLAYER_HIT_DETECTION.value) { allies.activePool[x].handleHit(); }
+          if (Gs.PLAYER_HIT_DETECTION.value) { allies.activePool[x].handleHit(enemyBullets.activePool[b]); }
           if (allies.activePool.length < 1) {
             resetGame();
             break EnemyBulletLoop;
@@ -157,35 +165,37 @@ export function gameLoop(delta){
         child.tint = 0xffffff;
       });
     });
-
-    checkShipCollisions:
-    for (let h = allies.activePool.length - 1; h >= 0; h--) {      
-    // allies.activePool.forEach(ally => {
-      checkPerAlly:
-      for (let i = enemies.activePool.length - 1; i >= 0; i--) {      
-        if (collisionDetector(allies.activePool[h].sizeBox, enemies.activePool[i].sizeBox)) {
-          allies.activePool[h].sizeBox.tint = 0xff0000;
-          enemies.activePool[i].sizeBox.tint = 0xff0000;
-          if (Gs.PLAYER_HIT_DETECTION.value) { allies.activePool[h].handleHit(); }
-          if (allies.activePool.length < 1) {
-            resetGame();
-            break checkShipCollisions;
-          }
-          enemies.activePool[i].handleHit();
-          let allyHitbox = allies.activePool[h].hitBox;
-          let enemyHitbox = enemies.activePool[i].hitBox;
-          for (let ai = allyHitbox.children.length - 1; ai >= 0; ai--) {
-            for (let ei = enemyHitbox.children.length - 1; ei >= 0; ei--) {
-              
-              // if (collisionDetector(enemyHitbox.children[ei], allyHitbox.children[ai], true)) {
-                // allyHitbox.children[ai].tint = 0xff0000;
-                // enemyHitbox.children[ei].tint = 0xff0000;
-              // }
+    if (allies.activePool.length > 0) { // If you haven't already been destroyed by bullets
+       checkShipCollisions:
+      for (let h = allies.activePool.length - 1; h >= 0; h--) {      
+      // allies.activePool.forEach(ally => {
+        checkPerAlly:
+        for (let i = enemies.activePool.length - 1; i >= 0; i--) {      
+          if (collisionDetector(allies.activePool[h].sizeBox, enemies.activePool[i].sizeBox)) {
+            allies.activePool[h].sizeBox.tint = 0xff0000;
+            enemies.activePool[i].sizeBox.tint = 0xff0000;
+            if (Gs.PLAYER_HIT_DETECTION.value) { allies.activePool[h].handleHit({damage: 1}); }
+            if (allies.activePool.length < 1) {
+              resetGame();
+              break checkShipCollisions;
+            }
+            
+            let allyHitbox = allies.activePool[h].hitBox;
+            let enemyHitbox = enemies.activePool[i].hitBox;
+            for (let ai = allyHitbox.children.length - 1; ai >= 0; ai--) {
+              for (let ei = enemyHitbox.children.length - 1; ei >= 0; ei--) {
+                // enemies.activePool[i].handleHit();
+                // if (collisionDetector(enemyHitbox.children[ei], allyHitbox.children[ai], true)) {
+                  // allyHitbox.children[ai].tint = 0xff0000;
+                  // enemyHitbox.children[ei].tint = 0xff0000;
+                // }
+              }
             }
           }
         }
       }
     }
+   
 
     
    

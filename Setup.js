@@ -25,6 +25,9 @@ function createBackgroundLayer(x) {
 const backgroundGroup = new PIXI.display.Group(-1, true);
 export const shadowGroup = new PIXI.display.Group(0, true);
 export const shipGroup = new PIXI.display.Group(1, true);
+export const allyBulletGroup = new PIXI.display.Group(2, true);
+export const enemyBulletGroup = new PIXI.display.Group(3, true);
+export const controlGroup = new PIXI.display.Group(4, true);
 
 export default function setup() {
   app.stage = new PIXI.display.Stage();
@@ -32,52 +35,57 @@ export default function setup() {
   app.stage.addChild(new PIXI.display.Layer(backgroundGroup));
   app.stage.addChild(new PIXI.display.Layer(shadowGroup));
   app.stage.addChild(new PIXI.display.Layer(shipGroup));
+  app.stage.addChild(new PIXI.display.Layer(allyBulletGroup));
+  app.stage.addChild(new PIXI.display.Layer(enemyBulletGroup));
+  app.stage.addChild(new PIXI.display.Layer(controlGroup));
   loaderInfo.innerHTML = "complete!";
   createBackgroundLayer({
     name: "Nebulae",
     sprite: "sprites/background/wallpaper.png",
-    w: 256,
-    h: 640,
-    y: -320,
+    w: Gs.CANVAS_SIZEX,
+    h: Gs.CANVAS_SIZEY * 2,
+    y: -Gs.CANVAS_SIZEY,
     vy: .1,
     tint: 0xaaaaaa
   });
   createBackgroundLayer({
     name: "deepStars",
     sprite: "sprites/background/stars.png",
-    w: 320,
-    h: 640,
+    w: Gs.CANVAS_SIZEX + 64,
+    h: Gs.CANVAS_SIZEY * 2,
     x: -64,
-    y: -320,
+    y: -Gs.CANVAS_SIZEY,
     vy: 0.01,
     tint: 0xaa0077
   });
   createBackgroundLayer({
     name: "bgStars",
     sprite: "sprites/background/stars.png",
-    w: 288,
-    h: 640,
+    w: Gs.CANVAS_SIZEX + 32,
+    h: Gs.CANVAS_SIZEY * 2,
     x: -32,
-    y: -320,
+    y: -Gs.CANVAS_SIZEY,
     vy: .3,
     tint: 0xeeaabb
   });
   createBackgroundLayer({
     name: "clouds",
     sprite: "sprites/background/clouds.png",
-    w: 256,
-    h: 640,
-    y: -320,
+    w: Gs.CANVAS_SIZEX,
+    h: Gs.CANVAS_SIZEY * 2,
+    y: -Gs.CANVAS_SIZEY,
     vy: .4
   });
   createBackgroundLayer({
     name: "fgStars",
     sprite: "sprites/background/stars.png",
-    w: 256,
-    h: 640,
-    y: -320,
+    w: Gs.CANVAS_SIZEX,
+    h: Gs.CANVAS_SIZEY * 2,
+    y: -Gs.CANVAS_SIZEX,
     vy: .6
   });
+  let cursor = new PIXI.Sprite(PIXI.loader.resources["sprites/etc/cursor.png"].texture);
+  app.stage.addChild(cursor);
 
   
   // for (let i = 0; i < 5; i++ ) {
@@ -101,7 +109,7 @@ export default function setup() {
     270,
     Gs.CANVAS_SIZEX / 2,
     Gs.CANVAS_SIZEY - 64,
-    "Player2",
+    "Arwing",
     "ally"
   );
   // allies.getNew(
@@ -125,6 +133,9 @@ export default function setup() {
     //   x: (e.clientX / Gs.CANVAS_SCALEX),
     //   y: (e.clientY / Gs.CANVAS_SCALEY),
     // };
+    Gs.MOUSE_LOCATION.update(e);
+    cursor.position.x = Math.round(e.clientX / Gs.CANVAS_SCALEX) - (cursor.width / 2);
+    cursor.position.y = Math.round(e.clientY / Gs.CANVAS_SCALEY) - (cursor.height / 2);
     UI.MouseLocation.innerHTML = "x:" + Math.round(e.clientX / Gs.CANVAS_SCALEX) + " / " +
       "y: " + Math.round(e.clientY / Gs.CANVAS_SCALEY);
     // UI.EnemyRotation.innerHTML = "target: " +

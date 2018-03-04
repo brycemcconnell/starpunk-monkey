@@ -44,4 +44,10 @@ window.addEventListener('keyup', (e) => {
     player.forEach(manualShip => manualShip.shooting = false);
   }
 });
+window.addEventListener('mousedown', (e) => {
+  player.forEach(manualShip => manualShip.shooting = true);
+});
+window.addEventListener('mouseup', (e) => {
+  player.forEach(manualShip => manualShip.shooting = false);
+});
 }
