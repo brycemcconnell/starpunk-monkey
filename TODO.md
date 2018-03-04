@@ -80,3 +80,27 @@ Sniper - Shoots slowly but with a speed bonus to projectiles and perfect accurac
 Also add shields, a round perimeter around a ship that regenerates energy if not hit within a certain threshold
 
 Change all setTimeouts and setIntervals to aa in-game based system, because those functions dont listen to game pauses/etc.
+
+Add toggle movement mode, battle/travel
+When in travel mode, free move, scroll background in negative (sin/cos) direction to look like moving,
+create background class with dynamic speed based on ship. Maintain parallax.
+Moving in travel mode costs fuel, battle doesnt.
+Moving in travel mode changes your global(game) location, battle doesnt
+Add a global(game) location, as in your position in the galaxy
+add galaxy map, either canvas or webgl based on imagedata maybe in the top left corner? Hovering cursor shows location of pixel and relative data. Keep this data in a json? When a player visits locations add them to the player save state as visited
+If a place is not visited no data is shown, and the location is unknown, maybe have a signal detected kind of thing?
+Travelling in travel mode moves you at (speed) on your galaxial position
+Each pixel of the galaxy map represents (x) of galaxial position.
+Note that if screen size was 400, you would want to move a few (backgrounds) before changing galaxial position, maybe 10-20?
+If you click on a map in travel mode, you can select a destination for auto-pilot (or some variant of light speed?), this uses more fuel? Or normal travel sometimes you find loot?
+Locations include planets, asteroid fields, space stations, wormholes?
+Every time you enter a quandrant, load the data for it, also have RnG for events? Pirate ambush?
+Should traders be random events or should they be entities travelling around the galaxy map? 
+
+Add a party overview menu under the map that shows the current status of your partys ships (HP/etc)
+Fuel is managed player-level and not ship-level
+Eg. have a separate fuel bar to the party menu.
+
+SERVER STUFF
+Highscores stored in a db, contact server and ask for list of current level?
+Have a 'pilot' career score which adds up all scores, averages etc?

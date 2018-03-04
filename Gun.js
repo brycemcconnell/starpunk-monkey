@@ -36,7 +36,7 @@ export default class Gun {
   		if (this.moveType == "WithShip") {
 
   		}
-  		if (this.moveType == "MousePosition") {
+  		if (this.moveType == "Mouse") {
   			let angle = fr.angleToPoint(
   				{x: this.sprite.worldTransform.tx, y: this.sprite.worldTransform.ty},
   				{x: Gs.MOUSE_LOCATION.x, y: Gs.MOUSE_LOCATION.y});
