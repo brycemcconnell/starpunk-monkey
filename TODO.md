@@ -104,3 +104,7 @@ Eg. have a separate fuel bar to the party menu.
 SERVER STUFF
 Highscores stored in a db, contact server and ask for list of current level?
 Have a 'pilot' career score which adds up all scores, averages etc?
+
+Add asteroids and other space debris?
+
+When moving around in galaxial mode, (lazy load) the quadrant data/doodads and then place them in. Move within quadrant coordinates, and when the player leaves the quadrant, ensure the doodads eiterh stay in the previous quadrant coordinates or move off screen (before they go back to the inative doodad pool)

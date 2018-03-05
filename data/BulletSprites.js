@@ -3,13 +3,15 @@ export const BulletSprites = {
   	  sprite: "sprites/projectile/laser.png",
   	  damage: 1,
   	  speed: 2,
-  	  type: "basic"
+  	  type: "basic",
+  	  sound: 'laser'
   	},
   	"Basic2": {
   	  sprite: "sprites/projectile/laser2.png",
   	  damage: 1,
   	  speed: 2,
-  	  type: "basic"
+  	  type: "basic",
+  	  sound: 'laser'
   	},
   	// Implement damage system
   	"Missile": {
@@ -18,11 +20,13 @@ export const BulletSprites = {
   		speed: 2,
   		type: "aoe",
   		splashRadius: 10,
+  		sound: 'laser'
   	},
   	"Gatling": {
   		sprite: "sprites/projectile/gatling.png",
   		damage: .2,
-  		speed: 4
+  		speed: 4,
+  		sound: 'laser'
   	},
 
 };

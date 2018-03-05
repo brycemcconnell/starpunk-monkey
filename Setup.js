@@ -19,9 +19,11 @@ function createBackgroundLayer(x) {
   layer.alpha = x.alpha || 1;
   layer.speed = x.speed || 0;
   layer.direction = {
-    value: Math.round(fr.random(1)) ? 1 : -1,
+    x: Math.round(fr.random(1)) ? 1 : -1,
+    y: Math.round(fr.random(1)) ? 1 : -1,
     set: function() {
-      this.value = Math.round(fr.random(1)) ? 1 : -1;
+      this.x = Math.round(fr.random(1)) ? 1 : -1;
+      this.y = Math.round(fr.random(1)) ? 1 : -1;
     }
   };
   layer.vx = layer.direction.value * (layer.speed / 5);
@@ -55,9 +57,8 @@ export default function setup() {
     sprite: "sprites/background/wallpaper.png",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
-    y: -Gs.CANVAS_SIZEY,
     speed: .1,
-    tint: 0xaaaaaa
+    tint: 0xaaffff
   });
   createBackgroundLayer({
     name: "deepStars",
@@ -65,7 +66,6 @@ export default function setup() {
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -64,
-    y: -Gs.CANVAS_SIZEY,
     speed: 0.01,
     tint: 0xaa0077
   });
@@ -75,7 +75,6 @@ export default function setup() {
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -32,
-    y: -Gs.CANVAS_SIZEY,
     speed: .3,
     tint: 0xeeaabb
   });
@@ -84,7 +83,6 @@ export default function setup() {
     sprite: "sprites/background/clouds.png",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
-    y: -Gs.CANVAS_SIZEY,
     speed: .4
   });
   createBackgroundLayer({
@@ -139,7 +137,7 @@ export default function setup() {
   // sound.laser = PIXI.loader.resources["laser.wav"];
 
   Gs.setCANVAS_SCALE();
-  document.querySelector("canvas").addEventListener("mousemove", (e) => {
+  window.addEventListener("mousemove", (e) => {
     // enemies.activePool[0].destination = {
     //   x: (e.clientX / Gs.CANVAS_SCALEX),
     //   y: (e.clientY / Gs.CANVAS_SCALEY),

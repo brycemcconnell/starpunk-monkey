@@ -58,10 +58,19 @@ export function load() {
   // sound
   .add('laser','sounds/laser.wav')
   .add('explode','sounds/explode.mp3')
+  .add('missile','sounds/missile.wav')
+  .add('geonosis','sounds/geonosis.wav')
+  .add('laser2','sounds/laser2.wav')
+  .add('laser3','sounds/laser3.wav')
+  .add('laser4','sounds/laser4.wav')
+  .add('laser5','sounds/laser5.wav')
+  .add('laser6','sounds/laser6.wav')
+  .add('online','sounds/online.wav')
+  .add('offline','sounds/offline.wav')
   .on("progress", loadProgressHandler)
   .load(setup);
 }
-
+const mapWrapper = document.getElementById("mapWrapper");
 const loaderContainer = document.createElement('div');
 loaderContainer.classList.add("UI_loader_container");
 export const loaderInfo = document.createElement('p');
@@ -72,7 +81,7 @@ loaderBar.classList.add('UI_loader_container__loader');
 loaderBarContainer.appendChild(loaderBar);
 loaderContainer.appendChild(loaderBarContainer);
 loaderContainer.appendChild(loaderInfo);
-document.body.appendChild(loaderContainer);
+mapWrapper.appendChild(loaderContainer);
 
 
 function loadProgressHandler(loader, resource) {

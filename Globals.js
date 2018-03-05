@@ -19,7 +19,7 @@ export const FADE_SPEED = .1;
 export const SHADOW_ALPHA = .3;
 export const MAP_EDGE_PADDING = 32;
 
-PIXI.sound.volumeAll = 0;
+PIXI.sound.volumeAll = 1;
 export const SHOW_HITBOXES = {
 	value: false,
 	toggle: function() {
@@ -65,3 +65,34 @@ export const MOUSE_LOCATION = {
 		this.y = Math.round(e.clientY / CANVAS_SCALEY);
 	}
 };
+export const GALAXY_MODE_DRIFT = {
+	value: false,
+	toggle: function() {
+		this.value = this.value ? false : true;
+		console.log('Galaxy drift set to', this.value);
+	}
+};
+
+export const MAP_ZOOM = {
+	translateValues: [0, -50, -75, -87.5, -93.75],
+	scaleValues: [1, 2, 4, 8, 16],
+	currentIndex: 0,
+	scale: 1,
+	translate: 0,
+	set(dir) {
+		let newIndex = this.currentIndex + dir;
+
+		// Check if too big
+		newIndex = newIndex > this.translateValues.length - 1 ? this.translateValues.length - 1 : newIndex;
+		// Check if too small
+		newIndex = newIndex < 0 ? 0 : newIndex;
+
+		// Set values
+		this.currentIndex = newIndex;
+		this.scale = this.scaleValues[this.currentIndex];
+		this.translate = this.translateValues[this.currentIndex];
+	},
+	updateText(domElement) {
+		domElement.innerHTML = "x" + this.scaleValues[this.currentIndex];
+	}
+}

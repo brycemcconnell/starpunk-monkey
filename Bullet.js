@@ -13,6 +13,7 @@ export default class Bullet {
 		this.type = BulletSprites[config.sprite].type;
 		this.splashRadius = BulletSprites[config.sprite].splashRadius;
 		this.damage = BulletSprites[config.sprite].damage;
+		this.sound = BulletSprites[config.sprite].sound;
 		
 	}
 	handleDeath() {

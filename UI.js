@@ -20,6 +20,12 @@ class UIStatusBar extends UIElement {
 	}
 }
 
+export const LeftSideBar = document.createElement('div');
+export const LeftSideBarTable = document.createElement('table');
+LeftSideBar.appendChild(LeftSideBarTable);
+LeftSideBar.classList.add("UI_box", "UI_left_table");
+mapWrapper.appendChild(LeftSideBar);
+
 export const UIGuageOverlay = document.createElement('div');
 UIGuageOverlay.classList.add("UI_guage_overlay");
 
@@ -178,6 +184,38 @@ PlayerSpeedRow.appendChild(PlayerSpeedTitle);
 export const PlayerSpeed = document.createElement('td');
 PlayerSpeedRow.appendChild(PlayerSpeed);
 
+
+/*
+@LEFTSIDEBAR START
+*/
+export const PlayerGalaxialPositionRow = document.createElement('tr');
+LeftSideBarTable.appendChild(PlayerGalaxialPositionRow);
+export const PlayerGalaxialPositionTitle = document.createElement('th');
+PlayerGalaxialPositionTitle.innerHTML = "Current Galaxial Position: ";
+PlayerGalaxialPositionRow.appendChild(PlayerGalaxialPositionTitle);
+export const PlayerGalaxialPosition = document.createElement('td');
+PlayerGalaxialPositionRow.appendChild(PlayerGalaxialPosition);
+export const MapZoomIn = document.createElement('button');
+MapZoomIn.innerHTML = "+";
+MapZoomIn.onmouseup = () => {
+	Gs.MAP_ZOOM.set(1);
+	Gs.MAP_ZOOM.updateText(MapCurrentZoom);
+}
+export const MapZoomOut = document.createElement('button');
+MapZoomOut.innerHTML = "-";
+MapZoomOut.onmouseup = () => {
+	Gs.MAP_ZOOM.set(-1);
+	Gs.MAP_ZOOM.updateText(MapCurrentZoom);
+}
+export const MapCurrentZoom = document.createElement("div");
+MapCurrentZoom.innerHTML = "x1";
+export const MapControls = document.createElement("div");
+MapControls.classList.add("UI_map_controls")
+MapControls.appendChild(MapZoomIn);
+MapControls.appendChild(MapCurrentZoom);
+MapControls.appendChild(MapZoomOut);
+LeftSideBar.appendChild(MapControls);
+
 export const PlayerGalaxialAngleRow = document.createElement('tr');
 Player.appendChild(PlayerGalaxialAngleRow);
 export const PlayerGalaxialAngleTitle = document.createElement('th');
@@ -185,14 +223,9 @@ PlayerGalaxialAngleTitle.innerHTML = "Current Galaxial Angle: ";
 PlayerGalaxialAngleRow.appendChild(PlayerGalaxialAngleTitle);
 export const PlayerGalaxialAngle = document.createElement('td');
 PlayerGalaxialAngleRow.appendChild(PlayerGalaxialAngle);
-
-export const PlayerGalaxialPositionRow = document.createElement('tr');
-Player.appendChild(PlayerGalaxialPositionRow);
-export const PlayerGalaxialPositionTitle = document.createElement('th');
-PlayerGalaxialPositionTitle.innerHTML = "Current Galaxial Position: ";
-PlayerGalaxialPositionRow.appendChild(PlayerGalaxialPositionTitle);
-export const PlayerGalaxialPosition = document.createElement('td');
-PlayerGalaxialPositionRow.appendChild(PlayerGalaxialPosition);
+/*
+@LEFTSIDEBAR END
+*/
 
 
 export const AddEnemy = document.createElement('button');
@@ -232,6 +265,11 @@ TogglePlayerHitDetection.innerHTML = "Toggle Player Hit Detection";
 TogglePlayerHitDetection.onmouseup = () => {
 	Gs.PLAYER_HIT_DETECTION.toggle();
 }
+export const ToggleGalaxyModeDrift = document.createElement('button');
+ToggleGalaxyModeDrift.innerHTML = "Toggle Galaxy Mode Drift";
+ToggleGalaxyModeDrift.onmouseup = () => {
+	Gs.GALAXY_MODE_DRIFT.toggle();
+}
 export const AddWave = document.createElement('button');
 AddWave.innerHTML = "Add Wave";
 AddWave.onmouseup = () => {
@@ -249,39 +287,6 @@ AddWave.onmouseup = () => {
 
 const sidebar = document.createElement('div');
 sidebar.classList.add("UI_sidebar");
-
-const fireRateSliderContainer = document.createElement('div');
-fireRateSliderContainer.classList.add("UI_box");
-const fireRateSliderTitle = document.createElement('div');
-fireRateSliderTitle.innerHTML = 'FireRate';
-fireRateSliderTitle.classList.add("UI_sidebar-title");
-fireRateSliderContainer.style.borderRadius = '2px';
-// fireRateSliderContainer.style.backgroundColor = '#fff';
-const fireRateMin = document.createElement("span");
-fireRateMin.innerHTML = Gs.FIRERATE_MIN;
-const fireRateMax = document.createElement("span");
-fireRateMax.innerHTML = Gs.FIRERATE_MAX;
-const fireRateSliderView = document.createElement("div");
-fireRateSliderView.classList.add("UI_sidebar_fireRate-view");
-
-const fireRateSlider = document.createElement('input');
-fireRateSlider.type = "range";
-fireRateSlider.min = Gs.FIRERATE_MIN;
-fireRateSlider.max = Gs.FIRERATE_MAX;
-fireRateSlider.value = '20';
-fireRateSlider.style.margin = '0';
-fireRateSlider.style.borderColor = '#0f0';
-fireRateSliderView.appendChild(fireRateMin);
-fireRateSliderView.appendChild(fireRateSlider);
-fireRateSliderView.appendChild(fireRateMax);
-
-fireRateSlider.onchange = () => {
-  allies.activePool.forEach(ship => {
-  	ship.fireRate = fireRateSlider.value;
-  });
-}
-fireRateSliderContainer.appendChild(fireRateSliderTitle);
-fireRateSliderContainer.appendChild(fireRateSliderView);
 
 export const playerShipView = document.createElement("div");
 playerShipView.classList.add("UI_box");
@@ -442,7 +447,7 @@ wrapperOverlay.classList.add("canvas-inset-shadow");
 export function init() {
 	// This removes mousemove detection
 	// wrapper.appendChild(wrapperOverlay);
-	wrapper.appendChild(UIGuageOverlay);
+	// wrapper.appendChild(UIGuageOverlay);
 	pageWrapper.appendChild(sidebar)
 	sidebar.appendChild(Player);
 	sidebar.appendChild(AddEnemy);
@@ -452,8 +457,8 @@ export function init() {
 	sidebar.appendChild(ToggleSound);
 	sidebar.appendChild(ToggleRender);
 	sidebar.appendChild(TogglePlayerHitDetection);
+	sidebar.appendChild(ToggleGalaxyModeDrift);
 	sidebar.appendChild(AddWave);
-	sidebar.appendChild(fireRateSliderContainer);
 	sidebar.appendChild(playerShipView);
 	sidebar.appendChild(objectCountsContainer);
 }

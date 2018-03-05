@@ -110,4 +110,16 @@
 .UI_map {
 	margin-top: 48px;
 	margin-right: 4px;
+	margin-bottom: 4px;
+	background: radial-gradient(#f0a0ff55,black);
+}
+
+.UI_left_table {
+	order: 1;
+	font-size: 10px;
+	margin-right: 4px;
+}
+.UI_map_controls {
+	display: flex;
+	justify-content: space-between;
 }
