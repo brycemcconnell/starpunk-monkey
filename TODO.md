@@ -53,6 +53,7 @@ Normal - fire straight
 Seeking - Seek closest enemy target, retarget if enemy is destroyed before they hit them, fly into eternity if no enemies available
 Guided - even after shooting they remain on the same x-value as your ship while you move
 MouseGuided? - Select and then mouse click where to fire
+Orbit - Orbits the player until it comes into contact with an enemy?
 
 Types of bullet
 Normal - A single shell
@@ -108,3 +109,11 @@ Have a 'pilot' career score which adds up all scores, averages etc?
 Add asteroids and other space debris?
 
 When moving around in galaxial mode, (lazy load) the quadrant data/doodads and then place them in. Move within quadrant coordinates, and when the player leaves the quadrant, ensure the doodads eiterh stay in the previous quadrant coordinates or move off screen (before they go back to the inative doodad pool)
+
+When in a system of a (ntc named) color, have a distant star in the background of the same hue, and text somewhere showing its name, type, (size) etc.
+
+Have the background fade into different nebula when entering a different zone. Eg, no sun would be darker? Change particle effects and hues
+
+Local - What you see on the current viewport
+Quadrant - The pseudo region, 1 pixel area on the map, (approx 980pixels squared?)
+Galaxy - Your region on the entire map (200x200, or 40000 quadrants)

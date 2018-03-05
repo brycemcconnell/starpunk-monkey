@@ -1,4 +1,5 @@
 import setup from './Setup.js';
+import {animate, generateGalaxyData} from './map.js';
 export function load() {
   PIXI.loader
   //backgrounds
@@ -51,11 +52,11 @@ export function load() {
   ]).add([
     "sprites/gun/gun-gatling.png"
   ])
-  //etc
+  // UI graphics
   .add([
     "sprites/etc/cursor.png"
   ])
-  // sound
+  // sound fx
   .add('laser','sounds/laser.wav')
   .add('explode','sounds/explode.mp3')
   .add('missile','sounds/missile.wav')
@@ -67,6 +68,24 @@ export function load() {
   .add('laser6','sounds/laser6.wav')
   .add('online','sounds/online.wav')
   .add('offline','sounds/offline.wav')
+  .add('galaxial-booster','sounds/galaxial-booster.wav')
+  .add('galaxial-booster2','sounds/galaxial-booster2.wav')
+  .add('galaxial-booster3','sounds/galaxial-booster3.wav')
+  .add('space-missile','sounds/space-missile.wav')
+
+  // music
+  .add('moment-of-time','sounds/music/moment-of-time.mp3')
+  // Data
+  .add({
+    name: "galaxy",
+    url: "sprites/map/galaxy.png",
+    onComplete: function() {
+      animate();
+      PIXI.loader.resources['galaxy'].metadata.galaxy = generateGalaxyData();
+      console.log(PIXI.loader.resources['galaxy'])
+    }
+  })
+
   .on("progress", loadProgressHandler)
   .load(setup);
 }
@@ -85,8 +104,6 @@ mapWrapper.appendChild(loaderContainer);
 
 
 function loadProgressHandler(loader, resource) {
-  // console.log("loading: " + resource.url); 
-  // console.log("progress: " + loader.progress + "%"); 
   loaderInfo.innerHTML = "loading: " + resource.url + ", " + parseFloat(loader.progress).toFixed(2) + "%";
   loaderBar.style.width = loader.progress + "%";
   // loaderBar.style.width = "100%";

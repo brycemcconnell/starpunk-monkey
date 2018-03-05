@@ -20,7 +20,7 @@ export const BulletSprites = {
   		speed: 2,
   		type: "aoe",
   		splashRadius: 10,
-  		sound: 'laser'
+  		sound: 'space-missile'
   	},
   	"Gatling": {
   		sprite: "sprites/projectile/gatling.png",

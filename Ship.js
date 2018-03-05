@@ -17,7 +17,7 @@ export default class Ship {
 		this.sprite.parentGroup = shipGroup;
 		this.shadow = new PIXI.Sprite(PIXI.loader.resources[ShipSprites[config.sprite].sprite].texture);
 		this.shadow.tint = 0x000000;
-		this.shadow.alpha = Gs.SHADOW_STRENGTH;
+		this.shadow.alpha = Gs.SHADOW_ALPHA;
 		this.shadow.position.set(config.x, config.y + Gs.SHADOW_OFFSET);
 		this.shadow.anchor.set(0.5);
 		this.shadow.parentGroup = shadowGroup;
@@ -53,6 +53,7 @@ export default class Ship {
 		this.vx = 0;
 		this.vy = 0;
 		this.vr = 0;
+		this.time = 0;
 		this.speed = ShipSprites[config.sprite].speed;
 		this.rotateSpeed = .05;
 		this.immune = false;

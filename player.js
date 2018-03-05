@@ -21,10 +21,10 @@ export const player = {
 		toggle: function() {
 			if (this.value == "combat") {
 				this.value = "travel";
-				PIXI.sound.play('offline');
+				PIXI.sound.play('online');
 			} else {
 				this.value = "combat";
-				PIXI.sound.play('online');
+				PIXI.sound.play('offline');
 			}
 			background.forEach(layer => {
 	       layer.direction.set();
@@ -84,6 +84,7 @@ export const player = {
 			
 			if (ship.moveDirection.up) {
 				isMoving = true;
+				PIXI.sound.play('galaxial-booster3');
 				// @TODO add drift while in travel speed
 				let resistance = Gs.GALAXY_MODE_DRIFT.value ? .05 : 1;
 				background.forEach(layer => {
@@ -151,6 +152,15 @@ export const player = {
 		  });
 	},
 	handleCombatMovement: function(delta) {
+		/*
+		// Example circle movement
+		allies.activePool[0].time += .1;
+		let centreX = 100;
+		let centreY = 200;
+		allies.activePool[0].sprite.position.x = (Math.cos(allies.activePool[0].time) * 50) + centreX;
+		allies.activePool[0].sprite.position.y = (Math.sin(allies.activePool[0].time) * 50) + centreY;
+		return;
+		*/
 		let moveRightOk = 0;
 		let moveLeftOk = 0;
 		let moveDownOk = 0;

@@ -9,17 +9,22 @@ export const setCANVAS_SCALE = () => {
 }
 export const TILE_SIZE = 32;
 export const SHADOW_OFFSET = 50;
-export const SHADOW_STRENGTH = .3;
+export const SHADOW_ALPHA = .3;
 export const SCALE_FACTOR = 1;
 export const UI_SCALE = 2;
 export const DEFAULT_ROTATION = 270;
 export const FIRERATE_MIN = 1;
 export const FIRERATE_MAX = 60;
 export const FADE_SPEED = .1;
-export const SHADOW_ALPHA = .3;
 export const MAP_EDGE_PADDING = 32;
 
 PIXI.sound.volumeAll = 1;
+export const VOLUME_MUSIC = {
+	value: 1
+};
+export const VOLUME_SOUND = {
+	value: 1
+};
 export const SHOW_HITBOXES = {
 	value: false,
 	toggle: function() {

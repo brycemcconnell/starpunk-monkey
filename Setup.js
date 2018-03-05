@@ -158,7 +158,9 @@ export default function setup() {
   });
   initKeyboard();
 
-/*  let testWave = new Wave({
+  /*  
+  // Debug wave
+  let testWave = new Wave({
     team:  enemies,
     count: 5,
     timing: 500,
@@ -168,5 +170,18 @@ export default function setup() {
       y: -64
     }
   });*/
+  PIXI.sound.play('moment-of-time', {
+    loop: true,
+    volume: Gs.VOLUME_MUSIC.value
+  });
+  /*
+  // debug changing volume after a song has started
+  // When changing global volume, call all sounds/music and set their volume like so
+  setTimeout(() => {
+    PIXI.sound.volume('moment-of-time', 0)
+  }, 2500)
+  setTimeout(() => {
+    PIXI.sound.volume('moment-of-time', 1)
+  }, 4500)*/
 }
 

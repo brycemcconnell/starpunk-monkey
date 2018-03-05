@@ -1,4 +1,4 @@
-import {allies} from './Model.js';
+import {allies, app} from './Model.js';
 import {player} from './player.js';
 
 export function initKeyboard() {
@@ -48,7 +48,7 @@ window.addEventListener('keyup', (e) => {
     player.moveMode.toggle();
   }
 });
-window.addEventListener('mousedown', (e) => {
+app.view.addEventListener('mousedown', (e) => {
   playerShips.forEach(manualShip => manualShip.shooting = true);
 });
 window.addEventListener('mouseup', (e) => {
