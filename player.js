@@ -1,8 +1,9 @@
 import * as UI from './UI.js';
-import { allyBullets, app, allies, enemies } from './Model.js';
+import { background, allyBullets, app, allies, enemies } from './Model.js';
 import * as Gs from './Globals.js';
 import * as fr from './lib/fr.js';
-import {playerSpeed} from './stats.js';
+import {playerSpeed, playerGalaxialAngle, playerGalaxialPosition} from './stats.js';
+import {mapPosition} from './map.js';
 export const bulletSpeed = 3;
 // Turning system
 const turnFactor = 30; // Max turn in degrees
@@ -15,14 +16,127 @@ function turn(ship) {
 	ship.shadow.rotation = Math.PI/180 * (Gs.DEFAULT_ROTATION + currentTurn);
 }
 export const player = {
-	handleMovement: function(delta) {		
+	moveMode: {
+		value: "combat",
+		toggle: function() {
+			this.value = this.value == "combat" ? "travel" : "combat";
+			background.forEach(layer => {
+	       layer.direction.set();
+	      });
+		}
+	},
+	handleTravelMovement: function(delta) {
+		allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {
+			let currentSpeed = allies.activePool.sort((a, b) => a.speed - b.speed)[0].speed;
+			let currentTurnSpeed = turnSpeed;
+			if (ship.booster && ship.fuel > 0) {
+	   		currentSpeed += 1;
+	    	ship.fuel -= .5;
+	  	} else {
+	    	ship.fuel += ship.fuel < ship.maxFuel ? 0.1 : 0;
+	  	}
+	  	let realignX = 0;
+	  	let realignY = 0;
+	  	if (ship.sprite.position.x > Gs.CANVAS_SIZEX / 2) {
+	  		ship.sprite.position.x -= currentSpeed/5;
+	  		ship.shadow.position.x -= currentSpeed/5;
+	  	}
+	  	if (ship.sprite.position.x < Gs.CANVAS_SIZEX / 2) {
+	  		ship.sprite.position.x += currentSpeed/5;
+	  		ship.shadow.position.x += currentSpeed/5;
+	  	}
+	  	if (ship.sprite.position.y > Gs.CANVAS_SIZEX / 2) {
+	  		ship.sprite.position.y -= currentSpeed/5;
+	  		ship.shadow.position.y -= currentSpeed/5;
+	  	}
+	  	if (ship.sprite.position.y < Gs.CANVAS_SIZEX / 2) {
+	  		ship.sprite.position.y += currentSpeed/5;
+	  		ship.shadow.position.y += currentSpeed/5;
+	  	}
+			// console.log(ship.moveDirection)
+			function wrapLayer(layer) {
+				if (layer.x > 0) {
+	       	layer.x = -Gs.CANVAS_SIZEX;
+	       }
+	       if (layer.x < -Gs.CANVAS_SIZEX) {
+	       	layer.x = 0;
+	       }
+	       if (layer.y > 0) {
+	       	layer.y = -Gs.CANVAS_SIZEY;
+	       }
+	       if (layer.y < -Gs.CANVAS_SIZEY) {
+	       	layer.y = 0;
+	       }
+			}
+			if (ship.moveDirection.up) {
+				// @TODO add drift while in travel speed
+				background.forEach(layer => {
+	       if (Math.abs(layer.vx) > layer.speed + currentSpeed) {
+			  		layer.vx = layer.vx;
+			  	} else {
+			  		layer.vx -= ((Math.cos(ship.sprite.rotation)*(layer.speed + currentSpeed))*delta) * .005;
+			  	}
+			  	if (Math.abs(layer.vy) > layer.speed + currentSpeed) {
+			  		layer.vy = layer.vy;
+			  	} else {
+			  		layer.vy -= ((Math.sin(ship.sprite.rotation)*(layer.speed + currentSpeed))*delta) * .005;
+			  	}
+	      });
+		  }
+		  if (ship.moveDirection.down) {
+		  	background.forEach(layer => {
+	       if (Math.abs(layer.vx) > layer.speed + currentSpeed) {
+			  		layer.vx = layer.vx
+			  	} else {
+			  		layer.vx += ((Math.cos(ship.sprite.rotation)*(layer.speed + currentSpeed))*delta) * .005;
+			  	}
+			  	if (Math.abs(layer.vy) > layer.speed + currentSpeed) {
+			  		layer.vy = layer.vy
+			  	} else {
+			  		layer.vy += ((Math.sin(ship.sprite.rotation)*(layer.speed + currentSpeed))*delta) * .005;
+			  	}
+	      });
+		  }
+		  if (!ship.moveDirection.down && !ship.moveDirection.up) {
+		  	background.forEach(layer => {
+		  		if (Math.abs(layer.vx) > layer.speed) {
+		  			layer.vx += layer.vx > 0 ? - 0.05: 0.05;
+		  		}
+			  	if (Math.abs(layer.vy) > layer.speed) {
+				  	layer.vy += layer.vy > 0 ? - 0.05: 0.05;
+				  }
+		  	});
+		  }
+		  background.forEach(layer => {
+		  	
+		  	layer.x += layer.vx;
+		  	layer.y += layer.vy;
+		  	wrapLayer(layer);
+		  });
+		  if (ship.moveDirection.left) {
+		  	// currentTurnSpeed *= -1;
+		  	currentTurn = currentTurn - currentTurnSpeed;
+		  	turn(ship);
+		  }
+		  if (ship.moveDirection.right) {
+		  	currentTurn = currentTurn + currentTurnSpeed;
+		  	turn(ship);
+		  }
+		  playerSpeed.update((Math.abs(background[0].vx) + Math.abs(background[0].vy)).toFixed(2));
+		  playerGalaxialAngle.update((fr.angleToPoint({x: background[0].vx, y: background[0].vy}, {x: 0, y: 0}) * 180/Math.PI).toFixed(2));
+		  playerGalaxialPosition.update(fr.round(((playerGalaxialPosition.active + background[0].vx * -1)), 0),
+		  	                            fr.round(((playerGalaxialPosition.inactive + background[0].vy * -1)), 0)
+		  	                            );
+		  mapPosition.update(playerGalaxialPosition.active / 100, playerGalaxialPosition.inactive / 100);
+		});
+	},
+	handleCombatMovement: function(delta) {
 		let moveRightOk = 0;
 		let moveLeftOk = 0;
 		let moveDownOk = 0;
 		let moveUpOk = 0;
 	  allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {
 		  UI.FuelGuage.style.height =  (ship.fuel * 100) / ship.maxFuel + "%";
-
 		  if (ship.moveDirection.up && ship.sprite.y > ship.sprite.width / 2) {
 		    moveUpOk += 1;
 		  }

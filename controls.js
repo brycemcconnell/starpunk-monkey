@@ -1,53 +1,57 @@
 import {allies} from './Model.js';
+import {player} from './player.js';
 
 export function initKeyboard() {
-  let player = allies.activePool.filter(a => a.moveType == "manual");
-  // console.log(player);
+  let playerShips = allies.activePool.filter(a => a.moveType == "manual");
+  // console.log(playerShips);
   window.addEventListener('keydown', (e) => {
   if (e.key == "w" || e.key == "W" || e.key == "ArrowUp") {
-    player.forEach(manualShip => manualShip.moveDirection.up = true);
+    playerShips.forEach(manualShip => manualShip.moveDirection.up = true);
   }
   if (e.key == "s" || e.key == "S" || e.key == "ArrowDown") {
-    player.forEach(manualShip => manualShip.moveDirection.down = true);
+    playerShips.forEach(manualShip => manualShip.moveDirection.down = true);
   }
   if (e.key == "a" || e.key == "A" || e.key == "ArrowLeft") {
-    player.forEach(manualShip => manualShip.moveDirection.left = true);
+    playerShips.forEach(manualShip => manualShip.moveDirection.left = true);
   }
   if (e.key == "d" || e.key == "D" || e.key == "ArrowRight") {
-    player.forEach(manualShip => manualShip.moveDirection.right = true);
+    playerShips.forEach(manualShip => manualShip.moveDirection.right = true);
   }
   if (e.key == "Shift") {
-    player.forEach(manualShip => manualShip.booster = true);
+    playerShips.forEach(manualShip => manualShip.booster = true);
   }
   if (e.key == " ") {
-    player.forEach(manualShip => manualShip.shooting = true);
+    playerShips.forEach(manualShip => manualShip.shooting = true);
     e.preventDefault();
   }
 });
 window.addEventListener('keyup', (e) => {
   if (e.key == "w" || e.key == "W" || e.key == "ArrowUp") {
-    player.forEach(manualShip => manualShip.moveDirection.up = false);
+    playerShips.forEach(manualShip => manualShip.moveDirection.up = false);
   }
   if (e.key == "s" || e.key == "S" || e.key == "ArrowDown") {
-    player.forEach(manualShip => manualShip.moveDirection.down = false);
+    playerShips.forEach(manualShip => manualShip.moveDirection.down = false);
   }
   if (e.key == "a" || e.key == "A" || e.key == "ArrowLeft") {
-    player.forEach(manualShip => manualShip.moveDirection.left = false);
+    playerShips.forEach(manualShip => manualShip.moveDirection.left = false);
   }
   if (e.key == "d" || e.key == "D" || e.key == "ArrowRight") {
-    player.forEach(manualShip => manualShip.moveDirection.right = false);
+    playerShips.forEach(manualShip => manualShip.moveDirection.right = false);
   }
   if (e.key == "Shift") {
-    player.forEach(manualShip => manualShip.booster = false);
+    playerShips.forEach(manualShip => manualShip.booster = false);
   }
   if (e.key == " ") {
-    player.forEach(manualShip => manualShip.shooting = false);
+    playerShips.forEach(manualShip => manualShip.shooting = false);
+  }
+  if (e.key == "x") {
+    player.moveMode.toggle();
   }
 });
 window.addEventListener('mousedown', (e) => {
-  player.forEach(manualShip => manualShip.shooting = true);
+  playerShips.forEach(manualShip => manualShip.shooting = true);
 });
 window.addEventListener('mouseup', (e) => {
-  player.forEach(manualShip => manualShip.shooting = false);
+  playerShips.forEach(manualShip => manualShip.shooting = false);
 });
 }

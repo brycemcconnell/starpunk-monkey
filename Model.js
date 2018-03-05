@@ -6,7 +6,7 @@ import BulletArray from './BulletArray.js';
 import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import AlliedShip from './AlliedShip.js';
-function createGrid() {
+/*function createGrid() {
   let newGrid = [];
   for (let i = 0; i < Gs.CANVAS_SIZEX; i+=Gs.TILE_SIZE) {
     let row = [];
@@ -18,7 +18,7 @@ function createGrid() {
   }
   return newGrid;
 }
-export let grid = createGrid();
+export let grid = createGrid();*/
 
 export let app = new PIXI.Application({ 
     width: Gs.CANVAS_SIZEX * Gs.SCALE_FACTOR,         // default: 800

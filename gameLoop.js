@@ -1,4 +1,4 @@
-import { grid, speed, allyBullets, enemies, enemyBullets, background, allies } from './Model.js';
+import { speed, allyBullets, enemies, enemyBullets, background, allies } from './Model.js';
 import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
@@ -24,11 +24,17 @@ export function gameLoop(delta){
     }
     // console.log(timer)
 
-    background.forEach(layer => {
-      layer.y = layer.y * 2 < 0 ? layer.y + (layer.vy * delta) : -Gs.CANVAS_SIZEY;
-    });
 
-    player.handleMovement(delta);
+
+    if (player.moveMode.value == "combat") { 
+      player.handleCombatMovement(delta); 
+      background.forEach(layer => {
+        layer.y = layer.y * 2 < 0 ? layer.y + (layer.speed * delta) : -Gs.CANVAS_SIZEY;
+      });
+    } else {
+      player.handleTravelMovement(delta, background);
+      
+    }
     enemies.activePool.forEach(enemy => {
       enemy.handleMove(delta);
       enemy.handleAttack(delta);

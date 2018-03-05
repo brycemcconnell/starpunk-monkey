@@ -11,6 +11,8 @@ export const allyBulletCount = new ChildStat(UI.allyBulletsCount, entitiesTotalC
 
 // Dynamic stats
 export const playerSpeed = new Stat(UI.PlayerSpeed);
+export const playerGalaxialAngle = new Stat(UI.PlayerGalaxialAngle);
+export const playerGalaxialPosition = new Stat(UI.PlayerGalaxialPosition);
 
 
 export const playerScore = new Stat(UI.PlayerScore);

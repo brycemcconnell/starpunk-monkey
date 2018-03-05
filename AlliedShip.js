@@ -19,6 +19,7 @@ export default class AlliedShip extends Ship {
     this.fuel = 100;
     this.booster = false;
     this.moveType = "manual";
+    this.breaking = false;
     
 
     this.sprite.rotation = Math.PI/180 * Gs.DEFAULT_ROTATION;

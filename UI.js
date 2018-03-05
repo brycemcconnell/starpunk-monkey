@@ -178,6 +178,22 @@ PlayerSpeedRow.appendChild(PlayerSpeedTitle);
 export const PlayerSpeed = document.createElement('td');
 PlayerSpeedRow.appendChild(PlayerSpeed);
 
+export const PlayerGalaxialAngleRow = document.createElement('tr');
+Player.appendChild(PlayerGalaxialAngleRow);
+export const PlayerGalaxialAngleTitle = document.createElement('th');
+PlayerGalaxialAngleTitle.innerHTML = "Current Galaxial Angle: ";
+PlayerGalaxialAngleRow.appendChild(PlayerGalaxialAngleTitle);
+export const PlayerGalaxialAngle = document.createElement('td');
+PlayerGalaxialAngleRow.appendChild(PlayerGalaxialAngle);
+
+export const PlayerGalaxialPositionRow = document.createElement('tr');
+Player.appendChild(PlayerGalaxialPositionRow);
+export const PlayerGalaxialPositionTitle = document.createElement('th');
+PlayerGalaxialPositionTitle.innerHTML = "Current Galaxial Position: ";
+PlayerGalaxialPositionRow.appendChild(PlayerGalaxialPositionTitle);
+export const PlayerGalaxialPosition = document.createElement('td');
+PlayerGalaxialPositionRow.appendChild(PlayerGalaxialPosition);
+
 
 export const AddEnemy = document.createElement('button');
 AddEnemy.innerHTML = "add Enemy";

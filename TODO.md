@@ -65,7 +65,7 @@ Cluster - On hit, shoots out x of itself in random directions
 Timed Missile - explodes even if it doesn't hit anything
 Mine - Stops at x location and stays until an enemy collides with it or (timer runs out and it explodes anyway)
 
-Plasma - Medium damage to shields, small to hull, can only be fired from HighTech cannons
+Plasma - Medium damage to shields, small to hull, can only be fired from HighTech cannons (animated sprite, tail move back and forth? projectile also moves left to right)
 Phaser - High damage to shields, doesnt damage hull, can only be fired from HighTech cannons
 Ion - Small damage to shields, doesnt damage hull, slows enemy on hit, only fired from HighTech Cannons
 

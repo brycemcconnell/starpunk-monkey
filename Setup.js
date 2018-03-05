@@ -1,8 +1,9 @@
-import { grid, app, enemies, enemyBullets, background, allies } from './Model.js';
+import { app, enemies, enemyBullets, background, allies } from './Model.js';
 import {gameLoop} from './gameLoop.js';
 // import {instantiateShip} from './ship.js';
 import * as Gs from './Globals.js';
 import * as UI from './UI.js';
+import * as fr from './lib/fr.js';
 import Enemy from './Enemy.js';
 
 import AlliedShip from './AlliedShip.js';
@@ -16,7 +17,17 @@ function createBackgroundLayer(x) {
   layer.position.set(x.x || 0, x.y || 0);
   layer.tint = x.tint || 0xFFFFFF;
   layer.alpha = x.alpha || 1;
-  layer.vy = x.vy || 0;
+  layer.speed = x.speed || 0;
+  layer.direction = {
+    value: Math.round(fr.random(1)) ? 1 : -1,
+    set: function() {
+      this.value = Math.round(fr.random(1)) ? 1 : -1;
+    }
+  };
+  layer.vx = layer.direction.value * (layer.speed / 5);
+  layer.vy = layer.direction.value * (layer.speed / 5);
+  layer.tilePosition.x = x.offSetX || 0;
+  layer.tilePosition.y = x.offSetY || 0;
   layer.parentGroup = x.displayGroup || backgroundGroup;
   app.stage.addChild(layer);
   background.push(layer);
@@ -42,47 +53,47 @@ export default function setup() {
   createBackgroundLayer({
     name: "Nebulae",
     sprite: "sprites/background/wallpaper.png",
-    w: Gs.CANVAS_SIZEX,
+    w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     y: -Gs.CANVAS_SIZEY,
-    vy: .1,
+    speed: .1,
     tint: 0xaaaaaa
   });
   createBackgroundLayer({
     name: "deepStars",
     sprite: "sprites/background/stars.png",
-    w: Gs.CANVAS_SIZEX + 64,
+    w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
-    x: -64,
+    offSetX: -64,
     y: -Gs.CANVAS_SIZEY,
-    vy: 0.01,
+    speed: 0.01,
     tint: 0xaa0077
   });
   createBackgroundLayer({
     name: "bgStars",
     sprite: "sprites/background/stars.png",
-    w: Gs.CANVAS_SIZEX + 32,
+    w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
-    x: -32,
+    offSetX: -32,
     y: -Gs.CANVAS_SIZEY,
-    vy: .3,
+    speed: .3,
     tint: 0xeeaabb
   });
   createBackgroundLayer({
     name: "clouds",
     sprite: "sprites/background/clouds.png",
-    w: Gs.CANVAS_SIZEX,
+    w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     y: -Gs.CANVAS_SIZEY,
-    vy: .4
+    speed: .4
   });
   createBackgroundLayer({
     name: "fgStars",
     sprite: "sprites/background/stars.png",
-    w: Gs.CANVAS_SIZEX,
+    w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     y: -Gs.CANVAS_SIZEX,
-    vy: .6
+    speed: .6
   });
   let cursor = new PIXI.Sprite(PIXI.loader.resources["sprites/etc/cursor.png"].texture);
   app.stage.addChild(cursor);
@@ -123,8 +134,8 @@ export default function setup() {
   app.ticker.add(delta => gameLoop(delta));
 
   wrapper.style.display = "flex";
-  wrapper.style.width = document.querySelector("canvas").clientWidth + "px";
-  wrapper.style.height = document.querySelector("canvas").clientHeight + "px";
+  wrapper.style.width = app.view.clientWidth + "px";
+  wrapper.style.height = app.view.clientHeight + "px";
   // sound.laser = PIXI.loader.resources["laser.wav"];
 
   Gs.setCANVAS_SCALE();
@@ -149,7 +160,7 @@ export default function setup() {
   });
   initKeyboard();
 
-  let testWave = new Wave({
+/*  let testWave = new Wave({
     team:  enemies,
     count: 5,
     timing: 500,
@@ -158,6 +169,6 @@ export default function setup() {
       x: 128,
       y: -64
     }
-  });
+  });*/
 }
 

@@ -27,12 +27,14 @@
 			display: flex;
 		}
 		canvas {
-			width: auto;
-			height: 100vh;
 			image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
 			image-rendering: -webkit-optimize-contrast; /* Safari                        */
 			image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
 			image-rendering: pixelated;    
+		}
+		#wrapper canvas {
+			width: auto;
+			height: 100vh;
 			cursor: none !important;    
 		}
 		.canvas-inset-shadow {
@@ -40,6 +42,9 @@
 			min-height: 100%;
 			position: absolute;
 			box-shadow: inset 0 0 5em 1em #000000b3;
+		}
+		#mapWrapper {
+			order: -1;
 		}
 	</style>
 	<link rel="stylesheet" href="UI.css">
@@ -50,8 +55,9 @@
 </head>
 <body>
 	<div id="pageWrapper">
-		<div id="wrapper">
-		</div>
+		
+		<div id="wrapper"></div>
+		<div id="mapWrapper"></div>
 	</div>
 	
 	<script type="text/javascript">
