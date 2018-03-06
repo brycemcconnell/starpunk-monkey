@@ -3,7 +3,7 @@ export default class AnimatedObject {
 	constructor(sprite, frameCount, pos) {
 		this.textures = [];
 		for (let i = 0; i < frameCount; i++) {
-			let texture = PIXI.Texture.fromFrame('explode0' + (i + 1) + '.png');
+			let texture = PIXI.Texture.fromFrame(sprite + '0' + (i + 1) + '.png');
 				this.textures.push(texture);
 		}
 		this.animation = new PIXI.extras.AnimatedSprite(this.textures);

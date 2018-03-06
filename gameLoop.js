@@ -84,7 +84,7 @@ export function gameLoop(delta){
             enemies.activePool[x].handleHit(allyBullets.activePool[b]);
           }
           statsOld.hits.update();
-          PIXI.sound.play('explode', { volume: Gs.VOLUME_SOUND.value });
+          
           // Damage animation?
           // let explosion = new AnimatedObject("explode", 7, {
           //   x: allyBullets.activePool[b].sprite.position.x, 

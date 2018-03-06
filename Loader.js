@@ -56,6 +56,8 @@ export function load() {
    // Explosions
   .add([
     "./sprites/explode/explode.json"
+  ]).add([
+    "./sprites/explode/explodeb.json"
   ])
 
   // UI graphics
@@ -65,6 +67,8 @@ export function load() {
   // sound fx
   .add('laser','sounds/laser.wav')
   .add('explode','sounds/explode.mp3')
+  .add('explode2','sounds/explode2.mp3')
+  .add('explode3','sounds/explode3.mp3')
   .add('missile','sounds/missile.wav')
   .add('geonosis','sounds/geonosis.wav')
   .add('laser2','sounds/laser2.wav')

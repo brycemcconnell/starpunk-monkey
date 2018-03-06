@@ -22,8 +22,7 @@ export default class Bullet {
 	}
 
 	explode() {
-		let explosion = new AnimatedObject("explode", 7, {x: this.sprite.x, y: this.sprite.y});
-		console.log(explosion)
+		let explosion = new AnimatedObject("explodeb", 6, {x: this.sprite.x, y: this.sprite.y});
 		// let a = new PIXI.Graphics();
 		// a.beginFill(0xe74c3c); 
 		// // Being in a particle, only has simple position, (no worldTransform)

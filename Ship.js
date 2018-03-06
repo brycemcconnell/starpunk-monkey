@@ -133,6 +133,7 @@ export default class Ship {
 	}
 
 	handleHit(bullet) {
+		
 		if (!this.immune) {
 			this.currentHealth -= bullet.damage;
 			this.sprite.tint = 0xff7777;
@@ -140,7 +141,10 @@ export default class Ship {
 				this.sprite.tint = 0xffffff;
 			}, 100);
 			if (this.currentHealth < 1) {
+				PIXI.sound.play('explode3', { volume: Gs.VOLUME_SOUND.value });
 				this.handleDeath();
+			} else {
+				PIXI.sound.play('explode', { volume: Gs.VOLUME_SOUND.value });
 			}
 		}
 	}
