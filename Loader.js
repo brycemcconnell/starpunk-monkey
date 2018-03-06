@@ -52,6 +52,12 @@ export function load() {
   ]).add([
     "sprites/gun/gun-gatling.png"
   ])
+
+   // Explosions
+  .add([
+    "./sprites/explode/explode.json"
+  ])
+
   // UI graphics
   .add([
     "sprites/etc/cursor.png"
@@ -75,6 +81,7 @@ export function load() {
 
   // music
   .add('moment-of-time','sounds/music/moment-of-time.mp3')
+
   // Data
   .add({
     name: "galaxy",

@@ -19,7 +19,7 @@ export const BulletSprites = {
   		damage: 1,
   		speed: 2,
   		type: "aoe",
-  		splashRadius: 10,
+  		splashRadius: 20,
   		sound: 'space-missile'
   	},
   	"Gatling": {

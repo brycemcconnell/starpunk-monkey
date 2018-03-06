@@ -1,0 +1,14 @@
+export default class CollisionDetection {
+	static PointInRectangle(point, rect) {
+		// return 
+	}
+	static PointInCircle(point, circle) {
+		return Math.hypot(point.x - circle.x, point.y - circle.y) < circle.radius;
+	}
+  /*static CircleRectangle (circle, rect) {
+  	// Needs fixing
+    let deltaX = circle.x - Math.max((rect.x - rect.width / 2), Math.min(circle.x, (rect.x + rect.width / 2)));
+    let deltaY = circle.y - Math.max((rect.y - rect.width / 2), Math.min(circle.y, (rect.y + rect.height / 2)));
+    return (Math.hypot(deltaX, deltaY)) < (circle.radius * circle.radius);
+  }*/
+}

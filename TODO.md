@@ -117,3 +117,5 @@ Have the background fade into different nebula when entering a different zone. E
 Local - What you see on the current viewport
 Quadrant - The pseudo region, 1 pixel area on the map, (approx 980pixels squared?)
 Galaxy - Your region on the entire map (200x200, or 40000 quadrants)
+
+Make a function that takes all bullet sprites and creates a particle container for each within bulletContainers array(Model.js)

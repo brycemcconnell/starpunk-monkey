@@ -6,6 +6,8 @@ import * as Gs from './Globals.js';
 import {gameTime, trueTime, entitiesTotalCount, gameRelevantStats} from './stats.js';
 import Wave from './Wave.js';
 import {resetGame} from './resetGame.js';
+import CollisionDetection from './CollisionDetection.js';
+import AnimatedObject from './AnimatedObject.js';
 
 
 let timer = 0;
@@ -59,14 +61,35 @@ export function gameLoop(delta){
             allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + (enemies.activePool[x].sprite.width / 2) &&
             enemies.activePool[x].sprite.visible) {
           // console.log('hit', enemies);
-          console.log(allyBullets.activePool[b].sprite.worldTransform.tx, allyBullets.activePool[b].sprite.worldTransform.ty)
           if (allyBullets.activePool[b].type == "aoe") {
             allyBullets.activePool[b].explode();
+            let radius = allyBullets.activePool[b].splashRadius;
+            let explodeX = allyBullets.activePool[b].sprite.position.x;
+            let explodeY = allyBullets.activePool[b].sprite.position.y;
+            for (let i = enemies.activePool.length - 1; i >= 0; i--) {
+              let collider = CollisionDetection.PointInCircle({
+                x: enemies.activePool[i].sprite.x,
+                y: enemies.activePool[i].sprite.y,
+              },
+              {
+                x: explodeX,
+                y: explodeY,
+                radius: radius
+              });
+              if (collider) {
+                enemies.activePool[i].handleHit(allyBullets.activePool[b]);
+              }
+            }
           } else {
             enemies.activePool[x].handleHit(allyBullets.activePool[b]);
           }
           statsOld.hits.update();
-          PIXI.sound.play('explode');
+          PIXI.sound.play('explode', { volume: Gs.VOLUME_SOUND.value });
+          // Damage animation?
+          // let explosion = new AnimatedObject("explode", 7, {
+          //   x: allyBullets.activePool[b].sprite.position.x, 
+          //   y: allyBullets.activePool[b].sprite.position.y
+          // });
           allyBullets.recycle(allyBullets.activePool[b]);
           if (Gs.RESPAWN.value) { enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }
           statsOld.enemyCounter.update();
@@ -99,6 +122,7 @@ export function gameLoop(delta){
             break EnemyBulletLoop;
           }
           PIXI.sound.play('explode');
+
           enemyBullets.recycle(enemyBullets.activePool[b]);
           if (Gs.RESPAWN.value) { allies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }
           break EnemyBulletLoop;
@@ -126,7 +150,7 @@ export function gameLoop(delta){
       // console.log(aV, oA);
       // let ax1 = a.getBounds().x;
       // let ay1 = a.getBounds().y;
-      // let ax2 = a.getBounds().x + a.getBounds().width;
+      // let ai = a.getBounds().x + a.getBounds().width;
       // let ay2 = a.getBounds().y + a.getBounds().height;
       // let ac = {x: a.getBounds().x + (a.getBounds().width / 2),
       //           y: a.getBounds().y + (a.getBounds().height / 2)};

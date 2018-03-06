@@ -37,16 +37,18 @@ function createBackgroundLayer(x) {
 
 const backgroundGroup = new PIXI.display.Group(-1, true);
 export const shadowGroup = new PIXI.display.Group(0, true);
-export const shipGroup = new PIXI.display.Group(1, true);
-export const allyBulletGroup = new PIXI.display.Group(2, true);
-export const enemyBulletGroup = new PIXI.display.Group(3, true);
-export const controlGroup = new PIXI.display.Group(4, true);
+export const debugGroup = new PIXI.display.Group(1, true);
+export const shipGroup = new PIXI.display.Group(2, true);
+export const allyBulletGroup = new PIXI.display.Group(3, true);
+export const enemyBulletGroup = new PIXI.display.Group(4, true);
+export const controlGroup = new PIXI.display.Group(5, true);
 
 export default function setup() {
   app.stage = new PIXI.display.Stage();
   app.stage.group.enableSort = true;
   app.stage.addChild(new PIXI.display.Layer(backgroundGroup));
   app.stage.addChild(new PIXI.display.Layer(shadowGroup));
+  app.stage.addChild(new PIXI.display.Layer(debugGroup));
   app.stage.addChild(new PIXI.display.Layer(shipGroup));
   app.stage.addChild(new PIXI.display.Layer(allyBulletGroup));
   app.stage.addChild(new PIXI.display.Layer(enemyBulletGroup));

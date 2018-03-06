@@ -6,6 +6,7 @@ import * as fr from './lib/fr.js';
 import {enemyBullets} from './Model.js';
 import {playerScore, playerKills} from "./stats.js";
 import {ShipPaths} from "./data/ShipPaths.js";
+
 function collisionDetection() {
 
 }
@@ -140,12 +141,13 @@ export default class Enemy extends Ship {
 	  if (this.shooting && this.coolDown <= 0) {
 	    let pos = {x: this.sprite.x + Gs.TILE_SIZE / 2 - 4, y: this.sprite.y + Gs.TILE_SIZE / 2 - 4};
 	    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, "Basic2");
-		PIXI.sound.play('laser');
+		PIXI.sound.play('laser', { volume: Gs.VOLUME_SOUND.value });
 	    this.coolDown = this.fireRate;
 	  }
 	}
 	handleDeath(scoring = true) {
 		super.handleDeath();
+		
 		if (scoring) {
 			playerScore.update(playerScore.active + this.score);
 			playerKills.update(playerKills.active + 1);

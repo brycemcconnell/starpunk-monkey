@@ -1,6 +1,7 @@
 import {BulletSprites} from './data/BulletSprites.js';
 import {app, bulletContainers} from './Model.js';
-import {enemyBulletGroup} from './Setup.js';
+import {enemyBulletGroup, debugGroup} from './Setup.js';
+import AnimatedObject from './AnimatedObject.js';
 export default class Bullet {
 	constructor(config, newInstance = true) {
 		this.sprite = new PIXI.Sprite(PIXI.loader.resources[BulletSprites[config.sprite].sprite].texture);
@@ -21,11 +22,19 @@ export default class Bullet {
 	}
 
 	explode() {
-		let a = new PIXI.Graphics();
-		a.beginFill(0xe74c3c); 
-		// Being in a particle, only has simple position, (no worldTransform)
-		a.drawCircle(this.sprite.position.x, this.sprite.position.y - this.splashRadius, this.splashRadius);
-		a.endFill(); 
-		app.stage.addChild(a);
+		let explosion = new AnimatedObject("explode", 7, {x: this.sprite.x, y: this.sprite.y});
+		console.log(explosion)
+		// let a = new PIXI.Graphics();
+		// a.beginFill(0xe74c3c); 
+		// // Being in a particle, only has simple position, (no worldTransform)
+		// a.drawCircle(this.sprite.position.x, this.sprite.position.y, this.splashRadius);
+		// a.endFill(); 
+		// let b = new PIXI.Graphics();
+		// b.beginFill(0xff0000); 
+		// b.drawCircle(this.sprite.position.x, this.sprite.position.y, 2);
+		// b.endFill(); 
+		// a.displayGroup = debugGroup;
+		// app.stage.addChild(a);
+		// app.stage.addChild(b);
 	}
 }

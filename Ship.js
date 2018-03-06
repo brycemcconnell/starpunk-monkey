@@ -3,6 +3,7 @@ import {app, enemies, allies} from './Model.js';
 import {ShipSprites} from './data/SpriteList.js';
 import {shadowGroup, shipGroup} from './Setup.js';
 import Gun from './Gun.js';
+import AnimatedObject from "./AnimatedObject.js";
 
 export default class Ship {
 	constructor(config) {
@@ -148,5 +149,9 @@ export default class Ship {
 		this.sprite.visible = false;
 		this.userData.fadeOut(this.shadow);
 		this.team.recycle(this);
+		let explosion = new AnimatedObject("explode", 7, {
+      x: this.sprite.position.x, 
+      y: this.sprite.position.y
+    });
 	}
 }
