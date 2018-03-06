@@ -82,7 +82,6 @@ export function load() {
     onComplete: function() {
       animate();
       PIXI.loader.resources['galaxy'].metadata.galaxy = generateGalaxyData();
-      console.log(PIXI.loader.resources['galaxy'])
     }
   })
 

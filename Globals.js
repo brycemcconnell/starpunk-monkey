@@ -1,5 +1,5 @@
 import {app} from './Model.js';
-export const CANVAS_SIZEX = 256;
+export const CANVAS_SIZEX = 256; // test 16:9 with 569
 export const CANVAS_SIZEY = 320;
 export let CANVAS_SCALEX = 1;
 export let CANVAS_SCALEY = 1;
@@ -18,9 +18,8 @@ export const FIRERATE_MAX = 60;
 export const FADE_SPEED = .1;
 export const MAP_EDGE_PADDING = 32;
 
-PIXI.sound.volumeAll = 1;
 export const VOLUME_MUSIC = {
-	value: 1
+	value: 0
 };
 export const VOLUME_SOUND = {
 	value: 1
@@ -51,7 +50,14 @@ export const RESPAWN = {
 export const RENDER_STATE = {
 	value: true,
 	toggle: function() {
-		this.value = this.value ? false : true;
+		if (this.value) {
+			this.value = false;
+			app.ticker.stop();
+		} else {
+			this.value = true;
+			app.ticker.start();
+		}
+		
 		console.log('Render set to', this.value);
 	}
 };

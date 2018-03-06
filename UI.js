@@ -1,4 +1,4 @@
-import {allies, enemies} from './Model.js';
+import { allies, enemies} from './Model.js';
 import Wave from './Wave.js';
 // import {statsOld} from './player.js';
 import * as fr from './lib/fr.js';

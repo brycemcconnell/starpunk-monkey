@@ -25,7 +25,8 @@ export let app = new PIXI.Application({
     height: Gs.CANVAS_SIZEY * Gs.SCALE_FACTOR,        // default: 600
     antialias: true,    // default: false
     transparent: false, // default: false
-    resolution: 1      // default: 1
+    resolution: 1,      // default: 1
+
 });
 app.renderer.backgroundColor = 0x061639;
 app.stage.scale.set(Gs.SCALE_FACTOR, Gs.SCALE_FACTOR);
@@ -41,7 +42,29 @@ export const allyBullets = new BulletArray(Bullet, Stat.allyBulletCount, "Allies
 export const speed = 2;
 
 export const background = [];
-
+export const bulletContainers = {
+  Gatling: new PIXI.ParticleContainer(50, {
+    tint: true,
+    position: true,
+    rotation: true,
+    alpha: true,
+    uvs: true,
+  }),
+  Missile: new PIXI.ParticleContainer(50, {
+    tint: true,
+    position: true,
+    rotation: true,
+    alpha: true,
+    uvs: true,
+  }),
+  Basic2: new PIXI.ParticleContainer(500, {
+    tint: true,
+    position: true,
+    rotation: true,
+    alpha: true,
+    uvs: true,
+  }),
+};
 
 
 

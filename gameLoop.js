@@ -1,4 +1,4 @@
-import { speed, allyBullets, enemies, enemyBullets, background, allies } from './Model.js';
+import { app, speed, allyBullets, enemies, enemyBullets, background, allies } from './Model.js';
 import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
@@ -9,27 +9,28 @@ import {resetGame} from './resetGame.js';
 
 
 let timer = 0;
-let lastTime = Date.now();
-
+let lastTime = 0;
+let updateSpeed = 500;
+function handleGameTime() {
+  lastTime = timer;
+  timer += app.ticker.elapsedMS;
+  trueTime.update(trueTime.active = Math.floor(app.ticker.lastTime));
+  if (Math.floor(lastTime/updateSpeed) < Math.floor(timer/updateSpeed)) {
+   gameTime.update(gameTime.active = Math.floor(app.ticker.lastTime/1000));
+    UI.FPS.innerHTML = Math.floor(app.ticker.FPS);
+  }
+}
 export function gameLoop(delta){
   if (Gs.RENDER_STATE.value) {
-    trueTime.update(trueTime.active += Date.now() - lastTime,
-                  trueTime.inactive = Math.floor(trueTime.active / 1000));
-    lastTime = Date.now();
-
-    timer += 1;
-    if (timer % 60 == 0) {
-      gameTime.update(gameTime.active += 1);
-      UI.FPS.innerHTML = parseFloat(60 / delta).toFixed(1);
-    }
-    // console.log(timer)
+    handleGameTime();
 
 
 
     if (player.moveMode.value == "combat") { 
       player.handleCombatMovement(delta); 
       background.forEach(layer => {
-        layer.y = layer.y * 2 < 0 ? layer.y + (layer.speed * delta) : -Gs.CANVAS_SIZEY;
+        if (layer.y > 0) layer.y = -Gs.CANVAS_SIZEY;
+        layer.y += (layer.speed * delta);
       });
     } else {
       player.handleTravelMovement(delta, background);
@@ -58,6 +59,7 @@ export function gameLoop(delta){
             allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + (enemies.activePool[x].sprite.width / 2) &&
             enemies.activePool[x].sprite.visible) {
           // console.log('hit', enemies);
+          console.log(allyBullets.activePool[b].sprite.worldTransform.tx, allyBullets.activePool[b].sprite.worldTransform.ty)
           if (allyBullets.activePool[b].type == "aoe") {
             allyBullets.activePool[b].explode();
           } else {

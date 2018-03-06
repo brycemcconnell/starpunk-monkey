@@ -79,6 +79,7 @@ export default class Ship {
 
   	this.guns = [];
 
+
   	// let gun = new PIXI.Sprite(PIXI.loader.resources["sprites/gun/gun-double.png"].texture);
   	// gun.moveType = "Circle";
   	// gun.position.x = 12;

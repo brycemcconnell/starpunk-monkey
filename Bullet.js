@@ -1,5 +1,5 @@
 import {BulletSprites} from './data/BulletSprites.js';
-import {app} from './Model.js';
+import {app, bulletContainers} from './Model.js';
 import {enemyBulletGroup} from './Setup.js';
 export default class Bullet {
 	constructor(config, newInstance = true) {
@@ -8,7 +8,7 @@ export default class Bullet {
 		this.speed = BulletSprites[config.sprite].speed;
 		if (!newInstance) {
 			this.sprite.parentGroup = enemyBulletGroup;
-	 	    app.stage.addChild(this.sprite);
+	 	    bulletContainers[config.sprite].addChild(this.sprite);
 		}
 		this.type = BulletSprites[config.sprite].type;
 		this.splashRadius = BulletSprites[config.sprite].splashRadius;
@@ -17,13 +17,14 @@ export default class Bullet {
 		
 	}
 	handleDeath() {
-		this.sprite.visible = false;
+		// this.sprite.visible = false;
 	}
 
 	explode() {
 		let a = new PIXI.Graphics();
 		a.beginFill(0xe74c3c); 
-		a.drawCircle(this.sprite.worldTransform.tx, this.sprite.worldTransform.ty - this.splashRadius, this.splashRadius);
+		// Being in a particle, only has simple position, (no worldTransform)
+		a.drawCircle(this.sprite.position.x, this.sprite.position.y - this.splashRadius, this.splashRadius);
 		a.endFill(); 
 		app.stage.addChild(a);
 	}

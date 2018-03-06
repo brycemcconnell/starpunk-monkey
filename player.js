@@ -328,7 +328,7 @@ export function shoot(rotation, startPosition, type){
   let bullet = allyBullets.getNew(rotation, startPosition.x, startPosition.y, type);
   statsOld.shots.update();
   statsOld.accuracy.update();
-  PIXI.sound.play(bullet.sound); 
+  PIXI.sound.play(bullet.sound, {volume: Gs.VOLUME_SOUND.value}); 
   // console.log(bullets.length, bulletPool.length);
 }
 

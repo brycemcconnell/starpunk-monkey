@@ -1,4 +1,4 @@
-import { app, enemies, enemyBullets, background, allies } from './Model.js';
+import { app, enemies, enemyBullets, background, allies, bulletContainers } from './Model.js';
 import {gameLoop} from './gameLoop.js';
 // import {instantiateShip} from './ship.js';
 import * as Gs from './Globals.js';
@@ -83,19 +83,21 @@ export default function setup() {
     sprite: "sprites/background/clouds.png",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
-    speed: .4
+    speed: .4,
+    // displayGroup: controlGroup
   });
   createBackgroundLayer({
     name: "fgStars",
     sprite: "sprites/background/stars.png",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
-    y: -Gs.CANVAS_SIZEX,
     speed: .6
   });
   let cursor = new PIXI.Sprite(PIXI.loader.resources["sprites/etc/cursor.png"].texture);
   app.stage.addChild(cursor);
-
+  Object.values(bulletContainers).forEach(container => {
+    app.stage.addChild(container);
+  })
   
   // for (let i = 0; i < 5; i++ ) {
   //   let enemy = new Enemy({x: 10, y: (30 * i)+ 30, sprite: "Enemy", tint: 0xff7777}, null, {type: "verticalSnake", config: {loop: true}});
