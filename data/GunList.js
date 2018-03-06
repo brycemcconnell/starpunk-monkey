@@ -16,7 +16,7 @@ export const GunList = {
 		turrets: [
 			{x: 0, y: 0}
 		],
-		type: "Basic2",
+		type: "Laser",
 		accuracy: .05 // 95%
 	},
 	"Standard Gatling": {
@@ -39,7 +39,7 @@ export const GunList = {
 			{x: 2, y: 0},
 			{x: -2, y: 0}
 		],
-		type: "Basic2",
+		type: "Laser",
 		accuracy: .1 // 90%
 	},
 	"Standard Missile": {

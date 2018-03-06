@@ -57,7 +57,7 @@ export const bulletContainers = {
     alpha: true,
     uvs: true,
   }),
-  Basic2: new PIXI.ParticleContainer(500, {
+  Laser: new PIXI.ParticleContainer(500, {
     tint: true,
     position: true,
     rotation: true,

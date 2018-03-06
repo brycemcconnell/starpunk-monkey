@@ -6,7 +6,7 @@ export const BulletSprites = {
   	  type: "basic",
   	  sound: 'laser'
   	},
-  	"Basic2": {
+  	"Laser": {
   	  sprite: "sprites/projectile/laser2.png",
   	  damage: 1,
   	  speed: 2,
