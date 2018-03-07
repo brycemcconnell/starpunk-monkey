@@ -6,6 +6,7 @@ import * as fr from './lib/fr.js';
 import {enemyBullets} from './Model.js';
 import {playerScore, playerKills} from "./stats.js";
 import {ShipPaths} from "./data/ShipPaths.js";
+import {BulletSprites} from "./data/BulletSprites.js";
 
 function collisionDetection() {
 
@@ -140,8 +141,8 @@ export default class Enemy extends Ship {
 	  }
 	  if (this.shooting && this.coolDown <= 0) {
 	    let pos = {x: this.sprite.x + Gs.TILE_SIZE / 2 - 4, y: this.sprite.y + Gs.TILE_SIZE / 2 - 4};
-	    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, "Laser");
-		PIXI.sound.play('laser', { volume: Gs.VOLUME_SOUND.value });
+	    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, BulletSprites["Laser"]);
+		PIXI.sound.play('SFX_Laser1', { volume: Gs.VOLUME_SOUND.value });
 	    this.coolDown = this.fireRate;
 	  }
 	}

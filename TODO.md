@@ -249,3 +249,39 @@ on handleMove() {
 [ ] Take the AI logic from within the "Enemy" class and move it into a new AIShip class
 
 [ ] Add asteroids which can be destroyed, and asteroids that cannot? Maybe make them some other type of object
+
+[ ] Asteroids split into 2-4 of the next smallest size when destroyed. Small asteroids just blow up normally, maybe a chance to drop something?
+
+[ ] Gravity gun, two types, in: suck enemies into a hole and then damage them in an explosion (or just leave them there so the player can shoot easily?), out: send a shockwave that pushes enemies away from x/y location or player?
+
+[ ] Improve & optimize ship/gun/bullet/modifiers implementation
+```
+Create Ship >
+Create Guns > Assign gun ammunition
+Assign Ship Guns >
+In game loop:
+On fire > For each gun, shoot guns ammunition
+
+Gun dictates the type of ammunition available to use, modifiers to the bullet
+Bullets define their own effects, but are locked to the type of gun through the ammunition limitation
+```
+
+[ ] Make enemies generate their guns and shoot if they have guns, currently they are 'shooting' from themselves without a gun
+
+[ ] Add descriptions to ship/gun/bullet/modifiers
+
+[ ] Implement RNG drops from enemies and debris. These could include:
+- energy refills
+- health refills
+- Materials
+- Guns
+- Ammunition (is this limited? or maybe only some are?)
+- Ship parts (collect x amount to be able to build that ship once OR that ship blueprint, which requires materials to build any amount of times once blueprint is unlocked)
+- Gun parts, same as above
+- Modifiers, or potentially a similar system to above? I like the idea of this being just random drops as is though
+- Credits?
+- Some sort of 'transmission data', required to call an ally into the battle (or make this accumulate through killing ships instead? don't worry about a drop?)
+
+[ ] Perhaps make phase weaons (projectiles that go through enemies) into a gun modifier? Available on standard and beam weapons?
+
+[ ] Bullets have different types. A seeking bullet will seek out 'energy signiatures', aka enemy ships. Ships can have energy signiature cloaking mechanisms however. Make follow player x axis bullets? Or should phaser bullets be a thing instead of phaser guns? what mods on bullets vs guns

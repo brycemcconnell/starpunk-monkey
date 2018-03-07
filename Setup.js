@@ -59,27 +59,24 @@ export default function setup() {
     y: 10,
     rotation: 1,
     spin: .01,
-    sprite: "DOODAD_Asteroid-Large",
-    type: "Debris",
-    moveAngle: 1
+    moveAngle: 1,
+    associate: "Asteroid-S"
   });
   movingObjects.getNew({
     x: 40,
     y: 10,
     rotation: 1,
     spin: -.03,
-    sprite: "DOODAD_Asteroid-Medium",
-    type: "Debris",
-    moveAngle: 1
+    moveAngle: 1,
+    associate: "Asteroid-M"
   });
   movingObjects.getNew({
     x: 20,
     y: 30,
     rotation: 1,
     spin: .04,
-    sprite: "DOODAD_Asteroid-Small",
-    type: "Debris",
-    moveAngle: 1
+    moveAngle: 1,
+    associate: "Asteroid-L"
   });
   createBackgroundLayer({
     name: "Nebulae",
@@ -122,7 +119,7 @@ export default function setup() {
     h: Gs.CANVAS_SIZEY * 2,
     speed: .6
   });
-  let cursor = new PIXI.Sprite(PIXI.loader.resources["sprites/etc/cursor.png"].texture);
+  let cursor = new PIXI.Sprite(PIXI.loader.resources["UI_Cursor-Attack"].texture);
   app.stage.addChild(cursor);
   Object.values(bulletContainers).forEach(container => {
     app.stage.addChild(container);

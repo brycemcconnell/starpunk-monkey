@@ -2,27 +2,29 @@ import {GunList} from './data/GunList.js';
 import * as Gs from './Globals.js';
 import * as fr from './lib/fr.js';
 import {GunModList} from './data/GunModList.js';
+import {BulletSprites} from './data/BulletSprites.js';
 export default class Gun {
-	constructor(parent, slot, type, movement, modifier) {
-	  	this.sprite = new PIXI.Sprite(PIXI.loader.resources[GunList[type].sprite].texture);
+	constructor(config) {
+	  	this.sprite = new PIXI.Sprite(PIXI.loader.resources[GunList[config.type].sprite].texture);
 	  	this.parent = parent;
-	  	this.moveType = movement; // @TODO Make this user configuragle
-	  	this.sprite.position.set(slot.x, slot.y);
-	  	this.sprite.pivot.set(GunList[type].pivotX, GunList[type].pivotY);
-	  	this.type = GunList[type].type;
-	  	this.fireRate = GunList[type].fireRate;
+	  	this.moveType = config.movement; // @TODO Make this user configuragle
+	  	this.sprite.position.set(config.slot.x, config.slot.y);
+	  	this.sprite.pivot.set(GunList[config.type].pivotX, GunList[config.type].pivotY);
+	  	this.type = GunList[config.type].type;
+	  	this.fireRate = GunList[config.type].fireRate;
 	  	this.coolDown = 0;
-	  	this.turrets = GunList[type].turrets.map(turret => {
+	  	this.turrets = GunList[config.type].turrets.map(turret => {
 	  		let obj = new PIXI.DisplayObject();
 	  		obj.position.set(turret.x, turret.y);
 	  		this.sprite.addChild(obj)
 	  		return obj;
 	  	});
-	  	this.modifier = GunModList[modifier] || false;
-	  	this.accuracy = this.modifier ? GunList[type].accuracy - this.modifier.accuracy >= 0 ? 
-	  	                                  GunList[type].accuracy - this.modifier.accuracy :
+	  	this.modifier = GunModList[config.modifier] || false;
+	  	this.accuracy = this.modifier ? GunList[config.type].accuracy - this.modifier.accuracy >= 0 ? 
+	  	                                  GunList[config.type].accuracy - this.modifier.accuracy :
 	  	                                  0 :
-	  	                                GunList[type].accuracy;
+	  	                                GunList[config.type].accuracy;
+	  	this.ammo = BulletSprites[config.ammo];
 
 	}
 	handleMovement () { 

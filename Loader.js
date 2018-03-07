@@ -19,63 +19,49 @@ export function load() {
   .add("SHIP_G2-Arwing2",      "sprites/ship/g2-arwing2.png")
    
   // projectiles
-  .add([
-    "sprites/projectile/laser.png"
-  ]).add([
-    "sprites/projectile/laser2.png"
-  ]).add([
-    "sprites/projectile/missile.png"
-  ]).add([
-    "sprites/projectile/gatling.png"
-  ])
-  // gun
-  .add([
-    "sprites/gun/gun.png"
-  ]).add([
-    "sprites/gun/gun-double.png"
-  ]).add([
-    "sprites/gun/gun-missile.png"
-  ]).add([
-    "sprites/gun/gun-gatling.png"
-  ])
+  .add("PROJECTILE_Test",     "sprites/projectile/test.png")
+  .add("PROJECTILE_Laser1",   "sprites/projectile/laser1.png")
+  .add("PROJECTILE_Missile1", "sprites/projectile/missile1.png")
+  .add("PROJECTILE_Gatling1", "sprites/projectile/gatling1.png")
 
-  .add("DOODAD_Asteroid-Medium",      "sprites/doodads/asteroid-m.png")
-  .add("DOODAD_Asteroid-Large",       "sprites/doodads/asteroid-l.png")
-  .add("DOODAD_Asteroid-Small",       "sprites/doodads/asteroid-s.png")
+  // gun
+  .add("GUN_Laser-Standard",   "sprites/gun/laser-standard.png")
+  .add("GUN_Laser-Double",     "sprites/gun/laser-double.png")
+  .add("GUN_Missile-Standard", "sprites/gun/missile-standard.png")
+  .add("GUN_Gatling-Standard", "sprites/gun/gatling-standard.png")
+
+  // Doodads
+  .add("DOODAD_Asteroid-Medium","sprites/doodads/asteroid-m.png")
+  .add("DOODAD_Asteroid-Large", "sprites/doodads/asteroid-l.png")
+  .add("DOODAD_Asteroid-Small", "sprites/doodads/asteroid-s.png")
 
    // Explosions
-  .add([
-    "./sprites/explode/explode.json"
-  ]).add([
-    "./sprites/explode/explodeb.json"
-  ]).add([
-    "./sprites/explode/explodec.json"
-  ]).add([
-    "./sprites/explode/exploded.json"
-  ])
+  .add("explode",  "./sprites/explode/explode.json")
+  .add("explodeb", "./sprites/explode/explodeb.json")
+  .add("explodec", "./sprites/explode/explodec.json")
+  .add("exploded", "./sprites/explode/exploded.json")
 
   // UI graphics
-  .add([
-    "sprites/etc/cursor.png"
-  ])
+  .add("UI_Cursor-Attack", "sprites/ui/cursor-attack.png")
+
   // sound fx
-  .add('laser','sounds/laser.wav')
-  .add('explode','sounds/explode.mp3')
-  .add('explode2','sounds/explode2.mp3')
-  .add('explode3','sounds/explode3.mp3')
-  .add('missile','sounds/missile.wav')
-  .add('geonosis','sounds/geonosis.wav')
-  .add('laser2','sounds/laser2.wav')
-  .add('laser3','sounds/laser3.wav')
-  .add('laser4','sounds/laser4.wav')
-  .add('laser5','sounds/laser5.wav')
-  .add('laser6','sounds/laser6.wav')
-  .add('online','sounds/online.wav')
-  .add('offline','sounds/offline.wav')
-  .add('galaxial-booster','sounds/galaxial-booster.wav')
-  .add('galaxial-booster2','sounds/galaxial-booster2.wav')
-  .add('galaxial-booster3','sounds/galaxial-booster3.wav')
-  .add('space-missile','sounds/space-missile.wav')
+  .add('SFX_Laser1',           'sounds/laser.wav')
+  .add('SFX_explode',          'sounds/explode.mp3')
+  .add('SFX_explode2',         'sounds/explode2.mp3')
+  .add('SFX_explode3',         'sounds/explode3.mp3')
+  .add('SFX_missile',          'sounds/missile.wav')
+  .add('SFX_geonosis',         'sounds/geonosis.wav')
+  .add('SFX_laser2',           'sounds/laser2.wav')
+  .add('SFX_laser3',           'sounds/laser3.wav')
+  .add('SFX_laser4',           'sounds/laser4.wav')
+  .add('SFX_laser5',           'sounds/laser5.wav')
+  .add('SFX_laser6',           'sounds/laser6.wav')
+  .add('SFX_online',           'sounds/online.wav')
+  .add('SFX_offline',          'sounds/offline.wav')
+  .add('SFX_galaxial-booster', 'sounds/galaxial-booster.wav')
+  .add('SFX_galaxial-booster2','sounds/galaxial-booster2.wav')
+  .add('SFX_galaxial-booster3','sounds/galaxial-booster3.wav')
+  .add('SFX_space-missile',    'sounds/space-missile.wav')
 
   // music
   .add('moment-of-time','sounds/music/moment-of-time.mp3')

@@ -6,14 +6,16 @@ export default class BulletArray extends SmartArray {
 		super(defaultClass, listener);
 		this.team = team;
 	}
-	getNew(rotation, x, y, type) {
-		let item = this.inactivePool.length > 0 ?
-			this.inactivePool.pop() :
-			new this.defaultClass({
-				x: x, y: y, sprite: type
+	getNew(rotation, x, y, ammo) {
+		let item;
+		if (this.inactivePool.length > 0) {
+			item = this.inactivePool.pop()
+		}
+		item = new this.defaultClass({
+				x: x, y: y, ammo: ammo
 		}, false);
 		// item = new this.defaultClass({
-		// 	x: x, y: y, sprite: type
+		// 	x: x, y: y, ammo: ammo
 		// }, false);
 		item.sprite.tint = this.team == "Allies" ? 0x33ffff :
 			                 this.team == "Enemies" ? 0xff3300 :
@@ -29,7 +31,7 @@ export default class BulletArray extends SmartArray {
 		return item;
 	}
 	recycle(item) {
-		// item.sprite.destroy();
+		item.sprite.destroy();
 		// item.sprite.visible = false;
 		item.sprite.alpha = 0;
 		this.activePool.splice(this.activePool.indexOf(item), 1);

@@ -197,7 +197,7 @@ export const player = {
 	  			let rot = ship.sprite.rotation + gun.sprite.rotation + offsetRadians;
 	  			gun.turrets.forEach(turret => {
 	  				let pos = {x: gun.sprite.worldTransform.tx + turret.x, y: gun.sprite.worldTransform.ty + turret.y};
-	  				shoot(rot, pos, gun.type);
+	  				shoot(rot, pos, gun.ammo);
 	  			})
 	  			gun.coolDown = gun.fireRate;
 	  		}
@@ -324,8 +324,8 @@ export const statsOld = {
 };
 
 
-export function shoot(rotation, startPosition, type){  
-  let bullet = allyBullets.getNew(rotation, startPosition.x, startPosition.y, type);
+export function shoot(rotation, startPosition, ammo){  
+  let bullet = allyBullets.getNew(rotation, startPosition.x, startPosition.y, ammo);
   statsOld.shots.update();
   statsOld.accuracy.update();
   PIXI.sound.play(bullet.sound, {volume: Gs.VOLUME_SOUND.value}); 

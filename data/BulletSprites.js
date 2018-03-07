@@ -1,38 +1,38 @@
 export const BulletSprites = {
 	"Basic": {
-  	  sprite: "sprites/projectile/laser.png",
+  	  sprite: "PROJECTILE_Test",
   	  damage: 1,
   	  speed: 2,
   	  type: "basic",
-  	  sound: 'laser',
+  	  sound: 'SFX_Laser1',
       hitAnimation: "explodec",
       hitAnimationFrames: 7
   	},
   	"Laser": {
-  	  sprite: "sprites/projectile/laser2.png",
+  	  sprite: "PROJECTILE_Laser1",
   	  damage: 1,
   	  speed: 2,
   	  type: "basic",
-  	  sound: 'laser',
+  	  sound: 'SFX_Laser1',
       hitAnimation: "explodec",
       hitAnimationFrames: 7
   	},
   	// Implement damage system
   	"Missile": {
-  		sprite: "sprites/projectile/missile.png",
+  		sprite: "PROJECTILE_Missile1",
   		damage: 1,
   		speed: 2,
   		type: "aoe",
   		splashRadius: 20,
-  		sound: 'space-missile',
+  		sound: 'SFX_space-missile',
       hitAnimation: "explodeb",
       hitAnimationFrames: 6
   	},
   	"Gatling": {
-  		sprite: "sprites/projectile/gatling.png",
+  		sprite: "PROJECTILE_Gatling1",
   		damage: .2,
   		speed: 4,
-  		sound: 'laser',
+  		sound: 'SFX_Laser1',
       hitAnimation: "exploded",
       hitAnimationFrames: 4
   	},

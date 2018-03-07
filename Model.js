@@ -45,21 +45,21 @@ export const movingObjects = new MovingObjectArray(Stat.movingObjectCount);
 
 export const background = [];
 export const bulletContainers = {
-  Gatling: new PIXI.ParticleContainer(50, {
+  PROJECTILE_Gatling1: new PIXI.ParticleContainer(50, {
     tint: true,
     position: true,
     rotation: true,
     alpha: true,
     uvs: true,
   }),
-  Missile: new PIXI.ParticleContainer(50, {
+  PROJECTILE_Missile1: new PIXI.ParticleContainer(50, {
     tint: true,
     position: true,
     rotation: true,
     alpha: true,
     uvs: true,
   }),
-  Laser: new PIXI.ParticleContainer(500, {
+  PROJECTILE_Laser1: new PIXI.ParticleContainer(500, {
     tint: true,
     position: true,
     rotation: true,

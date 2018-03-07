@@ -60,21 +60,21 @@ export default class Ship {
 		this.immune = false;
 
 		this.maxHealth = ShipSprites[config.sprite].maxHealth;
-  		this.currentHealth = this.maxHealth;
-  		this.score = ShipSprites[config.sprite].score;
-  		this.userData = {
-  			fadeOut: function(sprite) {
-  				if (sprite.alpha > 0) {
-  					sprite.alpha -= Gs.FADE_SPEED;
-  					setTimeout(() => {
-  						this.fadeOut(sprite)
-  					}, 100);
-  				} else {
-  					sprite.alpha = Gs.SHADOW_ALPHA;
-  					sprite.visible = false;
-  				}
-  			}
-  		};
+		this.currentHealth = this.maxHealth;
+		this.score = ShipSprites[config.sprite].score;
+		this.userData = {
+			fadeOut: function(sprite) {
+				if (sprite.alpha > 0) {
+					sprite.alpha -= Gs.FADE_SPEED;
+					setTimeout(() => {
+						this.fadeOut(sprite)
+					}, 100);
+				} else {
+					sprite.alpha = Gs.SHADOW_ALPHA;
+					sprite.visible = false;
+				}
+			}
+		};
 
   	this.gunSlots = ShipSprites[config.sprite].gunSlots;
 
@@ -141,10 +141,10 @@ export default class Ship {
 				this.sprite.tint = 0xffffff;
 			}, 100);
 			if (this.currentHealth < 1) {
-				PIXI.sound.play('explode3', { volume: Gs.VOLUME_SOUND.value });
+				PIXI.sound.play('SFX_explode3', { volume: Gs.VOLUME_SOUND.value });
 				this.handleDeath();
 			} else {
-				PIXI.sound.play('explode', { volume: Gs.VOLUME_SOUND.value });
+				PIXI.sound.play('SFX_explode', { volume: Gs.VOLUME_SOUND.value });
 			}
 		}
 	}

@@ -52,7 +52,6 @@ export function gameLoop(delta){
         obj[i].sprite.width,
         obj[i].sprite.height)) {
           movingObjects.recycle(movingObjects.activePool[i]);
-          console.log('off canvas')
       }
     }
 
@@ -63,15 +62,36 @@ export function gameLoop(delta){
     // ship.x += ship.vx;
     // ship.y += ship.vy;
     AllyBulletLoop:
+    
     for(let b = allyBullets.activePool.length - 1; b >= 0; b--){
-      allyBullets.activePool[b].sprite.position.x += (Math.cos(allyBullets.activePool[b].sprite.rotation)*allyBullets.activePool[b].speed)*delta;
-      allyBullets.activePool[b].sprite.position.y += (Math.sin(allyBullets.activePool[b].sprite.rotation)*allyBullets.activePool[b].speed)*delta;
+      allyBullets.activePool[b].handleMove(delta);
+
+      // Check collisions with debris
+      for (let x = movingObjects.activePool.length - 1; x >= 0; x--) {
+        let collider = CollisionDetection.PointInCircle({
+          x: allyBullets.activePool[b].sprite.x,
+          y: allyBullets.activePool[b].sprite.y,
+        },
+        {
+          x: movingObjects.activePool[x].sprite.x,
+          y: movingObjects.activePool[x].sprite.y,
+          radius:  movingObjects.activePool[x].sprite.width/2
+        }) && movingObjects.activePool[x].sprite.visible;
+        if (collider) {
+          let explosion = new AnimatedObject(allyBullets.activePool[b].hitAnimation, allyBullets.activePool[b].hitAnimationFrames, {x: allyBullets.activePool[b].sprite.position.x, y: allyBullets.activePool[b].sprite.position.y});
+          
+          movingObjects.activePool[x].handleHit(allyBullets.activePool[b]);
+          allyBullets.recycle(allyBullets.activePool[b]);
+          break AllyBulletLoop;
+        }
+      }
+
       for (let x = enemies.activePool.length - 1; x >= 0; x--) {
         if (allyBullets.activePool[b].sprite.position.y < enemies.activePool[x].sprite.position.y + (enemies.activePool[x].sprite.width / 2) &&
             allyBullets.activePool[b].sprite.position.y > enemies.activePool[x].sprite.position.y - (enemies.activePool[x].sprite.width / 2) &&
             allyBullets.activePool[b].sprite.position.x > enemies.activePool[x].sprite.position.x - (enemies.activePool[x].sprite.width / 2) &&
             allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + (enemies.activePool[x].sprite.width / 2) &&
-            enemies.activePool[x].sprite.visible) {
+            enemies.activePool[x].sprite.alpha == 1) {
           // console.log('hit', enemies);
           let explosion = new AnimatedObject(allyBullets.activePool[b].hitAnimation, allyBullets.activePool[b].hitAnimationFrames, {x: allyBullets.activePool[b].sprite.position.x, y: allyBullets.activePool[b].sprite.position.y});
           if (allyBullets.activePool[b].type == "aoe") {
@@ -121,20 +141,19 @@ export function gameLoop(delta){
     // Check if enemy bullets are hitting player ships
     EnemyBulletLoop:
     for(let b = enemyBullets.activePool.length - 1; b >= 0; b--){
-      enemyBullets.activePool[b].sprite.position.x += (Math.cos(enemyBullets.activePool[b].sprite.rotation)*enemyBullets.activePool[b].speed)*delta;
-      enemyBullets.activePool[b].sprite.position.y += (Math.sin(enemyBullets.activePool[b].sprite.rotation)*enemyBullets.activePool[b].speed)*delta;
+      enemyBullets.activePool[b].handleMove(delta);
       for (let x = allies.activePool.length - 1; x >= 0; x--) {
         if (enemyBullets.activePool[b].sprite.position.y < allies.activePool[x].sprite.position.y + (allies.activePool[x].sprite.width / 2) &&
             enemyBullets.activePool[b].sprite.position.y > allies.activePool[x].sprite.position.y - (allies.activePool[x].sprite.width / 2) &&
             enemyBullets.activePool[b].sprite.position.x > allies.activePool[x].sprite.position.x - (allies.activePool[x].sprite.width / 2) &&
             enemyBullets.activePool[b].sprite.position.x < allies.activePool[x].sprite.position.x + (allies.activePool[x].sprite.width / 2) &&
-            allies.activePool[x].sprite.visible) {
+            allies.activePool[x].sprite.alpha == 1) {
           if (Gs.PLAYER_HIT_DETECTION.value) { allies.activePool[x].handleHit(enemyBullets.activePool[b]); }
           if (allies.activePool.length < 1) {
             resetGame();
             break EnemyBulletLoop;
           }
-          PIXI.sound.play('explode');
+          PIXI.sound.play('SFX_explode');
 
           enemyBullets.recycle(enemyBullets.activePool[b]);
           if (Gs.RESPAWN.value) { allies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }
