@@ -247,3 +247,5 @@ on handleMove() {
 
 
 [ ] Take the AI logic from within the "Enemy" class and move it into a new AIShip class
+
+[ ] Add asteroids which can be destroyed, and asteroids that cannot? Maybe make them some other type of object

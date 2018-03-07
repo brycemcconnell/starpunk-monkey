@@ -15,6 +15,8 @@ export default class Bullet {
 		this.splashRadius = BulletSprites[config.sprite].splashRadius;
 		this.damage = BulletSprites[config.sprite].damage;
 		this.sound = BulletSprites[config.sprite].sound;
+		this.hitAnimation = BulletSprites[config.sprite].hitAnimation;
+		this.hitAnimationFrames = BulletSprites[config.sprite].hitAnimationFrames;
 		
 	}
 	handleDeath() {

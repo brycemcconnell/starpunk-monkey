@@ -7,7 +7,7 @@ export default class ShipArray extends SmartArray {
 		this.inactivePool.pop() :
 		new this.defaultClass({
 			x: x, y: y, sprite: sprite, team: team
-		});
+		}, false);
 		
 		item.sprite.position.x = x;
 		item.shadow.position.x = x;

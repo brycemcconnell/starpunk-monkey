@@ -8,6 +8,7 @@ export const enemyCount = new ChildStat(UI.enemiesCount, entitiesTotalCount);
 export const enemyBulletCount = new ChildStat(UI.enemyBulletsCount, entitiesTotalCount);
 export const allyCount = new ChildStat(UI.alliesCount, entitiesTotalCount);
 export const allyBulletCount = new ChildStat(UI.allyBulletsCount, entitiesTotalCount);
+export const movingObjectCount = new ChildStat(UI.movingObjectCount, entitiesTotalCount);
 
 // Dynamic stats
 export const playerSpeed = new Stat(UI.PlayerSpeed);

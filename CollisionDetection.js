@@ -1,3 +1,4 @@
+import * as Gs from './Globals.js';
 export default class CollisionDetection {
 	static PointInRectangle(point, rect) {
 		// return 
@@ -11,4 +12,10 @@ export default class CollisionDetection {
     let deltaY = circle.y - Math.max((rect.y - rect.width / 2), Math.min(circle.y, (rect.y + rect.height / 2)));
     return (Math.hypot(deltaX, deltaY)) < (circle.radius * circle.radius);
   }*/
+  static OffCanvas(position, width = 0, height = 0) {
+  	return (position.y - height > Gs.CANVAS_SIZEY ||
+    position.x - width > Gs.CANVAS_SIZEX ||
+    position.y + height < 0 ||
+    position.x + width < 0) 
+  }
 }

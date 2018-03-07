@@ -6,6 +6,7 @@ import BulletArray from './BulletArray.js';
 import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import AlliedShip from './AlliedShip.js';
+import MovingObjectArray from './MovingObjectArray.js';
 /*function createGrid() {
   let newGrid = [];
   for (let i = 0; i < Gs.CANVAS_SIZEX; i+=Gs.TILE_SIZE) {
@@ -40,6 +41,7 @@ export const enemies = new ShipArray(Enemy, Stat.enemyCount);
 export const enemyBullets = new BulletArray(Bullet, Stat.enemyBulletCount, "Enemies");
 export const allyBullets = new BulletArray(Bullet, Stat.allyBulletCount, "Allies");
 export const speed = 2;
+export const movingObjects = new MovingObjectArray(Stat.movingObjectCount);
 
 export const background = [];
 export const bulletContainers = {

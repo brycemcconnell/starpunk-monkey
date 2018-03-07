@@ -1,4 +1,4 @@
-import { app, enemies, enemyBullets, background, allies, bulletContainers } from './Model.js';
+import { app, enemies, enemyBullets, background, allies, bulletContainers, movingObjects } from './Model.js';
 import {gameLoop} from './gameLoop.js';
 // import {instantiateShip} from './ship.js';
 import * as Gs from './Globals.js';
@@ -54,9 +54,36 @@ export default function setup() {
   app.stage.addChild(new PIXI.display.Layer(enemyBulletGroup));
   app.stage.addChild(new PIXI.display.Layer(controlGroup));
   loaderInfo.innerHTML = "complete!";
+  movingObjects.getNew({
+    x: 10,
+    y: 10,
+    rotation: 1,
+    spin: .01,
+    sprite: "DOODAD_Asteroid-Large",
+    type: "Debris",
+    moveAngle: 1
+  });
+  movingObjects.getNew({
+    x: 40,
+    y: 10,
+    rotation: 1,
+    spin: -.03,
+    sprite: "DOODAD_Asteroid-Medium",
+    type: "Debris",
+    moveAngle: 1
+  });
+  movingObjects.getNew({
+    x: 20,
+    y: 30,
+    rotation: 1,
+    spin: .04,
+    sprite: "DOODAD_Asteroid-Small",
+    type: "Debris",
+    moveAngle: 1
+  });
   createBackgroundLayer({
     name: "Nebulae",
-    sprite: "sprites/background/wallpaper.png",
+    sprite: "BG_Nebulae",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     speed: .1,
@@ -64,7 +91,7 @@ export default function setup() {
   });
   createBackgroundLayer({
     name: "deepStars",
-    sprite: "sprites/background/stars.png",
+    sprite: "BG_Stars",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -64,
@@ -73,7 +100,7 @@ export default function setup() {
   });
   createBackgroundLayer({
     name: "bgStars",
-    sprite: "sprites/background/stars.png",
+    sprite: "BG_Stars",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -32,
@@ -82,7 +109,7 @@ export default function setup() {
   });
   createBackgroundLayer({
     name: "clouds",
-    sprite: "sprites/background/clouds.png",
+    sprite: "BG_Clouds",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     speed: .4,
@@ -90,7 +117,7 @@ export default function setup() {
   });
   createBackgroundLayer({
     name: "fgStars",
-    sprite: "sprites/background/stars.png",
+    sprite: "BG_Stars",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     speed: .6

@@ -13,7 +13,7 @@ export default class SmartArray {
 			this.inactivePool.pop() :
 			new this.defaultClass({
 				x: x, y: y, sprite: "Basic"
-		});
+		}, false);
 		item.sprite.position.x = x;
 		item.sprite.position.y = y;
 		item.sprite.rotation = rotation;

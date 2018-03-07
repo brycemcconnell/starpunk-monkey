@@ -1,4 +1,4 @@
-import { app, speed, allyBullets, enemies, enemyBullets, background, allies } from './Model.js';
+import { app, speed, allyBullets, enemies, enemyBullets, background, allies, movingObjects } from './Model.js';
 import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
@@ -44,6 +44,18 @@ export function gameLoop(delta){
     });
 
 
+    for(let i = movingObjects.activePool.length - 1; i >= 0; i--){
+      let obj = movingObjects.activePool;
+      obj[i].handleMove();
+      if (CollisionDetection.OffCanvas(
+        obj[i].sprite.position,
+        obj[i].sprite.width,
+        obj[i].sprite.height)) {
+          movingObjects.recycle(movingObjects.activePool[i]);
+          console.log('off canvas')
+      }
+    }
+
     // If you have multiple allies, make the fleet move at the same speed?
     // Sort by lowest speed first, eg allies[0] is slowest. Change the speed of your fleet based on this
     // allies[1] = {speed: 2};
@@ -61,6 +73,7 @@ export function gameLoop(delta){
             allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + (enemies.activePool[x].sprite.width / 2) &&
             enemies.activePool[x].sprite.visible) {
           // console.log('hit', enemies);
+          let explosion = new AnimatedObject(allyBullets.activePool[b].hitAnimation, allyBullets.activePool[b].hitAnimationFrames, {x: allyBullets.activePool[b].sprite.position.x, y: allyBullets.activePool[b].sprite.position.y});
           if (allyBullets.activePool[b].type == "aoe") {
             allyBullets.activePool[b].explode();
             let radius = allyBullets.activePool[b].splashRadius;

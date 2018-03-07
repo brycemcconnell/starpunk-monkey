@@ -25,12 +25,12 @@ export default class AlliedShip extends Ship {
     this.sprite.rotation = Math.PI/180 * Gs.DEFAULT_ROTATION;
     this.shadow.rotation = Math.PI/180 * Gs.DEFAULT_ROTATION;
 
-    let gun = new Gun(this.sprite, this.gunSlots["main-left"], "Standard Missile", "Mouse");
-    // let gun2 = new Gun(this.sprite, this.gunSlots["main-right"], "Standard Missile", "Mouse");
+    let gun = new Gun(this.sprite, this.gunSlots["main-left"], "Standard Laser", "Mouse");
+    let gun2 = new Gun(this.sprite, this.gunSlots["main-right"], "Standard Gatling", "Mouse");
     this.guns.push(gun);
-    // this.guns.push(gun2);
+    this.guns.push(gun2);
     this.sprite.addChild(gun.sprite);
-    // this.sprite.addChild(gun2.sprite);
+    this.sprite.addChild(gun2.sprite);
     // let gun3 = new Gun(this.sprite, this.gunSlots["secondary-left"], "Double Laser", "StayStraight");
     // let gun4 = new Gun(this.sprite, this.gunSlots["secondary-right"], "Double Laser", "StayStraight");
     // this.guns.push(gun3);

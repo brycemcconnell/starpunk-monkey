@@ -1,6 +1,6 @@
 export const ShipSprites = {
   "Enemy": {
-    sprite: "sprites/ship/enemy.png",
+    sprite: "SHIP_G1-Enemy1",
     hitBoxes: [
       {
         x: 0,
@@ -11,7 +11,7 @@ export const ShipSprites = {
     ]
   },
   "Player": {
-    sprite: "sprites/ship/ship.png",
+    sprite: "SHIP_G1-Player1",
     hitBoxes: [
       {
         x: 0,
@@ -22,7 +22,7 @@ export const ShipSprites = {
     ]
   },
   "Player2": {
-    sprite: "sprites/ship/ship2.png",
+    sprite: "SHIP_G1-Player2",
     maxHealth: 3,
     speed: 2.5,
     hitBoxes: [
@@ -48,7 +48,7 @@ export const ShipSprites = {
     }
   },
   "PlayerAlt": {
-    sprite: "sprites/ship/shipAlt.png",
+    sprite: "SHIP_G1-Player1Alt",
     hitBoxes: [
       {
         x: 0,
@@ -59,7 +59,7 @@ export const ShipSprites = {
     ]
   },
   "BattleCruiser": {
-    sprite: "sprites/ship/battleCruiser.png",
+    sprite: "SHIP_G1-BattleCruiser",
     maxHealth: 6,
     speed: 2,
     hitBoxes: [
@@ -72,8 +72,8 @@ export const ShipSprites = {
     ]
   },
   "Enemy2": {
-    sprite: "sprites/ship/enemy2.png",
-    maxHealth: 2,
+    sprite: "SHIP_G1-Enemy2",
+    maxHealth: 3,
     score: 100,
     speed: 1.5,
     hitBoxes: [
@@ -92,7 +92,7 @@ export const ShipSprites = {
     ]
   },
   "Arwing": {
-    sprite: "sprites/ship/arwing.png",
+    sprite: "SHIP_G2-Arwing1",
     maxHealth: 4,
     score: 100,
     speed: 2,
@@ -130,7 +130,7 @@ export const ShipSprites = {
     }
   },
   "Arwing2": {
-    sprite: "sprites/ship/arwing2.png",
+    sprite: "SHIP_G2-Arwing2",
     maxHealth: 4,
     score: 100,
     speed: 2.5,
@@ -168,7 +168,7 @@ export const ShipSprites = {
     }
   },
   "Castle": {
-    sprite: "sprites/ship/castle.png",
+    sprite: "SHIP_G1-Castle",
     maxHealth: 4,
     score: 100,
     speed: 2.5,

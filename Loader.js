@@ -3,35 +3,21 @@ import {animate, generateGalaxyData} from './map.js';
 export function load() {
   PIXI.loader
   //backgrounds
-  .add([
-    "sprites/background/bg.png"
-  ]).add([
-    "sprites/background/wallpaper.png"
-  ]).add([
-    "sprites/background/stars.png"
-  ]).add([
-    "sprites/background/clouds.png"
-  ])
+  .add("BG_Nebulae","sprites/background/nebulae.png")
+  .add("BG_Stars",  "sprites/background/stars.png")
+  .add("BG_Clouds", "sprites/background/clouds.png")
+
   // ships
-  .add([
-    "sprites/ship/ship.png"
-  ]).add([
-    "sprites/ship/ship2.png"
-  ]).add([
-    "sprites/ship/shipAlt.png"
-  ]).add([
-    "sprites/ship/battleCruiser.png"
-  ]).add([
-    "sprites/ship/enemy.png"
-  ]).add([
-    "sprites/ship/enemy2.png"
-  ])  .add([
-    "sprites/ship/arwing.png"
-  ]).add([
-    "sprites/ship/arwing2.png"
-  ]).add([
-    "sprites/ship/castle.png"
-  ])
+  .add("SHIP_G1-Player1",      "sprites/ship/g1-player1.png")
+  .add("SHIP_G1-Player2",      "sprites/ship/g1-player2.png")
+  .add("SHIP_G1-Player1Alt",   "sprites/ship/g1-playeralt.png")
+  .add("SHIP_G1-BattleCruiser","sprites/ship/g1-battlecruiser.png")
+  .add("SHIP_G1-Enemy1",       "sprites/ship/g1-enemy1.png")
+  .add("SHIP_G1-Enemy2",       "sprites/ship/g1-enemy2.png")
+  .add("SHIP_G1-Castle",       "sprites/ship/g1-castle.png")
+  .add("SHIP_G2-Arwing1",      "sprites/ship/g2-arwing1.png")
+  .add("SHIP_G2-Arwing2",      "sprites/ship/g2-arwing2.png")
+   
   // projectiles
   .add([
     "sprites/projectile/laser.png"
@@ -53,11 +39,19 @@ export function load() {
     "sprites/gun/gun-gatling.png"
   ])
 
+  .add("DOODAD_Asteroid-Medium",      "sprites/doodads/asteroid-m.png")
+  .add("DOODAD_Asteroid-Large",       "sprites/doodads/asteroid-l.png")
+  .add("DOODAD_Asteroid-Small",       "sprites/doodads/asteroid-s.png")
+
    // Explosions
   .add([
     "./sprites/explode/explode.json"
   ]).add([
     "./sprites/explode/explodeb.json"
+  ]).add([
+    "./sprites/explode/explodec.json"
+  ]).add([
+    "./sprites/explode/exploded.json"
   ])
 
   // UI graphics
