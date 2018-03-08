@@ -59,22 +59,9 @@ export const GunList = {
 		ammo: "Missile",
 		accuracy: .05 // 95%
 	},
-	"Standard Shockwave": {
-		description: "Releases a shockwave around the turret pushing nearby enemies back",
-		fireRate: 100,
-		sprite:"GUN_Missile-Standard",
-		pivotX: 2.5,
-		pivotY: 2,
-		turrets:[
-			{x: 0, y: 0}
-		],
-		type: "Shockwave",
-		ammo: "Shockwave Shell",
-		accuracy: .05 // 95%
-	},
-	"Standard Implosion": {
-		description: "Pulls area-of-effect hit enemies into one spot for x seconds",
-		fireRate: 100,
+	"Standard Gravity Cannon": {
+		description: "Can use shockwave and imploding ammo types, otherwise is just a weaker cannon",
+		fireRate: 60,
 		sprite:"GUN_Missile-Standard",
 		pivotX: 2.5,
 		pivotY: 2,
@@ -82,11 +69,11 @@ export const GunList = {
 			{x: 0, y: 0}
 		],
 		type: "Standard",
-		ammo: "Implode Shell",
+		ammo: "Gravity Shell",
 		accuracy: .05 // 95%
 	},
-	"Standard Tractor Beam": {
-		description: "Pulls the hit enemy towards the player",
+	"Standard Gravity Beam": {
+		description: "Can use shockwave and imploding types, otherwise is just a weaker beam",
 		fireRate: 1,
 		sprite:"GUN_Missile-Standard",
 		pivotX: 2.5,
@@ -98,20 +85,7 @@ export const GunList = {
 		ammo: "Tractor Beam Cell",
 		accuracy: .05 // 95%
 	},
-	"Standard Repulsion Beam": {
-		description: "Pushes the hit enemy towards the player",
-		fireRate: 1,
-		sprite:"GUN_Missile-Standard",
-		pivotX: 2.5,
-		pivotY: 2,
-		turrets:[
-			{x: 0, y: 0}
-		],
-		type: "Beam",
-		ammo: "Repulsion Beam Cell",
-		accuracy: .05 // 95%
-	},
-	"Standard Laser Beam": {
+	"Standard Beam": {
 		description: "Pushes the hit enemy towards the player",
 		fireRate: 1,
 		sprite:"GUN_Missile-Standard",
@@ -123,18 +97,5 @@ export const GunList = {
 		type: "Beam",
 		ammo: "Beam Cell",
 		accuracy: .05 // 95%
-	},
-	"Phaser Laser Beam": {
-		description: "Pushes the hit enemy towards the player",
-		fireRate: 1,
-		sprite:"GUN_Missile-Standard",
-		pivotX: 2.5,
-		pivotY: 2,
-		turrets:[
-			{x: 0, y: 0}
-		],
-		type: "Beam",
-		ammo: "Phaser Beam Cell",
-		accuracy: .05 // 95%
-	},
+	}
 };

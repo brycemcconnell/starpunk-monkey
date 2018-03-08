@@ -133,6 +133,14 @@ export default class Ship {
 	}
 
 	handleHit(bullet) {
+		if (bullet.type == "pull") {
+			this.vxpull = (Math.cos(bullet.sprite.rotation + Math.PI)*bullet.strength);
+			this.vypull = (Math.sin(bullet.sprite.rotation + Math.PI)*bullet.strength);
+		}
+		if (bullet.type == "push") {
+			this.vxpush = (Math.cos(bullet.sprite.rotation)*bullet.strength);
+			this.vypush = (Math.sin(bullet.sprite.rotation)*bullet.strength);
+		}
 		
 		if (!this.immune) {
 			this.currentHealth -= bullet.damage;

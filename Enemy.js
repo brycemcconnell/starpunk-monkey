@@ -32,6 +32,11 @@ export default class Enemy extends Ship {
 	    this.shooting = true;
 	    this.fireRate = 90;
 	    this.coolDown = 0;
+
+	    this.vxpull = 0;
+		this.vypull = 0;
+		this.vxpush = 0;
+		this.vypush = 0;
 	    
 	}
 	setPath() {
@@ -42,13 +47,25 @@ export default class Enemy extends Ship {
 				let newPath = Object.assign({}, item);
 				newPath.type = ShipPaths[path].type;
 				newPath.rotate = ShipPaths[path].rotate || null;
-				newPath.rotateSpeedModifier = ShipPaths[path].rotateSpeedModifier || 0;
+				// newPath.rotateSpeedModifier = ShipPaths[path].rotateSpeedModifier || 0;
 				result.push(newPath);
 			});
 		});
 		this.path = result;
 	}
 	handleMove(delta) {
+		if (this.vxpull > 0) this.vxpull -= .01;
+		if (this.vypull > 0) this.vypull -= .01;
+		if (this.vxpush > 0) this.vxpush -= .01;
+		if (this.vypush > 0) this.vypush -= .01;
+		if (this.vxpull < 0) this.vxpull += .01;
+		if (this.vypull < 0) this.vypull += .01;
+		if (this.vxpush < 0) this.vxpush += .01;
+		if (this.vypush < 0) this.vypush += .01;
+		this.vxpush = Math.abs(this.vxpush) < .01 ? 0 : this.vxpush;
+		this.vypush = Math.abs(this.vypush) < .01 ? 0 : this.vypush;
+		this.vxpull = Math.abs(this.vxpull) < .01 ? 0 : this.vxpull;
+		this.vypull = Math.abs(this.vypull) < .01 ? 0 : this.vypull;
 		// reset
 		this.destination = this.path[this.pathCurrent];
 		// If a path Vector does not have x or y, replace it with current
@@ -90,10 +107,17 @@ export default class Enemy extends Ship {
 						) {
 						this.vx = Math.sign(this.destination.x - this.sprite.position.x) * this.speed;
 					}
-					if (fr.deltaAngle(Math.PI / 2, this.sprite.rotation) < 0) {
-						this.vr = -this.rotateSpeed;
-					} else {
-						this.vr = this.rotateSpeed;
+					// console.log()
+
+					// Lower rotation jiggling when hit
+					if (fr.deltaAngle(Math.PI / 2, this.sprite.rotation) > 0.01 ||
+						fr.deltaAngle(Math.PI / 2, this.sprite.rotation) < -0.01) {
+						// Move angle towards x
+						if (fr.deltaAngle(Math.PI / 2, this.sprite.rotation) < 0) {
+								this.vr = -this.rotateSpeed;
+						} else {
+							this.vr = this.rotateSpeed;
+						}
 					}
 				}
 			}
@@ -104,11 +128,11 @@ export default class Enemy extends Ship {
 		// move evrything
 		this.sprite.rotation += this.vr * delta;
 		this.shadow.rotation += this.vr * delta;
-		this.sprite.position.x += this.vx * delta;
-		this.sprite.position.y += this.vy * delta;
-		this.shadow.position.x += this.vx * delta;
-		this.shadow.position.y += this.vy * delta;
-		
+		this.sprite.position.x += (this.vx + this.vxpull + this.vxpush) * delta;
+		this.sprite.position.y += (this.vy + this.vypull + this.vypush) * delta;
+		this.shadow.position.x += (this.vx + this.vxpull + this.vxpush) * delta;
+		this.shadow.position.y += (this.vy + this.vypull + this.vypush) * delta;
+
 		if (this.pathCurrent == this.path.length - 1 && this.path.length > 1) {
 			if (this.sprite.position.y > Gs.CANVAS_SIZEY + (this.sprite.height) ||
 	            this.sprite.position.x > Gs.CANVAS_SIZEX + (this.sprite.width) ||

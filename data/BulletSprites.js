@@ -6,7 +6,8 @@ export const BulletSprites = {
   	  type: "basic",
   	  sound: 'SFX_Laser1',
       hitAnimation: "explodec",
-      hitAnimationFrames: 7
+      hitAnimationFrames: 7,
+      gun: "Laser"
   	},
   	"Laser": {
   	  sprite: "PROJECTILE_Laser1",
@@ -15,7 +16,8 @@ export const BulletSprites = {
   	  type: "basic",
   	  sound: 'SFX_Laser1',
       hitAnimation: "explodec",
-      hitAnimationFrames: 7
+      hitAnimationFrames: 7,
+      gun: "Laser"
   	},
   	// Implement damage system
   	"Missile": {
@@ -26,15 +28,40 @@ export const BulletSprites = {
   		splashRadius: 20,
   		sound: 'SFX_space-missile',
       hitAnimation: "explodeb",
-      hitAnimationFrames: 6
+      hitAnimationFrames: 6,
+      gun: "Missile"
   	},
   	"Gatling": {
-  		sprite: "PROJECTILE_Gatling1",
+      sprite: "PROJECTILE_Gatling1",
+      damage: .2,
+      speed: 4,
+      type: "basic",
+      sound: 'SFX_Laser1',
+      hitAnimation: "exploded",
+      hitAnimationFrames: 4,
+      gun: "Gatling"
+    },
+    "Tractor Shell": {
+      sprite: "PROJECTILE_Gravity4",
+      damage: .2,
+      speed: 4,
+      sound: 'SFX_Laser1',
+      hitAnimation: "exploded",
+      hitAnimationFrames: 4,
+      type: "pull",
+      gun: "Gravity",
+      strength: 1
+    },
+    "Repulsion Shell": {
+  		sprite: "PROJECTILE_Gravity3",
   		damage: .2,
   		speed: 4,
   		sound: 'SFX_Laser1',
       hitAnimation: "exploded",
-      hitAnimationFrames: 4
+      hitAnimationFrames: 4,
+      type: "push",
+      gun: "Gravity",
+      strength: 1
   	},
 
 };

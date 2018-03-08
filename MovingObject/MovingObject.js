@@ -29,21 +29,38 @@ export default class MovingObject {
 		this.vx = 0;
 		this.vy = 0;
 		this.vr = config.spin;
+
+		this.vxpull = 0;
+		this.vypull = 0;
+		this.vxpush = 0;
+		this.vypush = 0;
 	}
 
-	handleMove() {
+	handleMove(delta) {
+		if (this.vxpull > 0) this.vxpull -= .01;
+		if (this.vypull > 0) this.vypull -= .01;
+		if (this.vxpush > 0) this.vxpush -= .01;
+		if (this.vypush > 0) this.vypush -= .01;
 		this.vx = (Math.cos(this.moveAngle)*this.speed);
 		this.vy = (Math.sin(this.moveAngle)*this.speed);
 
-		this.sprite.position.x += this.vx;
-		this.sprite.position.y += this.vy;
-		this.sprite.rotation += this.vr;
+		this.sprite.position.x += (this.vx + this.vxpull + this.vxpush) * delta;
+		this.sprite.position.y += (this.vy + this.vypull + this.vypush) * delta;
+		this.sprite.rotation += this.vr * delta;
 
 		this.vx = 0;
 		this.vy = 0;
 	}
 
 	handleHit(bullet) {
+		if (bullet.type == "pull") {
+			this.vxpull = (Math.cos(bullet.sprite.rotation + Math.PI)*bullet.strength);
+			this.vypull = (Math.sin(bullet.sprite.rotation + Math.PI)*bullet.strength);
+		}
+		if (bullet.type == "push") {
+			this.vxpush = (Math.cos(bullet.sprite.rotation)*bullet.strength);
+			this.vypush = (Math.sin(bullet.sprite.rotation)*bullet.strength);
+		}
 
 		if (!this.immune) {
 			this.currentHealth -= bullet.damage;

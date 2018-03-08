@@ -21,10 +21,10 @@ export const player = {
 		toggle: function() {
 			if (this.value == "combat") {
 				this.value = "travel";
-				PIXI.sound.play('online');
+				PIXI.sound.play('SFX_online');
 			} else {
 				this.value = "combat";
-				PIXI.sound.play('offline');
+				PIXI.sound.play('SFX_offline');
 			}
 			background.forEach(layer => {
 	       layer.direction.set();
@@ -84,7 +84,7 @@ export const player = {
 			
 			if (ship.moveDirection.up) {
 				isMoving = true;
-				PIXI.sound.play('galaxial-booster3');
+				PIXI.sound.play('SFX_galaxial-booster3');
 				// @TODO add drift while in travel speed
 				let resistance = Gs.GALAXY_MODE_DRIFT.value ? .05 : 1;
 				background.forEach(layer => {

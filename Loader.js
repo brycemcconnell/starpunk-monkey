@@ -23,6 +23,10 @@ export function load() {
   .add("PROJECTILE_Laser1",   "sprites/projectile/laser1.png")
   .add("PROJECTILE_Missile1", "sprites/projectile/missile1.png")
   .add("PROJECTILE_Gatling1", "sprites/projectile/gatling1.png")
+  .add("PROJECTILE_Gravity1", "sprites/projectile/gravity1.png")
+  .add("PROJECTILE_Gravity2", "sprites/projectile/gravity2.png")
+  .add("PROJECTILE_Gravity3", "sprites/projectile/gravity3.png")
+  .add("PROJECTILE_Gravity4", "sprites/projectile/gravity4.png")
 
   // gun
   .add("GUN_Laser-Standard",   "sprites/gun/laser-standard.png")

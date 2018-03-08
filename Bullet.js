@@ -9,7 +9,7 @@ export default class Bullet {
 		this.speed = config.ammo.speed;
 		if (!newInstance) {
 			this.sprite.parentGroup = enemyBulletGroup;
-	 	  bulletContainers[config.ammo.sprite].addChild(this.sprite);
+	 	  	bulletContainers[config.ammo.sprite].addChild(this.sprite);
 		}
 		this.type = config.ammo.type;
 		this.splashRadius = config.ammo.splashRadius;
@@ -17,11 +17,12 @@ export default class Bullet {
 		this.sound = config.ammo.sound;
 		this.hitAnimation = config.ammo.hitAnimation;
 		this.hitAnimationFrames = config.ammo.hitAnimationFrames;
+		this.strength = config.ammo.strength;
 		
 	}
 	handleMove(delta) {
 		this.sprite.position.x += (Math.cos(this.sprite.rotation)*this.speed)*delta;
-    this.sprite.position.y += (Math.sin(this.sprite.rotation)*this.speed)*delta;
+    	this.sprite.position.y += (Math.sin(this.sprite.rotation)*this.speed)*delta;
 	}
 	handleDeath() {
 		// this.sprite.visible = false;

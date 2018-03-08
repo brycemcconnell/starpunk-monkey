@@ -6,7 +6,7 @@ import {BulletSprites} from './data/BulletSprites.js';
 export default class Gun {
 	constructor(config) {
 	  	this.sprite = new PIXI.Sprite(PIXI.loader.resources[GunList[config.type].sprite].texture);
-	  	this.parent = parent;
+	  	this.parent = config.parent;
 	  	this.moveType = config.movement; // @TODO Make this user configuragle
 	  	this.sprite.position.set(config.slot.x, config.slot.y);
 	  	this.sprite.pivot.set(GunList[config.type].pivotX, GunList[config.type].pivotY);
@@ -29,8 +29,7 @@ export default class Gun {
 	}
 	handleMovement () { 
   		if (this.moveType == "StayStraight") {
-  			let rotation = this.parent.rotation - (3 * (Math.PI / 2))
-  			this.sprite.rotation = -rotation;
+  			this.sprite.rotation = -(this.parent.rotation - (Math.PI * 1.5));
   		}
   		if (this.moveType == "Circle") {
   			this.sprite.rotation += 0.05;

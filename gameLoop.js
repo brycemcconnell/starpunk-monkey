@@ -46,7 +46,7 @@ export function gameLoop(delta){
 
     for(let i = movingObjects.activePool.length - 1; i >= 0; i--){
       let obj = movingObjects.activePool;
-      obj[i].handleMove();
+      obj[i].handleMove(delta);
       if (CollisionDetection.OffCanvas(
         obj[i].sprite.position,
         obj[i].sprite.width,

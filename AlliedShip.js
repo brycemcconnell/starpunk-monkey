@@ -29,14 +29,14 @@ export default class AlliedShip extends Ship {
       parent: this.sprite,
       slot: this.gunSlots["main-left"],
       type: "Standard Laser",
-      movement: "Mouse",
+      movement: "StayStraight",
       ammo: "Laser"
     });
     let gun2 = new Gun({
       parent: this.sprite,
       slot: this.gunSlots["main-right"],
       type: "Standard Laser",
-      movement: "Mouse",
+      movement: "StayStraight",
       ammo: "Laser"
     });
     this.guns.push(gun);

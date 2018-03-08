@@ -7,6 +7,7 @@ import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import AlliedShip from './AlliedShip.js';
 import MovingObjectArray from './MovingObjectArray.js';
+import {BulletSprites} from './data/BulletSprites.js';
 /*function createGrid() {
   let newGrid = [];
   for (let i = 0; i < Gs.CANVAS_SIZEX; i+=Gs.TILE_SIZE) {
@@ -44,29 +45,40 @@ export const speed = 2;
 export const movingObjects = new MovingObjectArray(Stat.movingObjectCount);
 
 export const background = [];
-export const bulletContainers = {
-  PROJECTILE_Gatling1: new PIXI.ParticleContainer(50, {
+export const bulletContainers = {};
+const bulletTypes = [... new Set(Object.values(BulletSprites).map(bullet => bullet.sprite))];
+bulletTypes.forEach(type => {
+  bulletContainers[type] = new PIXI.ParticleContainer(50, {
     tint: true,
     position: true,
     rotation: true,
     alpha: true,
     uvs: true,
-  }),
-  PROJECTILE_Missile1: new PIXI.ParticleContainer(50, {
-    tint: true,
-    position: true,
-    rotation: true,
-    alpha: true,
-    uvs: true,
-  }),
-  PROJECTILE_Laser1: new PIXI.ParticleContainer(500, {
-    tint: true,
-    position: true,
-    rotation: true,
-    alpha: true,
-    uvs: true,
-  }),
-};
+  });
+});
+// export const bulletContainers = {
+//   PROJECTILE_Gatling1: new PIXI.ParticleContainer(50, {
+//     tint: true,
+//     position: true,
+//     rotation: true,
+//     alpha: true,
+//     uvs: true,
+//   }),
+//   PROJECTILE_Missile1: new PIXI.ParticleContainer(50, {
+//     tint: true,
+//     position: true,
+//     rotation: true,
+//     alpha: true,
+//     uvs: true,
+//   }),
+//   PROJECTILE_Laser1: new PIXI.ParticleContainer(500, {
+//     tint: true,
+//     position: true,
+//     rotation: true,
+//     alpha: true,
+//     uvs: true,
+//   }),
+// };
 
 
 
