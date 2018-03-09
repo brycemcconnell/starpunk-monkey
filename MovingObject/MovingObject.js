@@ -9,7 +9,7 @@ Base class for any object that simply moves in space
 */
 export default class MovingObject {
 	constructor(config) {
-		this.sprite = new PIXI.Sprite(PIXI.loader.resources[config.sprite].texture);
+		this.sprite = new PIXI.Sprite(PIXI.loader.resources[config.texture].texture);
 		this.sprite.position.x = config.x;
 		this.sprite.position.y = config.y;
 		this.sprite.rotation = config.rotation;
@@ -34,6 +34,8 @@ export default class MovingObject {
 		this.vypull = 0;
 		this.vxpush = 0;
 		this.vypush = 0;
+		
+		Object.assign(this, config);
 	}
 
 	handleMove(delta) {

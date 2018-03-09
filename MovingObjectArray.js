@@ -33,7 +33,7 @@ export default class MovingObjectArray {
 			item = new movingObjectClasses[DebrisList[config.associate].type]({
 				x: config.x,
 				y: config.y,
-				sprite: DebrisList[config.associate].sprite,
+				texture: DebrisList[config.associate].sprite,
 				rotation: config.rotation,
 				moveAngle: config.moveAngle,
 				spin: config.spin,
