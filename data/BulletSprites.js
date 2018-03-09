@@ -25,7 +25,7 @@ export const BulletSprites = {
   		damage: 1,
   		speed: 2,
   		type: "aoe",
-  		splashRadius: 20,
+  		splashRadius: 80,
   		sound: 'SFX_space-missile',
       hitAnimation: "explodeb",
       hitAnimationFrames: 6,

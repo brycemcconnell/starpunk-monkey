@@ -216,6 +216,8 @@ on handleMove() {
 
 [ ] Have a 'pilot' career score which adds up all scores, averages etc?
 
+[ ] Maybe use amazon bucket for this? Try researching?
+
 
 
 [~] 2018.03.07 update: Began implementing classes, rotating asteroids would be cool, get on this. Original: Add asteroids and other space debris?
@@ -285,3 +287,7 @@ Bullets define their own effects, but are locked to the type of gun through the 
 [ ] Perhaps make phase weaons (projectiles that go through enemies) into a gun modifier? Available on standard and beam weapons?
 
 [ ] Bullets have different types. A seeking bullet will seek out 'energy signiatures', aka enemy ships. Ships can have energy signiature cloaking mechanisms however. Make follow player x axis bullets? Or should phaser bullets be a thing instead of phaser guns? what mods on bullets vs guns
+
+[ ] Maybe just get rid of bullets entirely. Guns instead take damage/speed values and just increase the amount of guns (if needed). They still have an ammo property, but this only refers to the sprite of the ammunition and the animation it plays on hit (aka only graphical data stored per projectile)
+
+[ ] For timing events, make the timed event take a value in ms, then get the curret ticker time, and gradually take away from the timed event, when 0, run the event. Maybe all timed events go into an array, which just simply minuses the time from each event each frame, and checks if the value is less than 0, before doing event.run() or something.

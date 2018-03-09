@@ -161,7 +161,9 @@ export default class Ship {
 		this.sprite.visible = false;
 		this.userData.fadeOut(this.shadow);
 		this.team.recycle(this);
-		let explosion = new AnimatedObject("explode", 7, {
+		let explosion = new AnimatedObject({
+			sprite: "explode",
+			frames: 7,
       x: this.sprite.position.x, 
       y: this.sprite.position.y
     });

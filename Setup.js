@@ -15,7 +15,7 @@ function createBackgroundLayer(x) {
   const layer = new PIXI.extras.TilingSprite(PIXI.loader.resources[x.sprite].texture, x.w, x.h);
   layer.name = x.name || undefined;
   layer.position.set(x.x || 0, x.y || 0);
-  layer.tint = x.tint || 0xFFFFFF;
+  layer.tint = x.tint ? '0x' + fr.color.rgbToHex(fr.color.hslToRgb(...x.tint)) : 0xFFFFFF;
   layer.alpha = x.alpha || 1;
   layer.speed = x.speed || 0;
   layer.direction = {
@@ -35,7 +35,8 @@ function createBackgroundLayer(x) {
   background.push(layer);
 }
 
-const backgroundGroup = new PIXI.display.Group(-1, true);
+const backgroundGroup = new PIXI.display.Group(-2, true);
+const dynamicBackgroundGroup = new PIXI.display.Group(-1, true);
 export const shadowGroup = new PIXI.display.Group(0, true);
 export const debugGroup = new PIXI.display.Group(1, true);
 export const shipGroup = new PIXI.display.Group(2, true);
@@ -44,9 +45,12 @@ export const enemyBulletGroup = new PIXI.display.Group(4, true);
 export const controlGroup = new PIXI.display.Group(5, true);
 
 export default function setup() {
+  const hue = fr.random(255);
+  const hsl = fr.color.hslToRgb(hue, 90, 70);
   app.stage = new PIXI.display.Stage();
   app.stage.group.enableSort = true;
   app.stage.addChild(new PIXI.display.Layer(backgroundGroup));
+  app.stage.addChild(new PIXI.display.Layer(dynamicBackgroundGroup));
   app.stage.addChild(new PIXI.display.Layer(shadowGroup));
   app.stage.addChild(new PIXI.display.Layer(debugGroup));
   app.stage.addChild(new PIXI.display.Layer(shipGroup));
@@ -78,13 +82,15 @@ export default function setup() {
     moveAngle: 1,
     associate: "Asteroid-L"
   });
+   
+
   createBackgroundLayer({
     name: "Nebulae",
     sprite: "BG_Nebulae",
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     speed: .1,
-    tint: 0xaaffff
+   tint: [(hsl[0] - 30), 50, 50]
   });
   createBackgroundLayer({
     name: "deepStars",
@@ -93,7 +99,7 @@ export default function setup() {
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -64,
     speed: 0.01,
-    tint: 0xaa0077
+    tint: [(hsl[0]), 100, 40]
   });
   createBackgroundLayer({
     name: "bgStars",
@@ -102,7 +108,7 @@ export default function setup() {
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -32,
     speed: .3,
-    tint: 0xeeaabb
+    tint: [(hsl[0]), 80, 90]
   });
   createBackgroundLayer({
     name: "clouds",
@@ -110,7 +116,8 @@ export default function setup() {
     w: Gs.CANVAS_SIZEX * 2,
     h: Gs.CANVAS_SIZEY * 2,
     speed: .4,
-    // displayGroup: controlGroup
+    tint: [(hsl[0] + 30), 90, 60],
+    displayGroup: controlGroup
   });
   createBackgroundLayer({
     name: "fgStars",
@@ -211,5 +218,30 @@ export default function setup() {
   setTimeout(() => {
     PIXI.sound.volume('moment-of-time', 1)
   }, 4500)*/
+  function makeGradient() {
+    let x = Gs.CANVAS_SIZEX - 60;
+    let y = 60;
+    let radius = 80;
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
+    
+    
+
+    let gradient = ctx.createRadialGradient(x, y, radius, x, y, 0);
+    gradient.addColorStop(0, `hsla(${hue}, 90%, 70%, 0)`);
+    gradient.addColorStop(0.4, `hsla(${hue}, 90%, 70%, .3)`);
+    gradient.addColorStop(0.8, `hsla(${hue}, 90%, 50%, .8)`);
+    gradient.addColorStop(1, `hsla(0, 100%, 100%, .8)`);
+    
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2*Math.PI);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+    return canvas;
+  }
+  let canvas = makeGradient();
+  let sun = new PIXI.Sprite(PIXI.Texture.fromCanvas(canvas));
+  sun.parentGroup = dynamicBackgroundGroup;
+  app.stage.addChild(sun);
 }
 

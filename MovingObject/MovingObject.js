@@ -82,12 +82,13 @@ export default class MovingObject {
 	handleDeath() {
 		this.sprite.visible = false;
 		// this.team.recycle(this);
-		let explosion = new AnimatedObject("explode", 7, {
+		let explosion = new AnimatedObject({
+		  sprite: "explode",
+		  frames: 7, 
 		  x: this.sprite.position.x, 
 		  y: this.sprite.position.y
 		});
 		if (this.spawnOnDeath.enabled) {
-			console.log(this.spawnOnDeath)
 			let offspringCount = fr.random(this.spawnOnDeath.max, this.spawnOnDeath.min);
 			for (let i = 0; i < offspringCount; i++) {
 				movingObjects.getNew({

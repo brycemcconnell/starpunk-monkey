@@ -390,18 +390,20 @@ playerShipDebugMarkers.forEach(item => {
 playerShipDebugContainer.appendChild(playerShipDebugView);
 playerShipDebugContainer.appendChild(playerShipDebugOverviewTableHolder);
 
-const objectCountsContainer = document.createElement("div");
-const objectCountsTitle = document.createElement("div");
-const objectCountsTableContainer = document.createElement("div");
-const objectCountsTable = document.createElement("table");
-objectCountsTitle.innerHTML = "Object counter";
-objectCountsContainer.classList.add("UI_box");
-objectCountsTitle.classList.add('UI_sidebar-title');
 
-objectCountsContainer.appendChild(objectCountsTitle);
-objectCountsContainer.appendChild(objectCountsTableContainer);
+const entityCountsContainer = document.createElement("div");
+const entityCountsTitle = document.createElement("div");
+const entityCountsTableContainer = document.createElement("div");
+const entityCountsTable = document.createElement("table");
+entityCountsTitle.innerHTML = "(Sprite) Entity counter";
+entityCountsContainer.classList.add("UI_box");
+entityCountsTitle.classList.add('UI_sidebar-title');
 
-objectCountsTableContainer.appendChild(objectCountsTable);
+entityCountsContainer.appendChild(entityCountsTitle);
+entityCountsContainer.appendChild(entityCountsTableContainer);
+entityCountsTableContainer.appendChild(entityCountsTable);
+
+
 
 const enemiesTitle = document.createElement("th");
 const alliesTitle = document.createElement("th");
@@ -415,7 +417,7 @@ enemyBulletsTitle.innerHTML = "Enemy Bullet Count";
 allyBulletsTitle.innerHTML = "Ally Bullet Count";
 totalEntitiesTitle.innerHTML = "Total Entities";
 movingObjectTitle.innerHTML = "Moving Objects";
-const objectCountsTitleList = [
+const entityCountsTitleList = [
 	enemiesTitle,
 	alliesTitle,
 	enemyBulletsTitle,
@@ -423,14 +425,13 @@ const objectCountsTitleList = [
 	totalEntitiesTitle,
 	movingObjectTitle
 ];
-
 export const enemiesCount = document.createElement("td");
 export const alliesCount = document.createElement("td");
 export const enemyBulletsCount = document.createElement("td");
 export const allyBulletsCount = document.createElement("td");
 export const entitiesTotalCount = document.createElement("td");
 export const movingObjectCount = document.createElement("td");
-const objectCountsCountList = [
+const entityCountsCountList = [
 	enemiesCount,
 	alliesCount,
 	enemyBulletsCount,
@@ -438,34 +439,70 @@ const objectCountsCountList = [
 	entitiesTotalCount,
 	movingObjectCount
 ];
-objectCountsCountList.forEach(item => item.innerHTML = 0);
+entityCountsCountList.forEach(item => item.innerHTML = 0);
 
-objectCountsTitleList.forEach((item, index) => {
+entityCountsTitleList.forEach((item, index) => {
 	let row = document.createElement("tr");
 	row.appendChild(item);
-	row.appendChild(objectCountsCountList[index]);
-	objectCountsTable.appendChild(row);
-})
+	row.appendChild(entityCountsCountList[index]);
+	entityCountsTable.appendChild(row);
+});
+
+const nonEntityCountsContainer = document.createElement("div");
+const nonEntityCountsTitle = document.createElement("div");
+const nonEntityCountsTableContainer = document.createElement("div");
+const nonEntityCountsTable = document.createElement("table");
+nonEntityCountsTitle.innerHTML = "Non Entity counter";
+nonEntityCountsContainer.classList.add("UI_box");
+nonEntityCountsTitle.classList.add('UI_sidebar-title');
+
+nonEntityCountsContainer.appendChild(nonEntityCountsTitle);
+nonEntityCountsContainer.appendChild(nonEntityCountsTableContainer);
+nonEntityCountsTableContainer.appendChild(nonEntityCountsTable);
+
+const totalNonEntitiesTitle = document.createElement("th");
+totalNonEntitiesTitle.innerHTML = "Total NonEntities";
+const nonEntityCountsTitleList = [
+	totalNonEntitiesTitle,
+];
+export const nonEntitiesTotalCount = document.createElement("td");
+const nonEntityCountsCountList = [
+	nonEntitiesTotalCount,
+];
+nonEntityCountsCountList.forEach(item => item.innerHTML = 0);
+
+nonEntityCountsTitleList.forEach((item, index) => {
+	let row = document.createElement("tr");
+	row.appendChild(item);
+	row.appendChild(nonEntityCountsCountList[index]);
+	nonEntityCountsTable.appendChild(row);
+});
 
 const wrapperOverlay = document.createElement("div");
 wrapperOverlay.classList.add("canvas-inset-shadow");
+
+const buttonContainer = document.createElement("div");
+buttonContainer.classList.add("UI_box");
+buttonContainer.appendChild(AddEnemy);
+buttonContainer.appendChild(ToggleRespawn);
+buttonContainer.appendChild(ToggleHitboxes);
+buttonContainer.appendChild(ToggleSizeboxes);
+buttonContainer.appendChild(ToggleSound);
+buttonContainer.appendChild(ToggleRender);
+buttonContainer.appendChild(TogglePlayerHitDetection);
+buttonContainer.appendChild(ToggleGalaxyModeDrift);
+buttonContainer.appendChild(AddWave);
+
 export function init() {
 	// This removes mousemove detection
 	// wrapper.appendChild(wrapperOverlay);
 	// wrapper.appendChild(UIGuageOverlay);
 	pageWrapper.appendChild(sidebar)
 	sidebar.appendChild(Player);
-	sidebar.appendChild(AddEnemy);
-	sidebar.appendChild(ToggleRespawn);
-	sidebar.appendChild(ToggleHitboxes);
-	sidebar.appendChild(ToggleSizeboxes);
-	sidebar.appendChild(ToggleSound);
-	sidebar.appendChild(ToggleRender);
-	sidebar.appendChild(TogglePlayerHitDetection);
-	sidebar.appendChild(ToggleGalaxyModeDrift);
-	sidebar.appendChild(AddWave);
+	sidebar.appendChild(buttonContainer);
 	sidebar.appendChild(playerShipView);
-	sidebar.appendChild(objectCountsContainer);
+	sidebar.appendChild(entityCountsContainer);
+	sidebar.appendChild(nonEntityCountsContainer);
 }
 
 const inactiveItems = [

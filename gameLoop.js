@@ -78,7 +78,14 @@ export function gameLoop(delta){
           radius:  movingObjects.activePool[x].sprite.width/2
         }) && movingObjects.activePool[x].sprite.visible;
         if (collider) {
-          let explosion = new AnimatedObject(allyBullets.activePool[b].hitAnimation, allyBullets.activePool[b].hitAnimationFrames, {x: allyBullets.activePool[b].sprite.position.x, y: allyBullets.activePool[b].sprite.position.y});
+          let explosion = new AnimatedObject({
+            sprite: allyBullets.activePool[b].hitAnimation,
+            frames: allyBullets.activePool[b].hitAnimationFrames, 
+            x: allyBullets.activePool[b].sprite.position.x, 
+            y: allyBullets.activePool[b].sprite.position.y,
+            height: allyBullets.activePool[b].splashRadius,
+            width: allyBullets.activePool[b].splashRadius
+          });
           
           movingObjects.activePool[x].handleHit(allyBullets.activePool[b]);
           allyBullets.recycle(allyBullets.activePool[b]);
@@ -93,7 +100,14 @@ export function gameLoop(delta){
             allyBullets.activePool[b].sprite.position.x < enemies.activePool[x].sprite.position.x + (enemies.activePool[x].sprite.width / 2) &&
             enemies.activePool[x].sprite.alpha == 1) {
           // console.log('hit', enemies);
-          let explosion = new AnimatedObject(allyBullets.activePool[b].hitAnimation, allyBullets.activePool[b].hitAnimationFrames, {x: allyBullets.activePool[b].sprite.position.x, y: allyBullets.activePool[b].sprite.position.y});
+          let explosion = new AnimatedObject({
+            sprite: allyBullets.activePool[b].hitAnimation,
+            frames: allyBullets.activePool[b].hitAnimationFrames,
+            x: allyBullets.activePool[b].sprite.position.x, 
+            y: allyBullets.activePool[b].sprite.position.y,
+            height: allyBullets.activePool[b].splashRadius,
+            width: allyBullets.activePool[b].splashRadius
+          });
           if (allyBullets.activePool[b].type == "aoe") {
             allyBullets.activePool[b].explode();
             let radius = allyBullets.activePool[b].splashRadius;
