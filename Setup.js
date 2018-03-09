@@ -70,7 +70,7 @@ export default function setup() {
     x: 40,
     y: 10,
     rotation: 1,
-    spin: -.03,
+    spin: -.005,
     moveAngle: 1,
     associate: "Asteroid-M"
   });
@@ -78,7 +78,7 @@ export default function setup() {
     x: 20,
     y: 30,
     rotation: 1,
-    spin: .04,
+    spin: .01,
     moveAngle: 1,
     associate: "Asteroid-L"
   });
