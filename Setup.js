@@ -15,7 +15,7 @@ function createBackgroundLayer(x) {
   const layer = new PIXI.extras.TilingSprite(PIXI.loader.resources[x.sprite].texture, x.w, x.h);
   layer.name = x.name || undefined;
   layer.position.set(x.x || 0, x.y || 0);
-  layer.tint = x.tint ? '0x' + fr.color.rgbToHex(fr.color.hslToRgb(...x.tint)) : 0xFFFFFF;
+  layer.tint = x.tint ? '0x' + fr.color.rgbToHex(...fr.color.hslToRgb(...x.tint)) : 0xFFFFFF;
   layer.alpha = x.alpha || 1;
   layer.speed = x.speed || 0;
   layer.direction = {
