@@ -7,8 +7,9 @@ export default class AnimatedObject {
 				this.textures.push(texture);
 		}
 		this.animation = new PIXI.extras.AnimatedSprite(this.textures);
-		this.animation.x = config.x;
-		this.animation.y = config.y;
+		this.animation.gotoAndPlay(config.startAt || 0);
+		this.animation.x = config.x || 0;
+		this.animation.y = config.y || 0;
 		this.animation.scale.set(config.scale || 1);
 		this.animation.height = config.height || this.textures[0].height;
 		this.animation.width = config.width || this.textures[0].width;
@@ -18,6 +19,12 @@ export default class AnimatedObject {
 		this.animation.play();
 		this.animation.onComplete = () => {this.animation.destroy()};
 
-		app.stage.addChild(this.animation);
+		this.parent = config.parent || null;
+		if (this.parent) {
+			this.parent.addChild(this.animation);
+		} else {
+			app.stage.addChild(this.animation);
+		}
+		
 	}
 }

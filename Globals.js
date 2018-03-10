@@ -9,7 +9,7 @@ export const setCANVAS_SCALE = () => {
 }
 export const TILE_SIZE = 32;
 export const SHADOW_OFFSET = 50;
-export const SHADOW_ALPHA = .3;
+export const SHADOW_ALPHA = .0;
 export const SCALE_FACTOR = 1;
 export const UI_SCALE = 2;
 export const DEFAULT_ROTATION = 270;
@@ -22,7 +22,7 @@ export const VOLUME_MUSIC = {
 	value: 0
 };
 export const VOLUME_SOUND = {
-	value: .005
+	value: 1
 };
 export const SHOW_HITBOXES = {
 	value: false,

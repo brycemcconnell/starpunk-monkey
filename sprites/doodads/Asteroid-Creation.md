@@ -14,3 +14,6 @@ Randomisation: 78%
 Repeat: 32
 
 Set layer blendmode to Burn, opacity ~30
+
+
+Edit: filterpack turn down saturation, then turn down value

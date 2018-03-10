@@ -1,4 +1,4 @@
-import { app, enemies, enemyBullets, background, allies, bulletContainers, movingObjects } from './Model.js';
+import { app, enemies, enemyBullets, background, dynamicBackground, allies, bulletContainers, movingObjects } from './Model.js';
 import {gameLoop} from './gameLoop.js';
 // import {instantiateShip} from './ship.js';
 import * as Gs from './Globals.js';
@@ -219,12 +219,13 @@ export default function setup() {
     PIXI.sound.volume('moment-of-time', 1)
   }, 4500)*/
   function makeGradient() {
-    let x = Gs.CANVAS_SIZEX - 60;
-    let y = 60;
     let radius = 80;
+    let x = radius;
+    let y = radius;
     let canvas = document.createElement("canvas");
     let ctx = canvas.getContext("2d");
-    
+    canvas.width = radius * 2;
+    canvas.height = radius * 2;
     
 
     let gradient = ctx.createRadialGradient(x, y, radius, x, y, 0);
@@ -240,8 +241,10 @@ export default function setup() {
     return canvas;
   }
   let canvas = makeGradient();
-  let sun = new PIXI.Sprite(PIXI.Texture.fromCanvas(canvas));
+  const sun = new PIXI.Sprite(PIXI.Texture.fromCanvas(canvas));
   sun.parentGroup = dynamicBackgroundGroup;
+  sun.speed = .01;
+  dynamicBackground.push(sun);
   app.stage.addChild(sun);
 }
 

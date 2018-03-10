@@ -45,6 +45,7 @@ export const speed = 2;
 export const movingObjects = new MovingObjectArray(Stat.movingObjectCount);
 
 export const background = [];
+export const dynamicBackground = [];
 export const bulletContainers = {};
 const bulletTypes = [... new Set(Object.values(BulletSprites).map(bullet => bullet.sprite))];
 bulletTypes.forEach(type => {

@@ -89,6 +89,40 @@ export const ShipSprites = {
         w: 8,
         h: 8
       }
+    ],
+    drops: [
+      {
+        // I want each enemy to be able to have different drop chance/count/and value per item
+        
+        name: "Enemy2 Parts",
+        rate: [
+
+        ]
+      },
+      {
+        name: "Repair Pack",
+        amount: [0, 1],
+      }
+    ]
+  },
+  "Enemy3": {
+    sprite: "SHIP_G1-Enemy3",
+    maxHealth: 4,
+    score: 100,
+    speed: 1.5,
+    hitBoxes: [
+      {
+        x: 0,
+        y: 0,
+        w: 16,
+        h: 24,
+      },
+      {
+        x: 16,
+        y: 8,
+        w: 8,
+        h: 8
+      }
     ]
   },
   "Arwing": {

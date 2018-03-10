@@ -83,6 +83,9 @@ export const player = {
 			// console.log(ship.moveDirection)
 			
 			if (ship.moveDirection.up) {
+				ship.trails.forEach(trail => {
+			  	trail.visible = true;
+			  });
 				isMoving = true;
 				PIXI.sound.play('SFX_galaxial-booster3');
 				// @TODO add drift while in travel speed
@@ -96,6 +99,9 @@ export const player = {
 	      });
 		  }
 		  if (!ship.moveDirection.up || ship.moveDirection.down) {
+		  	ship.trails.forEach(trail => {
+			  	trail.visible = false;
+			  });
 		  	background.forEach(layer => {
 		  		if (Math.abs(layer.vx) > layer.speed) {
 		  			layer.vx += layer.vx > 0 ? - 0.05: 0.05;
@@ -254,7 +260,31 @@ export const player = {
 			                currentTurn > 0 ? currentTurn - currentTurnSpeed : currentTurn;
 			  turningEnabled && turn(ship);
 		  }
-		  if (moveDirectionCount == 0) currentSpeed = 0;
+		  if (moveDirectionCount == 0) {
+		  	currentSpeed = 0;
+		  	if (ship.sprite.scale.x < 1) {
+		  		ship.sprite.scale.x += .02;
+		  		ship.sprite.scale.y += .02;
+		  	}
+		  	if (ship.sprite.scale.x > 1) {
+		  		ship.sprite.scale.set(1)
+		  	}
+		  } else {
+				if (ship.sprite.scale.x > .9) {
+		  		ship.sprite.scale.x -= .01;
+		  		ship.sprite.scale.y -= .01;
+		  	}
+		  	if (ship.booster && ship.fuel > 0 && ship.sprite.scale.x > .8) {
+		  		ship.sprite.scale.x -= .01;
+		  		ship.sprite.scale.y -= .01;
+		  	} else {
+		  		if (ship.sprite.scale.x < .9) {
+			  		ship.sprite.scale.x += .01;
+			  		ship.sprite.scale.y += .01;
+			  	} 
+		  	}
+		  	
+		  }
 		  playerSpeed.update(currentSpeed.toFixed(2));
 		});
 	}

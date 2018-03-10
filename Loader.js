@@ -14,10 +14,13 @@ export function load() {
   .add("SHIP_G1-BattleCruiser","sprites/ship/g1-battlecruiser.png")
   .add("SHIP_G1-Enemy1",       "sprites/ship/g1-enemy1.png")
   .add("SHIP_G1-Enemy2",       "sprites/ship/g1-enemy2.png")
+  .add("SHIP_G1-Enemy3",       "sprites/ship/g1-enemy3.png")
   .add("SHIP_G1-Castle",       "sprites/ship/g1-castle.png")
   .add("SHIP_G2-Arwing1",      "sprites/ship/g2-arwing1.png")
   .add("SHIP_G2-Arwing2",      "sprites/ship/g2-arwing2.png")
    
+   //fx
+   .add("flight-trail", "sprites/fx/flight-trail.json")
   // projectiles
   .add("PROJECTILE_Test",     "sprites/projectile/test.png")
   .add("PROJECTILE_Laser1",   "sprites/projectile/laser1.png")
@@ -44,9 +47,13 @@ export function load() {
   .add("explodeb", "./sprites/explode/explodeb.json")
   .add("explodec", "./sprites/explode/explodec.json")
   .add("exploded", "./sprites/explode/exploded.json")
+  .add("explodebw", "./sprites/explode/explodebw.json")
 
   // UI graphics
   .add("UI_Cursor-Attack", "sprites/ui/cursor-attack.png")
+
+  // Drops
+  .add("CreditAnim", "sprites/drops/CreditAnim.json")
 
   // sound fx
   .add('SFX_Laser1',           'sounds/laser.wav')
@@ -66,6 +73,7 @@ export function load() {
   .add('SFX_galaxial-booster2','sounds/galaxial-booster2.wav')
   .add('SFX_galaxial-booster3','sounds/galaxial-booster3.wav')
   .add('SFX_space-missile',    'sounds/space-missile.wav')
+  .add('SFX_get',              'sounds/get.mp3')
 
   // music
   .add('moment-of-time','sounds/music/moment-of-time.mp3')

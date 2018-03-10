@@ -31,8 +31,10 @@ export default class MovingObjectArray {
 		// 	item.sprite.texture = DebrisList[config.associate].sprite;
 		// } else {
 			item = new movingObjectClasses[DebrisList[config.associate].type]({
+				type: DebrisList[config.associate].type,
 				x: config.x,
 				y: config.y,
+				animated: DebrisList[config.associate].animated,
 				texture: DebrisList[config.associate].sprite,
 				rotation: config.rotation,
 				moveAngle: config.moveAngle,
@@ -43,9 +45,12 @@ export default class MovingObjectArray {
 				spawnOnDeathChild: DebrisList[config.associate].spawnOnDeathChild,
 				maxHealth: DebrisList[config.associate].maxHealth,
 				speed: DebrisList[config.associate].speed,
+				pickupRange: DebrisList[config.associate].pickupRange,
+				frames: DebrisList[config.associate].frames,
+				loop: DebrisList[config.associate].loop,
+				animationSpeed: DebrisList[config.associate].animationSpeed
 			}, false);
 		// }
-		
 		this.activePool.push(item);
 		this.listener.update(this.activePool.length, this.inactivePool.length);
 		return item;

@@ -291,3 +291,7 @@ Bullets define their own effects, but are locked to the type of gun through the 
 [ ] Maybe just get rid of bullets entirely. Guns instead take damage/speed values and just increase the amount of guns (if needed). They still have an ammo property, but this only refers to the sprite of the ammunition and the animation it plays on hit (aka only graphical data stored per projectile)
 
 [ ] For timing events, make the timed event take a value in ms, then get the curret ticker time, and gradually take away from the timed event, when 0, run the event. Maybe all timed events go into an array, which just simply minuses the time from each event each frame, and checks if the value is less than 0, before doing event.run() or something.
+
+[ ] Guns have cooldown markers at the bottom, kinda like FTL. You can toggle between auto fire or manual fire. ??
+
+[ ] Asteroids drop rock with a very rare chance of dropping precious minerals?

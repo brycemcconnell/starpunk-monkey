@@ -9,11 +9,25 @@ Base class for any object that simply moves in space
 */
 export default class MovingObject {
 	constructor(config) {
-		this.sprite = new PIXI.Sprite(PIXI.loader.resources[config.texture].texture);
+		this.type = config.type;
+		if (config.animated) {
+			this.sprite = new PIXI.Container();
+			let animation = new AnimatedObject({
+				sprite: config.texture,
+				frames: config.frames,
+				loop: config.loop,
+				animationSpeed: config.animationSpeed,
+				startAt: fr.random(config.frames)
+			});
+			this.sprite.addChild(animation.animation);
+		} else {
+			this.sprite = new PIXI.Sprite(PIXI.loader.resources[config.texture].texture);
+			this.sprite.anchor.set(.5, .5);
+		}
 		this.sprite.position.x = config.x;
 		this.sprite.position.y = config.y;
 		this.sprite.rotation = config.rotation;
-		this.sprite.anchor.set(.5, .5);
+		
 		app.stage.addChild(this.sprite);
 		this.speed = config.speed || .5;
 		this.moveAngle = config.moveAngle;
@@ -26,6 +40,18 @@ export default class MovingObject {
 			min: config.spawnOnDeathMin || 1,
 			max: config.spawnOnDeathMax || 1
 		};
+		this.hasDrops = true;
+		this.dropList = [
+			{
+				name: "credits",
+				chance: 50,
+				value: [5, 10]
+			},{
+				name: "credits",
+				chance: 100,
+				value: [5, 10]
+			},
+		];
 		this.vx = 0;
 		this.vy = 0;
 		this.vr = config.spin;
@@ -83,7 +109,7 @@ export default class MovingObject {
 		this.sprite.visible = false;
 		// this.team.recycle(this);
 		let explosion = new AnimatedObject({
-		  sprite: "explode",
+		  sprite: "explodebw",
 		  frames: 7, 
 		  x: this.sprite.position.x, 
 		  y: this.sprite.position.y
@@ -101,5 +127,32 @@ export default class MovingObject {
 				});
 			}
 		} 
+		if (this.hasDrops) {
+			let loot = generateLootFrom(this.dropList);
+			for (let i = 0; i < loot.length; i++) {
+				movingObjects.getNew({
+				  	associate: "Credit",
+				    x: this.sprite.position.x,
+				    y: this.sprite.position.y,
+				    rotation: fr.random(Math.PI * 2),
+				    spin: -fr.random(.01, .001),
+				    moveAngle: fr.random(Math.PI * 2)
+				});
+			}
+		}
 	}
+}
+
+function generateLootFrom(dropList) {
+	let lootList = [];
+	dropList.forEach(drop => {
+		if (fr.random(100) < drop.chance) {
+			let result = drop.name;
+			if (drop.name == "credits") {
+				result = fr.random(drop.value[0], drop.value[1]);
+			}
+			lootList.push(result);
+		}
+	});
+	return lootList;
 }

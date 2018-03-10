@@ -22,5 +22,17 @@ export const DebrisList = {
 	    spawnOnDeathChild: "Asteroid-M",
 	    maxHealth: 16,
 	    speed: .2
+	},
+	"Credit": {
+		type: "Pickup",
+	    sprite: "CreditAnim",
+	    spawnOnDeathEnabled: false,
+	    maxHealth: 0,
+	    speed: .1,
+	    pickupRange: 20,
+	    animated: true,
+	    frames: 8,
+	    loop: true,
+	    animationSpeed: .2
 	}
 }; 

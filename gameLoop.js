@@ -1,4 +1,4 @@
-import { app, speed, allyBullets, enemies, enemyBullets, background, allies, movingObjects } from './Model.js';
+import { app, speed, allyBullets, enemies, enemyBullets, background, dynamicBackground, allies, movingObjects } from './Model.js';
 import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
@@ -27,12 +27,17 @@ export function gameLoop(delta){
     handleGameTime();
 
 
-
+    let debris = movingObjects.activePool.filter(obj => obj.type == "Debris");
+    let pickups = movingObjects.activePool.filter(obj => obj.type == "Pickup");
     if (player.moveMode.value == "combat") { 
       player.handleCombatMovement(delta); 
       background.forEach(layer => {
         if (layer.y > 0) layer.y = -Gs.CANVAS_SIZEY;
         layer.y += (layer.speed * delta);
+      });
+      dynamicBackground.forEach(layer => {
+        if (layer.x > Gs.CANVAS_SIZEX) layer.x = -layer.width;
+        layer.x += (layer.speed * delta);
       });
     } else {
       player.handleTravelMovement(delta, background);
@@ -54,6 +59,33 @@ export function gameLoop(delta){
           movingObjects.recycle(movingObjects.activePool[i]);
       }
     }
+    let player1 = allies.activePool[0];
+    PickupLoop:
+    for (let x = pickups.length - 1; x >= 0; x--) {
+      let collider = CollisionDetection.PointInCircle({
+        x: player1.sprite.x,
+        y: player1.sprite.y,
+      },
+      {
+        x: pickups[x].sprite.x,
+        y: pickups[x].sprite.y,
+        radius:  pickups[x].pickupRange
+      }) && pickups[x].sprite.visible;
+      if (collider) {
+        PIXI.sound.play('SFX_get',  { volume: Gs.VOLUME_SOUND.value });
+        // let explosion = new AnimatedObject({
+        //   sprite: player1.hitAnimation,
+        //   frames: player1.hitAnimationFrames, 
+        //   x: player1.sprite.position.x, 
+        //   y: player1.sprite.position.y,
+        //   height: player1.splashRadius,
+        //   width: player1.splashRadius
+        // });
+        pickups[x].handleDeath();
+        movingObjects.recycle(pickups[x]);
+        break PickupLoop;
+      }
+    }
 
     // If you have multiple allies, make the fleet move at the same speed?
     // Sort by lowest speed first, eg allies[0] is slowest. Change the speed of your fleet based on this
@@ -67,16 +99,16 @@ export function gameLoop(delta){
       allyBullets.activePool[b].handleMove(delta);
 
       // Check collisions with debris
-      for (let x = movingObjects.activePool.length - 1; x >= 0; x--) {
+      for (let x = debris.length - 1; x >= 0; x--) {
         let collider = CollisionDetection.PointInCircle({
           x: allyBullets.activePool[b].sprite.x,
           y: allyBullets.activePool[b].sprite.y,
         },
         {
-          x: movingObjects.activePool[x].sprite.x,
-          y: movingObjects.activePool[x].sprite.y,
-          radius:  movingObjects.activePool[x].sprite.width/2
-        }) && movingObjects.activePool[x].sprite.visible;
+          x: debris[x].sprite.x,
+          y: debris[x].sprite.y,
+          radius:  debris[x].sprite.width/2
+        }) && debris[x].sprite.visible;
         if (collider) {
           let explosion = new AnimatedObject({
             sprite: allyBullets.activePool[b].hitAnimation,
@@ -87,7 +119,7 @@ export function gameLoop(delta){
             width: allyBullets.activePool[b].splashRadius
           });
           
-          movingObjects.activePool[x].handleHit(allyBullets.activePool[b]);
+          debris[x].handleHit(allyBullets.activePool[b]);
           allyBullets.recycle(allyBullets.activePool[b]);
           break AllyBulletLoop;
         }
@@ -167,7 +199,7 @@ export function gameLoop(delta){
             resetGame();
             break EnemyBulletLoop;
           }
-          PIXI.sound.play('SFX_explode');
+          PIXI.sound.play('SFX_explode', { volume: Gs.VOLUME_SOUND.value });
 
           enemyBullets.recycle(enemyBullets.activePool[b]);
           if (Gs.RESPAWN.value) { allies.getNew(fr.randAngle4(), fr.random(224), fr.random(256)); }

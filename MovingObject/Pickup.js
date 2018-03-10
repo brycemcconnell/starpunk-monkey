@@ -6,7 +6,11 @@ when hit the player will recieve x into their inventory state
 */
 
 export default class Pickup extends MovingObject {
-	constructor() {
-
+	constructor(config) {
+		super(config);
+		this.pickupRange = config.pickupRange;
+	}
+	handleDeath() {
+		this.sprite.visible = false;
 	}
 }

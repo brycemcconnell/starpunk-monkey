@@ -16,6 +16,36 @@ export default class Ship {
 		// this.sprite.pivot = {x: 20, y: 20}
 		this.sprite.anchor.set(0.5);
 		this.sprite.parentGroup = shipGroup;
+
+		const trailLeft = new PIXI.Container();
+		trailLeft.visible = false;
+		trailLeft.pivot.set(1, 0);
+		trailLeft.rotation = Math.PI / 2;
+		trailLeft.position.set(-this.sprite.width / 2 - 3, -this.sprite.height / 2 + 1);
+		const trailL = new AnimatedObject({
+			sprite: "flight-trail",
+			frames: 4,
+			parent: trailLeft,
+			loop: true,
+			animationSpeed: .1
+		});
+		this.sprite.addChild(trailLeft);
+
+		const trailRight = new PIXI.Container();
+		trailRight.visible = false;
+		trailRight.pivot.set(1, 0);
+		trailRight.rotation = Math.PI / 2;
+		trailRight.position.set(-this.sprite.width / 2 - 3, this.sprite.height / 2 + 1);
+		const trailR = new AnimatedObject({
+			sprite: "flight-trail",
+			frames: 4,
+			parent: trailRight,
+			loop: true,
+			animationSpeed: .1
+		});
+		this.trails = [trailRight, trailLeft];
+		this.sprite.addChild(trailRight);
+
 		this.shadow = new PIXI.Sprite(PIXI.loader.resources[ShipSprites[config.sprite].sprite].texture);
 		this.shadow.tint = 0x000000;
 		this.shadow.alpha = Gs.SHADOW_ALPHA;
@@ -26,7 +56,7 @@ export default class Ship {
 		this.sizeBox = new PIXI.Graphics();
 		this.sizeBox.setTransform(-(this.sprite.width / 2), -(this.sprite.height / 2));
 		this.sizeBox.lineStyle(1, 0xffffff);
-		this.sizeBox.alpha = Gs.SHADOW_ALPHA;
+		this.sizeBox.alpha = .3;
 		this.sizeBox.drawRect(0, 0, this.sprite.width, this.sprite.height);
 		this.sprite.addChild(this.sizeBox);
 
@@ -167,5 +197,31 @@ export default class Ship {
       x: this.sprite.position.x, 
       y: this.sprite.position.y
     });
+   //  if (this.spawnOnDeath.enabled) {
+			// let offspringCount = fr.random(this.spawnOnDeath.max, this.spawnOnDeath.min);
+			// for (let i = 0; i < offspringCount; i++) {
+			// 	movingObjects.getNew({
+			// 		associate: this.spawnOnDeath.child,
+			// 	    x: this.sprite.position.x,
+			// 	    y: this.sprite.position.y,
+			// 	    rotation: fr.random(Math.PI * 2),
+			// 	    spin: -fr.random(.01, .001),
+			// 	    moveAngle: fr.random(Math.PI * 2)
+			// 	});
+			// }
+			if (this.drops) {
+				let loot = generateLootFrom(this.ship);
+
+				for (let i = 0; i < loot.length - 1; i++) {
+				movingObjects.getNew({
+				  	associate: loot[i].sprite,
+				    x: this.sprite.position.x,
+				    y: this.sprite.position.y,
+				    rotation: fr.random(Math.PI * 2),
+				    spin: -fr.random(.01, .001),
+				    moveAngle: fr.random(Math.PI * 2)
+				});
+			}
+		} 
 	}
 }
