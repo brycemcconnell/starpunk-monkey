@@ -22,7 +22,7 @@ export const VOLUME_MUSIC = {
 	value: 0
 };
 export const VOLUME_SOUND = {
-	value: 1
+	value: .1
 };
 export const SHOW_HITBOXES = {
 	value: false,

@@ -30,26 +30,29 @@ export default class MovingObjectArray {
 		// 	item.sprite.visible = true;
 		// 	item.sprite.texture = DebrisList[config.associate].sprite;
 		// } else {
-			item = new movingObjectClasses[DebrisList[config.associate].type]({
-				type: DebrisList[config.associate].type,
-				x: config.x,
-				y: config.y,
-				animated: DebrisList[config.associate].animated,
-				texture: DebrisList[config.associate].sprite,
-				rotation: config.rotation,
-				moveAngle: config.moveAngle,
-				spin: config.spin,
-				spawnOnDeathEnabled: DebrisList[config.associate].spawnOnDeathEnabled,
-				spawnOnDeathMin: DebrisList[config.associate].spawnOnDeathMin,
-				spawnOnDeathMax: DebrisList[config.associate].spawnOnDeathMax,
-				spawnOnDeathChild: DebrisList[config.associate].spawnOnDeathChild,
-				maxHealth: DebrisList[config.associate].maxHealth,
-				speed: DebrisList[config.associate].speed,
-				pickupRange: DebrisList[config.associate].pickupRange,
-				frames: DebrisList[config.associate].frames,
-				loop: DebrisList[config.associate].loop,
-				animationSpeed: DebrisList[config.associate].animationSpeed
-			}, false);
+			item = new movingObjectClasses[DebrisList[config.associate].type](
+				config
+			// {
+			// 	type: DebrisList[config.associate].type,
+			// 	x: config.x,
+			// 	y: config.y,
+			// 	animated: DebrisList[config.associate].animated,
+			// 	texture: DebrisList[config.associate].sprite,
+			// 	rotation: config.rotation,
+			// 	moveAngle: config.moveAngle,
+			// 	spin: config.spin,
+			// 	spawnOnDeathEnabled: DebrisList[config.associate].spawnOnDeathEnabled,
+			// 	spawnOnDeathMin: DebrisList[config.associate].spawnOnDeathMin,
+			// 	spawnOnDeathMax: DebrisList[config.associate].spawnOnDeathMax,
+			// 	spawnOnDeathChild: DebrisList[config.associate].spawnOnDeathChild,
+			// 	maxHealth: DebrisList[config.associate].maxHealth,
+			// 	speed: DebrisList[config.associate].speed,
+			// 	pickupRange: DebrisList[config.associate].pickupRange,
+			// 	frames: DebrisList[config.associate].frames,
+			// 	loop: DebrisList[config.associate].loop,
+			// 	animationSpeed: DebrisList[config.associate].animationSpeed
+			// }
+			, false);
 		// }
 		this.activePool.push(item);
 		this.listener.update(this.activePool.length, this.inactivePool.length);

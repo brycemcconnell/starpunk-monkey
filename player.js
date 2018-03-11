@@ -158,6 +158,7 @@ export const player = {
 		  });
 	},
 	handleCombatMovement: function(delta) {
+
 		/*
 		// Example circle movement
 		allies.activePool[0].time += .1;
@@ -172,6 +173,9 @@ export const player = {
 		let moveDownOk = 0;
 		let moveUpOk = 0;
 	  allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {
+	  	ship.trails.forEach(trail => {
+		  	trail.visible = false;
+		  });
 		  UI.FuelGuage.style.height =  (ship.fuel * 100) / ship.maxFuel + "%";
 		  if (ship.moveDirection.up && ship.sprite.y > ship.sprite.width / 2) {
 		    moveUpOk += 1;

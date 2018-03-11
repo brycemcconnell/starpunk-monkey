@@ -295,3 +295,22 @@ Bullets define their own effects, but are locked to the type of gun through the 
 [ ] Guns have cooldown markers at the bottom, kinda like FTL. You can toggle between auto fire or manual fire. ??
 
 [ ] Asteroids drop rock with a very rare chance of dropping precious minerals?
+
+[ ] Difficulty select: At the start of the game you have just done a huge job and got paid immensly, you are heading somewhere when a salesman appears selling you insurance:
+Hard: You tell him to slog on,
+Hardcore mode, if you die you're dead for good.
+
+Normal: You buy life insurance for 40,000,000 monehs
+Whenever you die, you are reborn in a lab as part of your insurance, are you really you? Or just a copy? You lose your ship/inventory etc.
+
+Easy: You buy life insurance and comprehensive ship insurance for 60,000,000 monehs
+If you die you are reborn as normal mode, but all your inventory and ships are returned to you by the insurance company.
+
+You started with 80,000,000 monehs?
+Depending on your choice, something bad happens and you get screwed over by your old contractor, who steals your remaining money leaving you with nothing.
+
+At some stage during the game, you and your crew are up against the same type of enemy you faced when you made that haul before the game started. It's an almost impossible task but you've done it before. Something goes wrong and (female that you care for) gets killed. Then another (male that is like sidekick) also gets killed. You've come this far you won't let them die in vain and you push harder, but at the () moment, your last ally ditches leaving you to die. The enemy inches within death takes the advantage and destroys your ship, leaving you floating in space, dead.
+If you're on hardcore mode, you wake up in the depths of the () spacestation, where some (underground figure) rips out your corpses spine and harvests something from it, and begins growing a clone of you. You are reborn there.
+Otherwise your insurance kicks in and you wake up at the facility again, (female love interest?) is there? Somehow intertwine this with the underground group, where both difficulty modes link up again.
+
+After this you gain access to the next tier of 'ships', maybe call them unrestricted? (your sidekick male fried) turns out had insurance, and is alive again, (female) didn't and is gone forever.

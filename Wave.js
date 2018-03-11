@@ -10,7 +10,7 @@ export default class Wave {
 
 		let currentCount = 0;
 		this.interval = setInterval(() => {
-			this.team.getNew(this.spawn.r, this.spawn.x, this.spawn.y, "Enemy3", "enemy")
+			this.team.getNew(this.spawn.r, this.spawn.x, this.spawn.y, "Bluebird", "enemy")
 			// add a new ship at default location
 			currentCount += 1;
 			if (currentCount == this.count) clearInterval(this.interval);

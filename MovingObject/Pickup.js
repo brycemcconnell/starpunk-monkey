@@ -1,4 +1,5 @@
 import MovingObject from './MovingObject.js';
+import {state} from './../state.js';
 /*
 Pickup
 Represent an object that has hit detection with the player,
@@ -12,5 +13,11 @@ export default class Pickup extends MovingObject {
 	}
 	handleDeath() {
 		this.sprite.visible = false;
+		if (this.name == "credits") {
+			state.currency.add(this.value);
+		} else {
+			state.inventory.add(this.name);
+		}
+		console.log(state)
 	}
 }

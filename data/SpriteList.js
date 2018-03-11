@@ -91,13 +91,20 @@ export const ShipSprites = {
       }
     ],
     drops: [
+    // I want each enemy to be able to have different drop chance/count/and value per item
       {
-        // I want each enemy to be able to have different drop chance/count/and value per item
-        
+        name: "credits",
+        count: [1]
+      },
+      {
         name: "Enemy2 Parts",
-        rate: [
-
-        ]
+        chance: 10,
+        count: 1,
+      },
+      {
+        name: "Enemy2 Parts",
+        chance: 5,
+        count: 2,
       },
       {
         name: "Repair Pack",
@@ -197,6 +204,44 @@ export const ShipSprites = {
       "main-right": {
         x: -2,
         y: 10,
+        type: "standard"
+      },
+    }
+  },
+  "Bluebird": {
+    sprite: "SHIP_G2-Bluebird",
+    maxHealth: 4,
+    score: 100,
+    speed: 2,
+    hitBoxes: [
+      {
+        x: 6,
+        y: -2,
+        w: 10,
+        h: 41,
+      },
+      {
+        x: 16,
+        y: 8,
+        w: 8,
+        h: 20
+      },
+      {
+        x: 24,
+        y: 14,
+        w: 10,
+        h: 8
+      }
+    ],
+    gunSlots: {
+      "main-left": {
+        x: -4,
+        y: -10,
+        type: "standard"
+      },
+      "main-right": {
+        x: -4,
+        y: 8,
         type: "standard"
       },
     }

@@ -22,5 +22,23 @@ export const state = {
 			type: "Standard Laser",
 			movement: "Mouse"
 		},
-	]
+	],
+	inventory: {
+		items: [],
+		add(item) {
+			this.items.push(item);
+		},
+		remove(item) {
+			this.items.splice(this.items.indexOf(item), 1);
+		}
+	},
+	currency: {
+		count: 0,
+		add(amount) {
+			this.count += amount;
+		},
+		remove(amount) {
+			this.count -= amount;
+		}
+	}
 }

@@ -9,11 +9,15 @@ Base class for any object that simply moves in space
 */
 export default class MovingObject {
 	constructor(config) {
+		Object.assign(config, DebrisList[config.associate]);
+
+		this.name = config.name;
+		this.value = config.value;
 		this.type = config.type;
 		if (config.animated) {
 			this.sprite = new PIXI.Container();
 			let animation = new AnimatedObject({
-				sprite: config.texture,
+				sprite: config.sprite,
 				frames: config.frames,
 				loop: config.loop,
 				animationSpeed: config.animationSpeed,
@@ -21,7 +25,7 @@ export default class MovingObject {
 			});
 			this.sprite.addChild(animation.animation);
 		} else {
-			this.sprite = new PIXI.Sprite(PIXI.loader.resources[config.texture].texture);
+			this.sprite = new PIXI.Sprite(PIXI.loader.resources[config.sprite].texture);
 			this.sprite.anchor.set(.5, .5);
 		}
 		this.sprite.position.x = config.x;
@@ -60,8 +64,6 @@ export default class MovingObject {
 		this.vypull = 0;
 		this.vxpush = 0;
 		this.vypush = 0;
-		
-		Object.assign(this, config);
 	}
 
 	handleMove(delta) {
@@ -136,7 +138,11 @@ export default class MovingObject {
 				    y: this.sprite.position.y,
 				    rotation: fr.random(Math.PI * 2),
 				    spin: -fr.random(.01, .001),
-				    moveAngle: fr.random(Math.PI * 2)
+				    moveAngle: fr.random(Math.PI * 2),
+				    dropList: null,
+				    hasDrops: false,
+				    name: loot[i].name,
+				    value: loot[i].value || 1
 				});
 			}
 		}
@@ -147,9 +153,11 @@ function generateLootFrom(dropList) {
 	let lootList = [];
 	dropList.forEach(drop => {
 		if (fr.random(100) < drop.chance) {
-			let result = drop.name;
+			let result = {
+				name: drop.name
+			};
 			if (drop.name == "credits") {
-				result = fr.random(drop.value[0], drop.value[1]);
+				result.value = fr.random(drop.value[0], drop.value[1]);
 			}
 			lootList.push(result);
 		}

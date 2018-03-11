@@ -18,6 +18,7 @@ export function load() {
   .add("SHIP_G1-Castle",       "sprites/ship/g1-castle.png")
   .add("SHIP_G2-Arwing1",      "sprites/ship/g2-arwing1.png")
   .add("SHIP_G2-Arwing2",      "sprites/ship/g2-arwing2.png")
+  .add("SHIP_G2-Bluebird",      "sprites/ship/g2-bluebird.png")
    
    //fx
    .add("flight-trail", "sprites/fx/flight-trail.json")
