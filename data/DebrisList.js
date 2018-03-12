@@ -34,5 +34,23 @@ export const DebrisList = {
 	    frames: 8,
 	    loop: true,
 	    animationSpeed: .2
-	}
+	},
+	"Metal": {
+		type: "Pickup",
+	    sprite: "Metal",
+	    spawnOnDeathEnabled: false,
+	    maxHealth: 0,
+	    speed: .1,
+	    pickupRange: 20,
+	    animated: false
+	},
+	"Metal2": {
+		type: "Pickup",
+	    sprite: "Metal2",
+	    spawnOnDeathEnabled: false,
+	    maxHealth: 0,
+	    speed: .1,
+	    pickupRange: 20,
+	    animated: false
+	},
 }; 

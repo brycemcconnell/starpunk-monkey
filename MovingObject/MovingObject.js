@@ -47,11 +47,13 @@ export default class MovingObject {
 		this.hasDrops = true;
 		this.dropList = [
 			{
-				name: "credits",
-				chance: 50,
-				value: [5, 10]
+				name: "Metal",
+				chance: 50
 			},{
-				name: "credits",
+				name: "Metal2",
+				chance: 50
+			},{
+				name: "Credit",
 				chance: 100,
 				value: [5, 10]
 			},
@@ -133,7 +135,7 @@ export default class MovingObject {
 			let loot = generateLootFrom(this.dropList);
 			for (let i = 0; i < loot.length; i++) {
 				movingObjects.getNew({
-				  	associate: "Credit",
+				  	associate: loot[i].name,
 				    x: this.sprite.position.x,
 				    y: this.sprite.position.y,
 				    rotation: fr.random(Math.PI * 2),
@@ -156,7 +158,7 @@ function generateLootFrom(dropList) {
 			let result = {
 				name: drop.name
 			};
-			if (drop.name == "credits") {
+			if (drop.name == "Credit") {
 				result.value = fr.random(drop.value[0], drop.value[1]);
 			}
 			lootList.push(result);

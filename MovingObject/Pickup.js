@@ -13,11 +13,10 @@ export default class Pickup extends MovingObject {
 	}
 	handleDeath() {
 		this.sprite.visible = false;
-		if (this.name == "credits") {
+		if (this.name == "Credit") {
 			state.currency.add(this.value);
 		} else {
 			state.inventory.add(this.name);
 		}
-		console.log(state)
 	}
 }

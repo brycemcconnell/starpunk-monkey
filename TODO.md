@@ -314,3 +314,15 @@ If you're on hardcore mode, you wake up in the depths of the () spacestation, wh
 Otherwise your insurance kicks in and you wake up at the facility again, (female love interest?) is there? Somehow intertwine this with the underground group, where both difficulty modes link up again.
 
 After this you gain access to the next tier of 'ships', maybe call them unrestricted? (your sidekick male fried) turns out had insurance, and is alive again, (female) didn't and is gone forever.
+
+[ ] The more you use an item the more valuable it becomes? Even if you get a strong weapon late game, your current weapon has a multiplier kind of thing so it improves with use, but if you unequip it, it takes a penalty?
+
+Pros:
+Using items longer is profitable
+
+Cons:
+New weapons obsolete?
+
+Perhaps a proficiency stat? Proficiency is unique to each weapon instance, and gives a bonus that increases while equiped, while not equiped it deteriorates.
+Bonuses include: Accuracy, damage, durability. You can sell these WITH the stats, thus increasing the value of items used a lot.
+Maybe the items themselves have a level up system and you can choose what to put the points into.

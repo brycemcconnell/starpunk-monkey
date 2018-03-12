@@ -1,5 +1,5 @@
 import {app} from './Model.js';
-export const CANVAS_SIZEX = 256; // test 16:9 with 569
+export const CANVAS_SIZEX = 569; // test 16:9 with 569
 export const CANVAS_SIZEY = 320;
 export let CANVAS_SCALEX = 1;
 export let CANVAS_SCALEY = 1;

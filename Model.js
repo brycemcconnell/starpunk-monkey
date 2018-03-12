@@ -30,6 +30,7 @@ export let app = new PIXI.Application({
     resolution: 1,      // default: 1
 
 });
+
 app.renderer.backgroundColor = 0x061639;
 app.stage.scale.set(Gs.SCALE_FACTOR, Gs.SCALE_FACTOR);
 app.renderer = PIXI.autoDetectRenderer(Gs.CANVAS_SIZEX, Gs.CANVAS_SIZEY, {
