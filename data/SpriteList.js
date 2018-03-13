@@ -135,6 +135,7 @@ export const ShipSprites = {
   "Arwing": {
     sprite: "SHIP_G2-Arwing1",
     maxHealth: 4,
+    maxShield: 2,
     score: 100,
     speed: 2,
     hitBoxes: [

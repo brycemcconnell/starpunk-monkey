@@ -514,3 +514,29 @@ const inactiveItems = [
 inactiveItems.forEach(item => {
 	item.classList.add("UI_inactive");
 });
+
+
+
+export const playerStatus = document.createElement('div');
+playerStatus.style.position = "absolute";
+playerStatus.style.height = "40px";
+playerStatus.style.width = "200px";
+playerStatus.style.backgroundColor = "#000a";
+export const playerHealthContainer = document.createElement('div');
+export const playerShieldContainer = document.createElement('div');
+
+export const playerHealthValue = document.createElement('div');
+export const playerShieldValue = document.createElement('div');
+playerHealthValue.style.backgroundColor = "red";
+playerHealthValue.style.height = "8px";
+playerHealthValue.style.width = "100%";
+playerShieldValue.style.backgroundColor = "cyan";
+playerShieldValue.style.height = "8px";
+playerShieldValue.style.width = "100%";
+playerHealthContainer.appendChild(playerHealthValue);
+playerShieldContainer.appendChild(playerShieldValue);
+
+playerStatus.appendChild(playerHealthContainer);
+playerStatus.appendChild(playerShieldContainer);
+
+document.querySelector('#wrapper').appendChild(playerStatus);

@@ -173,6 +173,8 @@ export const player = {
 		let moveDownOk = 0;
 		let moveUpOk = 0;
 	  allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {
+	  	UI.playerHealthValue.style.width = (ship.currentHealth / ship.maxHealth) * 100 + "%";
+      UI.playerShieldValue.style.width = (ship.currentShield / ship.maxShield) * 100 + "%";
 	  	ship.handleShields();
   	  ship.trails.forEach(trail => {
 		  	trail.visible = false;

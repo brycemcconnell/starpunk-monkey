@@ -57,6 +57,7 @@ export function load() {
   .add("CreditAnim", "sprites/drops/CreditAnim.json")
   .add("Metal", "sprites/drops/metal.png")
   .add("Metal2", "sprites/drops/metal2.png")
+  .add("HealthPack", "sprites/drops/health-pack.png")
 
   // sound fx
   .add('SFX_Laser1',           'sounds/laser.wav')

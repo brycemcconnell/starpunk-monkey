@@ -56,6 +56,9 @@ export default class MovingObject {
 				name: "Credit",
 				chance: 100,
 				value: [5, 10]
+			},{
+				name: "HealthPack",
+				chance: 100
 			},
 		];
 		this.vx = 0;

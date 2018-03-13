@@ -3,7 +3,7 @@ export const DebrisList = {
 	    sprite: "DOODAD_Asteroid-Small",
 	    type: "Debris",
 	    maxHealth: 4,
-	    speed: .9
+	    speed: .7
 	},
 	"Asteroid-M": {
 	    sprite: "DOODAD_Asteroid-Medium",
@@ -47,6 +47,14 @@ export const DebrisList = {
 	"Metal2": {
 		type: "Pickup",
 	    sprite: "Metal2",
+	    spawnOnDeathEnabled: false,
+	    maxHealth: 0,
+	    speed: .1,
+	    pickupRange: 20,
+	    animated: false
+	},"HealthPack": {
+		type: "Pickup",
+	    sprite: "HealthPack",
 	    spawnOnDeathEnabled: false,
 	    maxHealth: 0,
 	    speed: .1,

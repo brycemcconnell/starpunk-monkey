@@ -326,3 +326,17 @@ New weapons obsolete?
 Perhaps a proficiency stat? Proficiency is unique to each weapon instance, and gives a bonus that increases while equiped, while not equiped it deteriorates.
 Bonuses include: Accuracy, damage, durability. You can sell these WITH the stats, thus increasing the value of items used a lot.
 Maybe the items themselves have a level up system and you can choose what to put the points into.
+
+[ ] Change shield recharge rate from 1 to like 0.05
+
+[ ] Some drop ideas:
+- HP Restore
+- Shield Restore
+- Fuel Restore
+- Travel fuel restore
+- Attack damage bonus
+- Speed bonus
+- Super shield? (An extra shield above your own that doesn't recharge)
+- Transmission data (accumulate to call a friend, or make this accumulate through kill count?)
+
+[ ] Scrap metal looks too similar to small asteroids

@@ -246,7 +246,7 @@ export default class Ship {
 	handleShields() {
 		this.timeSinceLastHit = PIXI.ticker.shared.lastTime - this.lastHit;
 	  	if (this.timeSinceLastHit > 3000) {
-	  		if (this.currentShield < this.maxShield) this.currentShield += 1;
+	  		if (this.currentShield < this.maxShield) this.currentShield += .01;
 	  		if (this.currentShield > this.maxShield) this.currentShield = this.maxShield;
 	  		this.timeSinceLastHit = 0;
 	  	}

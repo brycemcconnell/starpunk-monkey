@@ -99,7 +99,7 @@ export default function setup() {
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -64,
     speed: 0.01,
-    tint: [(hsl[0]), 100, 40]
+    tint: [(hsl[0]), 50, 50]
   });
   createBackgroundLayer({
     name: "bgStars",
@@ -108,7 +108,7 @@ export default function setup() {
     h: Gs.CANVAS_SIZEY * 2,
     offSetX: -32,
     speed: .3,
-    tint: [(hsl[0]), 80, 90]
+    tint: [(hsl[0]), 50, 70]
   });
   createBackgroundLayer({
     name: "clouds",

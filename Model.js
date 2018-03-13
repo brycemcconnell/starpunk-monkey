@@ -34,10 +34,10 @@ export let app = new PIXI.Application({
 app.renderer.backgroundColor = 0x061639;
 app.stage.scale.set(Gs.SCALE_FACTOR, Gs.SCALE_FACTOR);
 app.renderer = PIXI.autoDetectRenderer(Gs.CANVAS_SIZEX, Gs.CANVAS_SIZEY, {
-    roundPixels: false,
+    roundPixels: true,
     resolution: window.devicePixelRatio || 1
   });
-PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.BICUBIC;
+// PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.BICUBIC;
 // PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 
 
