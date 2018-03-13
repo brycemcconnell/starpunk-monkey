@@ -173,7 +173,8 @@ export const player = {
 		let moveDownOk = 0;
 		let moveUpOk = 0;
 	  allies.activePool.filter(a => a.moveType == "manual").forEach(ship => {
-	  	ship.trails.forEach(trail => {
+	  	ship.handleShields();
+  	  ship.trails.forEach(trail => {
 		  	trail.visible = false;
 		  });
 		  UI.FuelGuage.style.height =  (ship.fuel * 100) / ship.maxFuel + "%";

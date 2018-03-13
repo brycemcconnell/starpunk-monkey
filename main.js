@@ -17,7 +17,6 @@ const wrapper = document.getElementById("wrapper");
 wrapper.appendChild(app.view);
 init();
 Loader.load();
-// PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
 
 
 // Resizing in chromium v.64 is bugged 2018-02-28

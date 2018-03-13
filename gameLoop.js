@@ -1,4 +1,4 @@
-import { app, speed, allyBullets, enemies, enemyBullets, background, dynamicBackground, allies, movingObjects } from './Model.js';
+import { app, speed, allyBullets, enemies, enemyBullets, background, dynamicBackground, allies, movingObjects, eventList } from './Model.js';
 import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
@@ -23,8 +23,13 @@ function handleGameTime() {
   }
 }
 export function gameLoop(delta){
-  if (Gs.RENDER_STATE.value) {
+  if (Gs.RENDER_STATE.value && !document.hidden) {
     handleGameTime();
+    // console.log(app.ticker.elapsedMS)
+    eventList.forEach(event => {
+      event.tick(app.ticker.elapsedMS);
+      // console.log(event);
+    });
 
 
     let debris = movingObjects.activePool.filter(obj => obj.type == "Debris");
@@ -44,6 +49,7 @@ export function gameLoop(delta){
       
     }
     enemies.activePool.forEach(enemy => {
+      enemy.handleShields();
       enemy.handleMove(delta);
       enemy.handleAttack(delta);
     });

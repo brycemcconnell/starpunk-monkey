@@ -34,16 +34,21 @@ export let app = new PIXI.Application({
 app.renderer.backgroundColor = 0x061639;
 app.stage.scale.set(Gs.SCALE_FACTOR, Gs.SCALE_FACTOR);
 app.renderer = PIXI.autoDetectRenderer(Gs.CANVAS_SIZEX, Gs.CANVAS_SIZEY, {
-    roundPixels: true,
+    roundPixels: false,
     resolution: window.devicePixelRatio || 1
   });
 PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.BICUBIC;
+// PIXI.SCALE_MODES.DEFAULT = PIXI.SCALE_MODES.NEAREST;
+
 
 export const enemies = new ShipArray(Enemy, Stat.enemyCount);
 export const enemyBullets = new BulletArray(Bullet, Stat.enemyBulletCount, "Enemies");
 export const allyBullets = new BulletArray(Bullet, Stat.allyBulletCount, "Allies");
 export const speed = 2;
 export const movingObjects = new MovingObjectArray(Stat.movingObjectCount);
+
+export const eventList = [];
+
 
 export const background = [];
 export const dynamicBackground = [];

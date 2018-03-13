@@ -193,7 +193,7 @@ export default function setup() {
   });
   initKeyboard();
 
-  /*  
+    
   // Debug wave
   let testWave = new Wave({
     team:  enemies,
@@ -204,7 +204,7 @@ export default function setup() {
       x: 128,
       y: -64
     }
-  });*/
+  });
   PIXI.sound.play('moment-of-time', {
     loop: true,
     volume: Gs.VOLUME_MUSIC.value

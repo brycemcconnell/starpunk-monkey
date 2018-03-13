@@ -91,6 +91,12 @@ export default class Ship {
 
 		this.maxHealth = ShipSprites[config.sprite].maxHealth;
 		this.currentHealth = this.maxHealth;
+		this.maxShield = ShipSprites[config.sprite].maxShield;
+		this.currentShield = this.maxShield;
+
+		this.lastHit = 0;
+		this.timeSinceLastHit = 0;
+
 		this.score = ShipSprites[config.sprite].score;
 		this.userData = {
 			fadeOut: function(sprite) {
@@ -163,6 +169,8 @@ export default class Ship {
 	}
 
 	handleHit(bullet) {
+
+		this.lastHit = PIXI.ticker.shared.lastTime;
 		if (bullet.type == "pull") {
 			this.vxpull = (Math.cos(bullet.sprite.rotation + Math.PI)*bullet.strength);
 			this.vypull = (Math.sin(bullet.sprite.rotation + Math.PI)*bullet.strength);
@@ -173,17 +181,27 @@ export default class Ship {
 		}
 		
 		if (!this.immune) {
-			this.currentHealth -= bullet.damage;
-			this.sprite.tint = 0xff7777;
-			setTimeout(() => {
-				this.sprite.tint = 0xffffff;
-			}, 100);
-			if (this.currentHealth < 1) {
-				PIXI.sound.play('SFX_explode3', { volume: Gs.VOLUME_SOUND.value });
-				this.handleDeath();
+			if (this.currentShield == 0) {
+				this.currentHealth -= bullet.damage;
+				this.sprite.tint = 0xff7777;
+				setTimeout(() => {
+					this.sprite.tint = 0xffffff;
+				}, 100);
+				if (this.currentHealth < 1) {
+					PIXI.sound.play('SFX_explode3', { volume: Gs.VOLUME_SOUND.value });
+					this.handleDeath();
+				} else {
+					PIXI.sound.play('SFX_explode', { volume: Gs.VOLUME_SOUND.value });
+				}
 			} else {
-				PIXI.sound.play('SFX_explode', { volume: Gs.VOLUME_SOUND.value });
+				this.currentShield -= bullet.damage;
+				if (this.currentShield < 0) this.currentShield = 0;
+				this.sprite.tint = 0x7777ff;
+				setTimeout(() => {
+					this.sprite.tint = 0xffffff;
+				}, 100);
 			}
+			
 		}
 	}
 
@@ -223,5 +241,14 @@ export default class Ship {
 				});
 			}
 		} 
+	}
+
+	handleShields() {
+		this.timeSinceLastHit = PIXI.ticker.shared.lastTime - this.lastHit;
+	  	if (this.timeSinceLastHit > 3000) {
+	  		if (this.currentShield < this.maxShield) this.currentShield += 1;
+	  		if (this.currentShield > this.maxShield) this.currentShield = this.maxShield;
+	  		this.timeSinceLastHit = 0;
+	  	}
 	}
 }

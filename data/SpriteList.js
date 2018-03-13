@@ -211,6 +211,7 @@ export const ShipSprites = {
   "Bluebird": {
     sprite: "SHIP_G2-Bluebird",
     maxHealth: 4,
+    maxShield: 3,
     score: 100,
     speed: 2,
     hitBoxes: [

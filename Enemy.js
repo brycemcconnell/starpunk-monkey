@@ -1,4 +1,3 @@
-import * as AI from './ai/index.js';
 import Ship from './Ship.js';
 import {statsOld} from './player.js';
 import * as Gs from './Globals.js';
@@ -16,11 +15,9 @@ function moveForward(obj) {
 	obj.vy = (Math.sin(obj.sprite.rotation)*obj.speed);
 }
 export default class Enemy extends Ship {
-	constructor(pos, type, ai = {type: "verticalSnake", config: {loop: true}}) {
+	constructor(pos, type) {
 		// Sprite Construction
 		super(pos);
-		this.AI = AI[ai.type];
-		this.AIconfig = ai.config;
 	    // Type construction
 	    this.rotateSpeed = .05;
 	    this.destination;
@@ -28,7 +25,6 @@ export default class Enemy extends Ship {
 	    this.setPath()
 	    this.pathCurrent = 0;
 	    this.targetAngle = 0;
-	    // AI Construction
 	    this.shooting = true;
 	    this.fireRate = 90;
 	    this.coolDown = 0;
@@ -160,6 +156,7 @@ export default class Enemy extends Ship {
 		return result;
 	}
 	handleAttack(delta) {
+		/// this.guns.forEach(gun => {});
 	  if (this.coolDown > 0) {
 	    this.coolDown -= 1 * delta;
 	  }
