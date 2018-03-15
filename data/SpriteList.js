@@ -296,4 +296,43 @@ export const ShipSprites = {
       },
     }
   },
+  "Tepop": {
+    sprite: "SHIP_G3-Tepop",
+    maxHealth: 4,
+    maxShield: 2,
+    score: 100,
+    speed: 2,
+    hitBoxes: [
+      {
+        x: 6,
+        y: -2,
+        w: 10,
+        h: 41,
+      },
+      {
+        x: 16,
+        y: 8,
+        w: 8,
+        h: 20
+      },
+      {
+        x: 24,
+        y: 14,
+        w: 10,
+        h: 8
+      }
+    ],
+    gunSlots: {
+      "main-left": {
+        x: -2,
+        y: -12,
+        type: "standard"
+      },
+      "main-right": {
+        x: -2,
+        y: 10,
+        type: "standard"
+      },
+    }
+  },
 };

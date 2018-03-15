@@ -39,7 +39,8 @@ const backgroundGroup = new PIXI.display.Group(-2, true);
 const dynamicBackgroundGroup = new PIXI.display.Group(-1, true);
 export const shadowGroup = new PIXI.display.Group(0, true);
 export const debugGroup = new PIXI.display.Group(1, true);
-export const shipGroup = new PIXI.display.Group(2, true);
+export const shipGroup = new PIXI.display.Group(-1, true);
+export const doodadGroup = new PIXI.display.Group(-2, true);
 export const allyBulletGroup = new PIXI.display.Group(3, true);
 export const enemyBulletGroup = new PIXI.display.Group(4, true);
 export const controlGroup = new PIXI.display.Group(5, true);
@@ -53,10 +54,12 @@ export default function setup() {
   app.stage.addChild(new PIXI.display.Layer(dynamicBackgroundGroup));
   app.stage.addChild(new PIXI.display.Layer(shadowGroup));
   app.stage.addChild(new PIXI.display.Layer(debugGroup));
+    app.stage.addChild(new PIXI.display.Layer(doodadGroup));
   app.stage.addChild(new PIXI.display.Layer(shipGroup));
   app.stage.addChild(new PIXI.display.Layer(allyBulletGroup));
   app.stage.addChild(new PIXI.display.Layer(enemyBulletGroup));
   app.stage.addChild(new PIXI.display.Layer(controlGroup));
+
   loaderInfo.innerHTML = "complete!";
   movingObjects.getNew({
     x: 10,
@@ -153,7 +156,7 @@ export default function setup() {
     270,
     Gs.CANVAS_SIZEX / 2,
     Gs.CANVAS_SIZEY - 64,
-    "Arwing",
+    "Tepop",
     "ally"
   );
   // allies.getNew(

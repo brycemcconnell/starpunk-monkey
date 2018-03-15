@@ -1,4 +1,5 @@
 import {app, movingObjects} from './../Model.js';
+import {doodadGroup} from './../Setup.js';
 import * as Gs from './../Globals.js';
 import * as fr from './../lib/fr.js';
 import AnimatedObject from './../AnimatedObject.js';
@@ -31,6 +32,7 @@ export default class MovingObject {
 		this.sprite.position.x = config.x;
 		this.sprite.position.y = config.y;
 		this.sprite.rotation = config.rotation;
+		this.sprite.parentGroup = doodadGroup;
 		
 		app.stage.addChild(this.sprite);
 		this.speed = config.speed || .5;
