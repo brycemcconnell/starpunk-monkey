@@ -1,4 +1,4 @@
-import { app, speed, allyBullets, enemies, enemyBullets, background, dynamicBackground, allies, movingObjects, eventList } from './Model.js';
+import { app, speed, allyBullets, enemies, enemyBullets, background, dynamicBackground, allies, movingObjects, eventList, beamArray } from './Model.js';
 import * as fr from './lib/fr.js';
 import { shoot, bulletSpeed, statsOld, player } from './player.js';
 import * as UI from './UI.js'
@@ -32,8 +32,31 @@ export function gameLoop(delta){
     });
 
 
+
+
     let debris = movingObjects.activePool.filter(obj => obj.type == "Debris");
     let pickups = movingObjects.activePool.filter(obj => obj.type == "Pickup");
+
+    beamArray.forEach(beam => {
+      // Doodads
+      checkDebris:
+      for (let i = debris.length - 1; i >= 0; i--) {
+        // console.log(i)
+        let hits = 0;
+        if (CollisionDetection.LineInCircle(beam.container.worldTransform.tx, {x: debris[i].sprite.position.x, radius: debris[i].sprite.width/2})
+          && beam.container.visible
+           && debris[i].sprite.visible) {
+          beam.handleHit(debris[i]);
+          debris[i].handleHit(beam);
+          hits ++;
+          break checkDebris;
+        } 
+        if ( hits == 0 ) {
+          beam.mid.width = Gs.CANVAS_SIZEY;
+        }
+      }
+    });
+
     if (player.moveMode.value == "combat") { 
       player.handleCombatMovement(delta); 
       background.forEach(layer => {
@@ -391,5 +414,7 @@ export function gameLoop(delta){
       pair.y = pair.y + offset.y
     });
   }
+
+  
 }
 

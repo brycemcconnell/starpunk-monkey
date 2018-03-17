@@ -340,3 +340,18 @@ Maybe the items themselves have a level up system and you can choose what to put
 - Transmission data (accumulate to call a friend, or make this accumulate through kill count?)
 
 [ ] Scrap metal looks too similar to small asteroids
+
+[ ] Resources:
+Player based:
+- Fame
+- Credits
+- Morality (good/evil?)
+- xp/levels?
+
+Inventory
+- Fuel
+- Ships
+- Parts (turrets, shields)
+- Modifications (chips to place into parts)
+- crafting materials
+- health pack stuff/etc.

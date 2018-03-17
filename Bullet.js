@@ -1,28 +1,32 @@
 import {BulletSprites} from './data/BulletSprites.js';
+import {GunList} from './data/GunList.js';
 import {app, bulletContainers} from './Model.js';
 import {enemyBulletGroup, debugGroup} from './Setup.js';
 import AnimatedObject from './AnimatedObject.js';
 export default class Bullet {
 	constructor(config, newInstance = true) {
-		this.sprite = new PIXI.Sprite(PIXI.loader.resources[config.ammo.sprite].texture);
+		let ammo = config.ammo;
+		console.log(ammo)
+		// console.log(config)
+		this.sprite = new PIXI.Sprite(PIXI.loader.resources[BulletSprites[ammo].sprite].texture);
 		this.sprite.position.set(config.x, config.y);
-		this.speed = config.ammo.speed;
+		this.speed = BulletSprites[ammo].speed;
 		if (!newInstance) {
 			this.sprite.parentGroup = enemyBulletGroup;
-	 	  	bulletContainers[config.ammo.sprite].addChild(this.sprite);
+	 	  	bulletContainers[BulletSprites[ammo].sprite].addChild(this.sprite);
 		}
-		this.type = config.ammo.type;
-		this.splashRadius = config.ammo.splashRadius;
-		this.damage = config.ammo.damage;
-		this.sound = config.ammo.sound;
-		this.hitAnimation = config.ammo.hitAnimation;
-		this.hitAnimationFrames = config.ammo.hitAnimationFrames;
-		this.strength = config.ammo.strength;
+		this.type = BulletSprites[ammo].type;
+		this.splashRadius = BulletSprites[ammo].splashRadius;
+		this.damage = BulletSprites[ammo].damage;
+		this.sound = BulletSprites[ammo].sound;
+		this.hitAnimation = BulletSprites[ammo].hitAnimation;
+		this.hitAnimationFrames = BulletSprites[ammo].hitAnimationFrames;
+		this.strength = BulletSprites[ammo].strength;
 		
 	}
 	handleMove(delta) {
 		this.sprite.position.x += (Math.cos(this.sprite.rotation)*this.speed)*delta;
-    	this.sprite.position.y += (Math.sin(this.sprite.rotation)*this.speed)*delta;
+		this.sprite.position.y += (Math.sin(this.sprite.rotation)*this.speed)*delta;		
 	}
 	handleDeath() {
 		// this.sprite.visible = false;

@@ -32,6 +32,9 @@ export function load() {
   .add("PROJECTILE_Gravity2", "sprites/projectile/gravity2.png")
   .add("PROJECTILE_Gravity3", "sprites/projectile/gravity3.png")
   .add("PROJECTILE_Gravity4", "sprites/projectile/gravity4.png")
+  .add("PROJECTILE_BeamStart", "sprites/projectile/beam-start.png")
+  .add("PROJECTILE_BeamMid", "sprites/projectile/beam-mid.png")
+  .add("PROJECTILE_BeamEnd", "sprites/projectile/beam-end.png")
 
   // gun
   .add("GUN_Laser-Standard",   "sprites/gun/laser-standard.png")

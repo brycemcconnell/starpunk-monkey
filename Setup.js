@@ -40,7 +40,7 @@ const dynamicBackgroundGroup = new PIXI.display.Group(-1, true);
 export const shadowGroup = new PIXI.display.Group(0, true);
 export const debugGroup = new PIXI.display.Group(1, true);
 export const shipGroup = new PIXI.display.Group(-1, true);
-export const doodadGroup = new PIXI.display.Group(-2, true);
+export const doodadGroup = new PIXI.display.Group(-1, true);
 export const allyBulletGroup = new PIXI.display.Group(3, true);
 export const enemyBulletGroup = new PIXI.display.Group(4, true);
 export const controlGroup = new PIXI.display.Group(5, true);
@@ -198,16 +198,16 @@ export default function setup() {
 
     
   // Debug wave
-  let testWave = new Wave({
-    team:  enemies,
-    count: 5,
-    timing: 500,
-    spawn: {
-      r: 90,
-      x: 128,
-      y: -64
-    }
-  });
+  // let testWave = new Wave({
+  //   team:  enemies,
+  //   count: 5,
+  //   timing: 500,
+  //   spawn: {
+  //     r: 90,
+  //     x: 128,
+  //     y: -64
+  //   }
+  // });
   PIXI.sound.play('moment-of-time', {
     loop: true,
     volume: Gs.VOLUME_MUSIC.value

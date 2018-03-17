@@ -1,5 +1,5 @@
 import * as UI from './UI.js';
-import { background, allyBullets, app, allies, enemies } from './Model.js';
+import { background, allyBullets, app, allies, enemies, beamArray } from './Model.js';
 import * as Gs from './Globals.js';
 import * as fr from './lib/fr.js';
 import {playerSpeed, playerGalaxialAngle, playerGalaxialPosition} from './stats.js';
@@ -195,10 +195,16 @@ export const player = {
 		  // Handle guns
 		  
 	  	ship.guns.forEach(gun => {
+	  		if (ship.shooting) {
+	  			gun.shooting = true;
+	  		} else {
+	  			gun.shooting = false;
+	  		}
+	  		
 	  		gun.handleMovement();
 	  		if (gun.coolDown > 0) {
 			    gun.coolDown -= 1 * delta;
-			  }
+			  } 
 	  		if (gun.coolDown <= 0 && ship.shooting) {
 	  			// gun.accuracy -> max offset, 1 being 90 degrees either way (180 chance)
 	  			// Thus 0.5 would be a 90 degree range
@@ -210,9 +216,20 @@ export const player = {
 	  			let rot = ship.sprite.rotation + gun.sprite.rotation + offsetRadians;
 	  			gun.turrets.forEach(turret => {
 	  				let pos = {x: gun.sprite.worldTransform.tx + turret.x, y: gun.sprite.worldTransform.ty + turret.y};
-	  				shoot(rot, pos, gun.ammo);
-	  			})
+	  				if (gun.type !== "Beam") {
+	  					shoot(rot, pos, gun.ammo);
+	  				} else {
+	  					if (gun.shooting == true) {
+		  					turret.beam.container.visible = true;
+		  					turret.beam.end.position.x = turret.beam.start.width + turret.beam.mid.width;
+	  					}
+	  				}
+	  			});
 	  			gun.coolDown = gun.fireRate;
+	  		} else if (!ship.shooting){
+	  			gun.turrets.forEach(turret => {
+	  				turret.beam.container.visible = false;
+	  			});
 	  		}
 	  	});
 		  UI.CoolDownGuage.style.opacity = (100 - (ship.coolDown * 100) / ship.fireRate) / 100;

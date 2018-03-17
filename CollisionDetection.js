@@ -18,4 +18,13 @@ export default class CollisionDetection {
     position.y + height < 0 ||
     position.x + width < 0) 
   }
+
+  static LineInCircle(lineX, circle) {
+    // console.log(lineX, circle)
+    // console.log((circle.radius + circle.x < lineX && circle.radius - circle.x > lineX))
+    // console.log("left", circle.x - circle.radius)
+    // console.log("right", circle.x + circle.radius)
+    // console.log("linex", lineX)
+    return (circle.x + circle.radius > lineX && circle.x - circle.radius < lineX);
+  }
 }

@@ -7,6 +7,7 @@ import Enemy from './Enemy.js';
 import Bullet from './Bullet.js';
 import AlliedShip from './AlliedShip.js';
 import MovingObjectArray from './MovingObjectArray.js';
+import BeamArray from './BeamArray.js';
 import {BulletSprites} from './data/BulletSprites.js';
 /*function createGrid() {
   let newGrid = [];
@@ -90,3 +91,4 @@ bulletTypes.forEach(type => {
 
 
 export const allies = new ShipArray(AlliedShip, Stat.allyCount);
+export const beamArray = new Array();

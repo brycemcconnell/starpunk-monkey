@@ -88,7 +88,7 @@ export const GunList = {
 	"Standard Beam": {
 		description: "Pushes the hit enemy towards the player",
 		fireRate: 1,
-		sprite:"GUN_Missile-Standard",
+		sprite:"GUN_Laser-Double",
 		pivotX: 2.5,
 		pivotY: 2,
 		turrets:[
@@ -96,6 +96,6 @@ export const GunList = {
 		],
 		type: "Beam",
 		ammo: "Beam Cell",
-		accuracy: .05 // 95%
+		accuracy: 0 // 100%
 	}
 };

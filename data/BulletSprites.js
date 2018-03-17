@@ -53,14 +53,36 @@ export const BulletSprites = {
       strength: 1
     },
     "Repulsion Shell": {
-  		sprite: "PROJECTILE_Gravity3",
+      sprite: "PROJECTILE_Gravity3",
+      damage: .2,
+      speed: 4,
+      sound: 'SFX_Laser1',
+      hitAnimation: "exploded",
+      hitAnimationFrames: 4,
+      type: "push",
+      gun: "Gravity",
+      strength: 1
+    },
+    "Beam Cell": {
+      sprite: "PROJECTILE_BeamStart",
+      damage: .2,
+      speed: 4,
+      sound: 'SFX_Laser1',
+      hitAnimation: "exploded",
+      hitAnimationFrames: 4,
+      type: "beam",
+      strength: 1
+    },
+    "Beam1": {
+      spriteStart: "PROJECTILE_BeamStart",
+      spriteMid: "PROJECTILE_BeamMid",
+  		spriteEnd: "PROJECTILE_BeamEnd",
   		damage: .2,
   		speed: 4,
   		sound: 'SFX_Laser1',
       hitAnimation: "exploded",
       hitAnimationFrames: 4,
-      type: "push",
-      gun: "Gravity",
+      type: "beam",
       strength: 1
   	},
 

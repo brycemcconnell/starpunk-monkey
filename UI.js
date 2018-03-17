@@ -411,19 +411,22 @@ const enemyBulletsTitle = document.createElement("th");
 const allyBulletsTitle = document.createElement("th");
 const totalEntitiesTitle = document.createElement("th");
 const movingObjectTitle = document.createElement("th");
+const beamTitle = document.createElement("th");
 enemiesTitle.innerHTML = "Enemy count";
 alliesTitle.innerHTML = "Ally Count";
 enemyBulletsTitle.innerHTML = "Enemy Bullet Count";
 allyBulletsTitle.innerHTML = "Ally Bullet Count";
 totalEntitiesTitle.innerHTML = "Total Entities";
 movingObjectTitle.innerHTML = "Moving Objects";
+beamTitle.innerHTML = "beam";
 const entityCountsTitleList = [
 	enemiesTitle,
 	alliesTitle,
 	enemyBulletsTitle,
 	allyBulletsTitle,
 	totalEntitiesTitle,
-	movingObjectTitle
+	movingObjectTitle,
+	beamTitle,
 ];
 export const enemiesCount = document.createElement("td");
 export const alliesCount = document.createElement("td");
@@ -431,13 +434,15 @@ export const enemyBulletsCount = document.createElement("td");
 export const allyBulletsCount = document.createElement("td");
 export const entitiesTotalCount = document.createElement("td");
 export const movingObjectCount = document.createElement("td");
+export const beamCount = document.createElement("td");
 const entityCountsCountList = [
 	enemiesCount,
 	alliesCount,
 	enemyBulletsCount,
 	allyBulletsCount,
 	entitiesTotalCount,
-	movingObjectCount
+	movingObjectCount,
+	beamCount,
 ];
 entityCountsCountList.forEach(item => item.innerHTML = 0);
 

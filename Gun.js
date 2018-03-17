@@ -1,10 +1,12 @@
 import {GunList} from './data/GunList.js';
+import Beam from './Beam.js';
 import * as Gs from './Globals.js';
 import * as fr from './lib/fr.js';
 import {GunModList} from './data/GunModList.js';
 import {BulletSprites} from './data/BulletSprites.js';
 export default class Gun {
 	constructor(config) {
+		// console.log(GunList[config.type])
 	  	this.sprite = new PIXI.Sprite(PIXI.loader.resources[GunList[config.type].sprite].texture);
 	  	this.parent = config.parent;
 	  	this.moveType = config.movement; // @TODO Make this user configuragle
@@ -13,9 +15,17 @@ export default class Gun {
 	  	this.type = GunList[config.type].type;
 	  	this.fireRate = GunList[config.type].fireRate;
 	  	this.coolDown = 0;
+
 	  	this.turrets = GunList[config.type].turrets.map(turret => {
-	  		let obj = new PIXI.DisplayObject();
+	  		let obj = new PIXI.Container();
 	  		obj.position.set(turret.x, turret.y);
+	  		let beam = new Beam({
+		  						type: "Beam1"
+		  					});
+	  		beam.container.position.x += this.sprite.width;
+	  		beam.container.position.y -= 2;
+	  		obj.addChild(beam.container);
+	  		obj.beam = beam;
 	  		this.sprite.addChild(obj)
 	  		return obj;
 	  	});
@@ -24,7 +34,8 @@ export default class Gun {
 	  	                                  GunList[config.type].accuracy - this.modifier.accuracy :
 	  	                                  0 :
 	  	                                GunList[config.type].accuracy;
-	  	this.ammo = BulletSprites[config.ammo];
+	  	this.ammo = GunList[config.type].ammo;
+	  	this.shooting = false;
 
 	}
 	handleMovement () { 
