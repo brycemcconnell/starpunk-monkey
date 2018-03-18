@@ -10,6 +10,18 @@ Gun Template
 */
 
 export const GunList = {
+	"Slow Laser": {
+		fireRate: 60,
+		sprite:"GUN_Laser-Standard",
+		pivotX: 2.5,
+		pivotY: 2,
+		turrets: [
+			{x: 0, y: 0}
+		],
+		type: "Standard",
+		ammo: "Laser",
+		accuracy: .05 // 95%
+	},
 	"Standard Laser": {
 		fireRate: 20,
 		sprite:"GUN_Laser-Standard",
@@ -88,9 +100,10 @@ export const GunList = {
 	"Standard Beam": {
 		description: "Pushes the hit enemy towards the player",
 		fireRate: 1,
-		sprite:"GUN_Laser-Double",
-		pivotX: 2.5,
-		pivotY: 2,
+		beamCharge: 20,
+		sprite:"GUN_Beam-Standard",
+		pivotX: 4,
+		pivotY: 4,
 		turrets:[
 			{x: 0, y: 0}
 		],

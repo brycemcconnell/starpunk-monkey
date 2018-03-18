@@ -7,9 +7,13 @@ import {mapPosition} from './map.js';
 export const bulletSpeed = 3;
 // Turning system
 const turnFactor = 30; // Max turn in degrees
-const turningEnabled = true;
+
 const turnSpeed = 2;
 let currentTurn = 0;
+
+const turningEnabled = false;
+const SCALE_FX = true;
+const SLOW_DIAGONAL = false;
 
 function turn(ship) {
 	ship.sprite.rotation = Math.PI/180 * (Gs.DEFAULT_ROTATION + currentTurn);
@@ -204,32 +208,45 @@ export const player = {
 	  		gun.handleMovement();
 	  		if (gun.coolDown > 0) {
 			    gun.coolDown -= 1 * delta;
-			  } 
-	  		if (gun.coolDown <= 0 && ship.shooting) {
-	  			// gun.accuracy -> max offset, 1 being 90 degrees either way (180 chance)
-	  			// Thus 0.5 would be a 90 degree range
-	  			// 0.01 is 99% chance being straight
-	  			// 0.9 is 10% chance being straight, 90% chance of being within 81 degrees either way from target (range of 162)
-	  			let offsetChance = 180 * gun.accuracy;
-	  			let offset = fr.random(offsetChance) - (offsetChance / 2);
-	  			let offsetRadians = offset * Math.PI/180;
-	  			let rot = ship.sprite.rotation + gun.sprite.rotation + offsetRadians;
-	  			gun.turrets.forEach(turret => {
-	  				let pos = {x: gun.sprite.worldTransform.tx + turret.x, y: gun.sprite.worldTransform.ty + turret.y};
-	  				if (gun.type !== "Beam") {
-	  					shoot(rot, pos, gun.ammo);
-	  				} else {
-	  					if (gun.shooting == true) {
-		  					turret.beam.container.visible = true;
-		  					turret.beam.end.position.x = turret.beam.start.width + turret.beam.mid.width;
-	  					}
-	  				}
-	  			});
-	  			gun.coolDown = gun.fireRate;
-	  		} else if (!ship.shooting){
-	  			gun.turrets.forEach(turret => {
-	  				turret.beam.container.visible = false;
-	  			});
+			} 
+			  console.log(gun.beamCharge, gun.coolDown)
+			if (gun.type !== "Beam") {
+		  		if (gun.coolDown <= 0 && ship.shooting) {
+		  			// gun.accuracy -> max offset, 1 being 90 degrees either way (180 chance)
+		  			// Thus 0.5 would be a 90 degree range
+		  			// 0.01 is 99% chance being straight
+		  			// 0.9 is 10% chance being straight, 90% chance of being within 81 degrees either way from target (range of 162)
+		  			let offsetChance = 180 * gun.accuracy;
+		  			let offset = fr.random(offsetChance) - (offsetChance / 2);
+		  			let offsetRadians = offset * Math.PI/180;
+		  			let rot = ship.sprite.rotation + gun.sprite.rotation + offsetRadians;
+
+		  			gun.turrets.forEach(turret => {
+		  				let pos = {x: gun.sprite.worldTransform.tx + turret.x, y: gun.sprite.worldTransform.ty + turret.y};
+		  					shoot(rot, pos, gun.ammo);
+		  				
+		  			});
+		  			gun.coolDown = gun.fireRate;
+		  		}
+	  		} else {
+	  			if (gun.coolDown <= gun.beamCharge && !gun.disable) {
+	  				if (gun.shooting == true) {
+						gun.turrets.forEach(turret => {
+	  						turret.beam.container.visible = true;
+	  						turret.beam.end.position.x = turret.beam.start.width + turret.beam.mid.width;
+	  					});
+	  					gun.coolDown += 1 * delta;
+					} else {
+			  			gun.turrets.forEach(turret => {
+			  				turret.beam.container.visible = false;
+			  			});
+			  		}
+	  			} else {
+	  				gun.disable = true;
+	  				gun.turrets.forEach(turret => {
+		  				turret.beam.container.visible = false;
+		  			});
+	  			}
 	  		}
 	  	});
 		  UI.CoolDownGuage.style.opacity = (100 - (ship.coolDown * 100) / ship.fireRate) / 100;
@@ -246,37 +263,37 @@ export const player = {
 	  	} else {
 	    	ship.fuel += ship.fuel < ship.maxFuel ? 0.1 : 0;
 	  	}
-			if ((ship.moveDirection.up || ship.moveDirection.down) &&
-		      (ship.moveDirection.left || ship.moveDirection.right)) {
+		if ((ship.moveDirection.up || ship.moveDirection.down) &&
+		    (ship.moveDirection.left || ship.moveDirection.right)
+		    && SLOW_DIAGONAL) {
 		    currentSpeed /= 1.33;
-		  }
-		  currentSpeed *= delta;
-		  if (moveUpOk == allies.activePool.length) {
+		}
+		currentSpeed *= delta;
+		if (moveUpOk == allies.activePool.length) {
 		  	moveDirectionCount += 1;
 		  	ship.sprite.y -= currentSpeed;
 		    ship.shadow.y -= currentSpeed;
-		  }
-		  if (moveDownOk == allies.activePool.length) {
+		}
+		if (moveDownOk == allies.activePool.length) {
 		  	moveDirectionCount += 1;
 		  	ship.sprite.y += currentSpeed;
 		    ship.shadow.y += currentSpeed;
-		  }
-
-			if (moveLeftOk == allies.activePool.length) {
-				moveDirectionCount += 1;
-				ship.sprite.x -= currentSpeed;
-		    ship.shadow.x -= currentSpeed;
-		    currentTurn = currentTurn > -turnFactor ? currentTurn - currentTurnSpeed : currentTurn;
-		    turningEnabled && turn(ship);
-		    turning = true;
+		}
+		if (moveLeftOk == allies.activePool.length) {
+			moveDirectionCount += 1;
+			ship.sprite.x -= currentSpeed;
+			ship.shadow.x -= currentSpeed;
+			currentTurn = currentTurn > -turnFactor ? currentTurn - currentTurnSpeed : currentTurn;
+			turningEnabled && turn(ship);
+			turning = true;
 			}
-			if (moveRightOk == allies.activePool.length) {
+		if (moveRightOk == allies.activePool.length) {
 				moveDirectionCount += 1;
 				ship.sprite.x += currentSpeed;
-		    ship.shadow.x += currentSpeed;
+		   		ship.shadow.x += currentSpeed;
 				currentTurn = currentTurn < turnFactor ? currentTurn + currentTurnSpeed : currentTurn;
-		    turningEnabled && turn(ship);
-		    turning = true;
+			    turningEnabled && turn(ship);
+			    turning = true;
 			}
 			if (!turning) {
 		  	// Reset Turning
@@ -284,30 +301,31 @@ export const player = {
 			                currentTurn > 0 ? currentTurn - currentTurnSpeed : currentTurn;
 			  turningEnabled && turn(ship);
 		  }
-		  if (moveDirectionCount == 0) {
-		  	currentSpeed = 0;
-		  	if (ship.sprite.scale.x < 1) {
-		  		ship.sprite.scale.x += .02;
-		  		ship.sprite.scale.y += .02;
-		  	}
-		  	if (ship.sprite.scale.x > 1) {
-		  		ship.sprite.scale.set(1)
-		  	}
-		  } else {
-				if (ship.sprite.scale.x > .9) {
-		  		ship.sprite.scale.x -= .01;
-		  		ship.sprite.scale.y -= .01;
-		  	}
-		  	if (ship.booster && ship.fuel > 0 && ship.sprite.scale.x > .8) {
-		  		ship.sprite.scale.x -= .01;
-		  		ship.sprite.scale.y -= .01;
-		  	} else {
-		  		if (ship.sprite.scale.x < .9) {
-			  		ship.sprite.scale.x += .01;
-			  		ship.sprite.scale.y += .01;
-			  	} 
-		  	}
-		  	
+		  if (SCALE_FX) {
+		  	if (moveDirectionCount == 0) {
+			  	currentSpeed = 0;
+			  	if (ship.sprite.scale.x < 1) {
+			  		ship.sprite.scale.x += .02;
+			  		ship.sprite.scale.y += .02;
+			  	}
+			  	if (ship.sprite.scale.x > 1) {
+			  		ship.sprite.scale.set(1)
+			  	}
+			  } else {
+					if (ship.sprite.scale.x > .9) {
+			  		ship.sprite.scale.x -= .01;
+			  		ship.sprite.scale.y -= .01;
+			  	}
+			  	if (ship.booster && ship.fuel > 0 && ship.sprite.scale.x > .8) {
+			  		ship.sprite.scale.x -= .01;
+			  		ship.sprite.scale.y -= .01;
+			  	} else {
+			  		if (ship.sprite.scale.x < .9) {
+				  		ship.sprite.scale.x += .01;
+				  		ship.sprite.scale.y += .01;
+				  	} 
+			  	}
+			  }
 		  }
 		  playerSpeed.update(currentSpeed.toFixed(2));
 		});

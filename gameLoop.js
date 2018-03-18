@@ -55,6 +55,24 @@ export function gameLoop(delta){
           beam.mid.width = Gs.CANVAS_SIZEY;
         }
       }
+
+      let enemyList = enemies.activePool;
+      checkEnemies:
+      for (let i = enemyList.length - 1; i >= 0; i--) {
+        // console.log(i)
+        let hits = 0;
+        if (CollisionDetection.LineInCircle(beam.container.worldTransform.tx, {x: enemyList[i].sprite.position.x, radius: enemyList[i].sprite.width/2})
+          && beam.container.visible
+           && enemyList[i].sprite.visible) {
+          beam.handleHit(enemyList[i]);
+          enemyList[i].handleHit(beam);
+          hits ++;
+          break checkEnemies;
+        } 
+        if ( hits == 0 ) {
+          beam.mid.width = Gs.CANVAS_SIZEY;
+        }
+      }
     });
 
     if (player.moveMode.value == "combat") { 

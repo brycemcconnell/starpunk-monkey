@@ -6,6 +6,7 @@ import {enemyBullets} from './Model.js';
 import {playerScore, playerKills} from "./stats.js";
 import {ShipPaths} from "./data/ShipPaths.js";
 import {BulletSprites} from "./data/BulletSprites.js";
+import Gun from "./Gun.js";
 
 function collisionDetection() {
 
@@ -33,6 +34,15 @@ export default class Enemy extends Ship {
 		this.vypull = 0;
 		this.vxpush = 0;
 		this.vypush = 0;
+
+		let gun = new Gun({
+	      parent: this.sprite,
+	      slot: this.gunSlots["main-left"],
+	      type: "Slow Laser",
+	      movement: "Straight",
+		});
+		this.guns.push(gun);
+ 	    this.sprite.addChild(gun.sprite);
 	    
 	}
 	setPath() {
@@ -156,16 +166,54 @@ export default class Enemy extends Ship {
 		return result;
 	}
 	handleAttack(delta) {
-		/// this.guns.forEach(gun => {});
-	  if (this.coolDown > 0) {
-	    this.coolDown -= 1 * delta;
-	  }
-	  if (this.shooting && this.coolDown <= 0) {
-	    let pos = {x: this.sprite.x + Gs.TILE_SIZE / 2 - 4, y: this.sprite.y + Gs.TILE_SIZE / 2 - 4};
-	    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, BulletSprites["Laser"]);
-		PIXI.sound.play('SFX_Laser1', { volume: Gs.VOLUME_SOUND.value });
-	    this.coolDown = this.fireRate;
-	  }
+		this.guns.forEach(gun => {
+	  		if (this.shooting) {
+	  			gun.shooting = true;
+	  		} else {
+	  			gun.shooting = false;
+	  		}
+	  		
+	  		gun.handleMovement();
+	  		if (gun.coolDown > 0) {
+			    gun.coolDown -= 1 * delta;
+			  } 
+	  		if (gun.coolDown <= 0 && this.shooting) {
+	  			// gun.accuracy -> max offset, 1 being 90 degrees either way (180 chance)
+	  			// Thus 0.5 would be a 90 degree range
+	  			// 0.01 is 99% chance being straight
+	  			// 0.9 is 10% chance being straight, 90% chance of being within 81 degrees either way from target (range of 162)
+	  			let offsetChance = 180 * gun.accuracy;
+	  			let offset = fr.random(offsetChance) - (offsetChance / 2);
+	  			let offsetRadians = offset * Math.PI/180;
+	  			let rot = this.sprite.rotation + gun.sprite.rotation + offsetRadians;
+	  			gun.turrets.forEach(turret => {
+	  				let pos = {x: gun.sprite.worldTransform.tx + turret.x, y: gun.sprite.worldTransform.ty + turret.y};
+	  				if (gun.type !== "Beam") {
+	  					shoot(rot, pos, gun.ammo);
+	  				} else {
+	  					if (gun.shooting == true) {
+		  					turret.beam.container.visible = true;
+		  					turret.beam.end.position.x = turret.beam.start.width + turret.beam.mid.width;
+	  					}
+	  				}
+	  			});
+	  			gun.coolDown = gun.fireRate;
+	  		} else if (!this.shooting){
+	  			gun.turrets.forEach(turret => {
+	  				turret.beam.container.visible = false;
+	  			});
+	  		}
+	  	});
+		
+	 //  if (this.coolDown > 0) {
+	 //    this.coolDown -= 1 * delta;
+	 //  }
+	 //  if (this.shooting && this.coolDown <= 0) {
+	 //    let pos = {x: this.sprite.x + Gs.TILE_SIZE / 2 - 4, y: this.sprite.y + Gs.TILE_SIZE / 2 - 4};
+	 //    let bullet = enemyBullets.getNew(this.sprite.rotation, this.sprite.x, this.sprite.y, BulletSprites["Laser"]);
+		// PIXI.sound.play('SFX_Laser1', { volume: Gs.VOLUME_SOUND.value });
+	 //    this.coolDown = this.fireRate;
+	 //  }
 	}
 	handleDeath(scoring = true) {
 		super.handleDeath();
@@ -175,4 +223,12 @@ export default class Enemy extends Ship {
 			playerKills.update(playerKills.active + 1);
 		}	
 	}
+}
+
+function shoot(rotation, startPosition, ammo){  
+  let bullet = enemyBullets.getNew(rotation, startPosition.x, startPosition.y, ammo);
+  // statsOld.shots.update();
+  // statsOld.accuracy.update();
+  PIXI.sound.play(bullet.sound, {volume: Gs.VOLUME_SOUND.value}); 
+  // console.log(bullets.length, bulletPool.length);
 }

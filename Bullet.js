@@ -6,7 +6,6 @@ import AnimatedObject from './AnimatedObject.js';
 export default class Bullet {
 	constructor(config, newInstance = true) {
 		let ammo = config.ammo;
-		console.log(ammo)
 		// console.log(config)
 		this.sprite = new PIXI.Sprite(PIXI.loader.resources[BulletSprites[ammo].sprite].texture);
 		this.sprite.position.set(config.x, config.y);

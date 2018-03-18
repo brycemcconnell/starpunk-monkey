@@ -41,6 +41,7 @@ export function load() {
   .add("GUN_Laser-Double",     "sprites/gun/laser-double.png")
   .add("GUN_Missile-Standard", "sprites/gun/missile-standard.png")
   .add("GUN_Gatling-Standard", "sprites/gun/gatling-standard.png")
+  .add("GUN_Beam-Standard", "sprites/gun/beam-standard.png")
 
   // Doodads
   .add("DOODAD_Asteroid-Medium","sprites/doodads/asteroid-m.png")

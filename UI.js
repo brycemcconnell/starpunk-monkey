@@ -231,7 +231,7 @@ PlayerGalaxialAngleRow.appendChild(PlayerGalaxialAngle);
 export const AddEnemy = document.createElement('button');
 AddEnemy.innerHTML = "add Enemy";
 AddEnemy.onmouseup = () => {
-	enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256), "Enemy2", "enemy");  
+	enemies.getNew(fr.randAngle4(), fr.random(224), fr.random(256), "Bluebird", "enemy");  
 	// update stat
 }
 

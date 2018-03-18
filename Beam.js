@@ -8,7 +8,8 @@ export default class Beam {
 		let newConf = Object.assign(config, BulletSprites[config.type]);
 		this.start = new PIXI.Sprite(PIXI.loader.resources[newConf.spriteStart].texture);
 		this.mid = new PIXI.TilingSprite(PIXI.loader.resources[newConf.spriteMid].texture, this.height, 8);
-		this.mid.position.x += 5;
+		this.mid.position.x += 4.5;
+		this.mid.position.y += -.5;
 		this.end = new PIXI.Sprite(PIXI.loader.resources[newConf.spriteEnd].texture);
 		this.end.position.x = this.start.width + this.mid.width;
 		this.container = new PIXI.Container();
@@ -17,6 +18,7 @@ export default class Beam {
 		this.container.addChild(this.start);
 		this.container.addChild(this.mid);
 		this.container.addChild(this.end);
+		this.container.position.y = 2;
 		this.container.visible = false;
 		beamArray.push(this);
 		app.stage.addChild(this.container);

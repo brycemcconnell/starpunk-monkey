@@ -14,6 +14,7 @@ export default class Gun {
 	  	this.sprite.pivot.set(GunList[config.type].pivotX, GunList[config.type].pivotY);
 	  	this.type = GunList[config.type].type;
 	  	this.fireRate = GunList[config.type].fireRate;
+	  	this.beamCharge = GunList[config.type].beamCharge;
 	  	this.coolDown = 0;
 
 	  	this.turrets = GunList[config.type].turrets.map(turret => {
