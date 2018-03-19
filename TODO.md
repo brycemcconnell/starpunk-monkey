@@ -355,3 +355,5 @@ Inventory
 - Modifications (chips to place into parts)
 - crafting materials
 - health pack stuff/etc.
+
+[ ] Fix all sprites to be of even dimensions, odd dimensions create rendering issues (Was mostly evident with the beam, it would have strange offsets)

@@ -44,8 +44,8 @@ export default class AlliedShip extends Ship {
       type: "Standard Beam",
       movement: "Straight"
     });
-    // this.guns.push(gun);
-    // this.guns.push(gun2);
+    this.guns.push(gun);
+    this.guns.push(gun2);
     this.guns.push(gun3);
     this.sprite.addChild(gun.sprite);
     this.sprite.addChild(gun2.sprite);

@@ -325,12 +325,12 @@ export const ShipSprites = {
     gunSlots: {
       "main-left": {
         x: 6,
-        y: -7.5,
+        y: -8,
         type: "standard"
       },
       "main-right": {
         x: 6,
-        y: 6.5,
+        y: 6,
         type: "standard"
       },"main": {
         x: 20,

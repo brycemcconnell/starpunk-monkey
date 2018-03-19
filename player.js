@@ -209,7 +209,8 @@ export const player = {
 	  		if (gun.coolDown > 0) {
 			    gun.coolDown -= 1 * delta;
 			} 
-			  console.log(gun.beamCharge, gun.coolDown)
+			// @TODO Implement proper overheat for beam weapons
+			  // console.log(gun.beamCharge, gun.coolDown)
 			if (gun.type !== "Beam") {
 		  		if (gun.coolDown <= 0 && ship.shooting) {
 		  			// gun.accuracy -> max offset, 1 being 90 degrees either way (180 chance)
